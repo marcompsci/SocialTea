@@ -253,3 +253,295 @@ final class ParserTests: XCTestCase {
         }
     }
 }
+
+// MARK: - FilterSet
+
+final class FilterSetTests: XCTestCase {
+
+    func testDefaultIsNotActive() {
+        let f = FilterSet()
+        XCTAssertFalse(f.isActive)
+        XCTAssertEqual(f.activeCount, 0)
+    }
+
+    func testSingleDateFilter() {
+        var f = FilterSet(); f.requireDate = true
+        XCTAssertTrue(f.isActive)
+        XCTAssertEqual(f.activeCount, 1)
+    }
+
+    func testBothFiltersActiveCount() {
+        let f = FilterSet(requireDate: true, requireNote: true)
+        XCTAssertEqual(f.activeCount, 2)
+    }
+
+    func testFilterPassthrough() {
+        let people = [Person(username: "a"), Person(username: "b")]
+        let out = ListTools.filter(people, by: FilterSet()) { _ in false }
+        XCTAssertEqual(out.map(\.id), ["a", "b"])
+    }
+
+    func testFilterByDateKeepsOnlyDated() {
+        let dated   = Person(username: "dated",   date: Date())
+        let undated = Person(username: "undated")
+        let out = ListTools.filter([dated, undated], by: FilterSet(requireDate: true)) { _ in false }
+        XCTAssertEqual(out.map(\.id), ["dated"])
+    }
+
+    func testFilterByNoteKeepsOnlyNoted() {
+        let a = Person(username: "a"); let b = Person(username: "b")
+        let noted: Set<String> = ["a"]
+        let out = ListTools.filter([a, b], by: FilterSet(requireNote: true)) { noted.contains($0.id) }
+        XCTAssertEqual(out.map(\.id), ["a"])
+    }
+
+    func testFilterCombinedRequiresBoth() {
+        let both      = Person(username: "both",      date: Date())
+        let dateOnly  = Person(username: "date_only", date: Date())
+        let noteOnly  = Person(username: "note_only")
+        let neither   = Person(username: "neither")
+        let noted: Set<String> = ["both", "note_only"]
+        let out = ListTools.filter([both, dateOnly, noteOnly, neither],
+                                   by: FilterSet(requireDate: true, requireNote: true)) { noted.contains($0.id) }
+        XCTAssertEqual(out.map(\.id), ["both"])
+    }
+}
+
+// MARK: - PDFReport
+
+final class PDFReportTests: XCTestCase {
+
+    private let sampleStats = [
+        PDFReport.PlatformStats(name: "Instagram", followers: 500, following: 400,
+                                followBackRatio: 0.80, notFollowingBack: 80, isMutual: false),
+        PDFReport.PlatformStats(name: "Facebook",  followers: 120, following: 120,
+                                followBackRatio: 1.0, notFollowingBack: nil, isMutual: true),
+    ]
+
+    func testOutputIsNonEmpty() {
+        XCTAssertGreaterThan(PDFReport.make(platforms: sampleStats).count, 1000)
+    }
+
+    func testPDFMagicHeader() {
+        let data = PDFReport.make(platforms: sampleStats)
+        let header = String(bytes: data.prefix(4), encoding: .ascii)
+        XCTAssertEqual(header, "%PDF")
+    }
+
+    func testEmptyPlatformListStillProducesValidPDF() {
+        let data = PDFReport.make(platforms: [])
+        let header = String(bytes: data.prefix(4), encoding: .ascii)
+        XCTAssertEqual(header, "%PDF")
+    }
+}
+
+// MARK: - GoalManager
+
+@MainActor
+final class GoalManagerTests: XCTestCase {
+
+    private let goalsKey   = "goals.targets"
+    private let checkInKey = "goals.lastCheckIn"
+    private let streakKey  = "goals.streak"
+
+    override func setUp() {
+        super.setUp()
+        UserDefaults.standard.removeObject(forKey: goalsKey)
+        UserDefaults.standard.removeObject(forKey: checkInKey)
+        UserDefaults.standard.removeObject(forKey: streakKey)
+    }
+
+    override func tearDown() {
+        UserDefaults.standard.removeObject(forKey: goalsKey)
+        UserDefaults.standard.removeObject(forKey: checkInKey)
+        UserDefaults.standard.removeObject(forKey: streakKey)
+        super.tearDown()
+    }
+
+    func testSetAndGetGoal() {
+        let mgr = GoalManager()
+        mgr.setGoal(1000, for: .instagram)
+        XCTAssertEqual(mgr.goal(for: .instagram), 1000)
+        XCTAssertNil(mgr.goal(for: .facebook))
+    }
+
+    func testRemoveGoalOnZero() {
+        let mgr = GoalManager()
+        mgr.setGoal(500, for: .instagram)
+        mgr.setGoal(0, for: .instagram)
+        XCTAssertNil(mgr.goal(for: .instagram))
+    }
+
+    func testProgressCalculation() throws {
+        let mgr = GoalManager()
+        mgr.setGoal(200, for: .instagram)
+        let p = try XCTUnwrap(mgr.progress(followers: 100, for: .instagram))
+        XCTAssertEqual(p, 0.5, accuracy: 0.0001)
+    }
+
+    func testProgressClampsAtOne() throws {
+        let mgr = GoalManager()
+        mgr.setGoal(100, for: .instagram)
+        let p = try XCTUnwrap(mgr.progress(followers: 999, for: .instagram))
+        XCTAssertEqual(p, 1.0, accuracy: 0.0001)
+    }
+
+    func testProgressNilWhenNoGoal() {
+        let mgr = GoalManager()
+        XCTAssertNil(mgr.progress(followers: 500, for: .instagram))
+    }
+
+    func testFirstCheckInSetsStreak1() {
+        let mgr = GoalManager()
+        XCTAssertEqual(mgr.streakDays, 0)
+        mgr.recordCheckIn()
+        XCTAssertEqual(mgr.streakDays, 1)
+    }
+
+    func testSameDayCheckInDoesNotChangeStreak() {
+        UserDefaults.standard.set(Date(), forKey: checkInKey)
+        UserDefaults.standard.set(5, forKey: streakKey)
+        let mgr = GoalManager()
+        mgr.recordCheckIn()
+        XCTAssertEqual(mgr.streakDays, 5)
+    }
+
+    func testConsecutiveDayIncrementsStreak() {
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        UserDefaults.standard.set(yesterday, forKey: checkInKey)
+        UserDefaults.standard.set(4, forKey: streakKey)
+        let mgr = GoalManager()
+        mgr.recordCheckIn()
+        XCTAssertEqual(mgr.streakDays, 5)
+    }
+
+    func testGapResetsStreakToOne() {
+        let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
+        UserDefaults.standard.set(twoDaysAgo, forKey: checkInKey)
+        UserDefaults.standard.set(10, forKey: streakKey)
+        let mgr = GoalManager()
+        mgr.recordCheckIn()
+        XCTAssertEqual(mgr.streakDays, 1)
+    }
+}
+
+// MARK: - ReviewManager
+
+@MainActor
+final class ReviewManagerTests: XCTestCase {
+
+    private let countKey   = "review.actionCount"
+    private let versionKey = "review.lastPromptVersion"
+
+    override func setUp() {
+        super.setUp()
+        UserDefaults.standard.removeObject(forKey: countKey)
+        UserDefaults.standard.removeObject(forKey: versionKey)
+    }
+
+    override func tearDown() {
+        UserDefaults.standard.removeObject(forKey: countKey)
+        UserDefaults.standard.removeObject(forKey: versionKey)
+        super.tearDown()
+    }
+
+    func testActionCountPersists() {
+        let mgr = ReviewManager()
+        mgr.recordAction()
+        mgr.recordAction()
+        XCTAssertEqual(UserDefaults.standard.integer(forKey: countKey), 2)
+    }
+
+    func testBelowThresholdNoVersionStored() {
+        let mgr = ReviewManager()
+        mgr.recordAction()
+        mgr.recordAction()
+        // Threshold is 3; 2 actions should not store a version.
+        let stored = UserDefaults.standard.string(forKey: versionKey) ?? ""
+        XCTAssertTrue(stored.isEmpty)
+    }
+
+    func testExistingCountRestoredOnInit() {
+        UserDefaults.standard.set(2, forKey: countKey)
+        let mgr = ReviewManager()
+        mgr.recordAction() // now at 3 — threshold reached but no scene in tests
+        XCTAssertEqual(UserDefaults.standard.integer(forKey: countKey), 3)
+    }
+}
+
+// MARK: - SessionStore cleanup deck
+
+@MainActor
+final class CleanupDeckTests: XCTestCase {
+
+    func testDecideAllKeep() {
+        let store = SessionStore(bundledBaseline: [:])
+        store.loadDemo(.instagram)
+        let deckCount = store.cleanupDeck(.instagram).count
+        XCTAssertGreaterThan(deckCount, 0)
+        store.decideAll(.keep, platform: .instagram)
+        XCTAssertTrue(store.cleanupDeck(.instagram).isEmpty)
+        XCTAssertEqual(store.cleanupState(.instagram).keep.count, deckCount)
+        XCTAssertTrue(store.cleanupState(.instagram).unfollowQueue.isEmpty)
+    }
+
+    func testDecideAllUnfollow() {
+        let store = SessionStore(bundledBaseline: [:])
+        store.loadDemo(.instagram)
+        let deckCount = store.cleanupDeck(.instagram).count
+        store.decideAll(.unfollow, platform: .instagram)
+        XCTAssertEqual(store.cleanupState(.instagram).unfollowQueue.count, deckCount)
+        XCTAssertTrue(store.cleanupState(.instagram).keep.isEmpty)
+    }
+
+    func testDecideAllEmptyDeckIsNoop() {
+        let store = SessionStore(bundledBaseline: [:])
+        store.decideAll(.keep, platform: .instagram)
+        XCTAssertTrue(store.cleanupState(.instagram).keep.isEmpty)
+    }
+}
+
+// MARK: - DeepLink
+
+final class DeepLinkTests: XCTestCase {
+
+    func testPlatformRoute() {
+        let url = URL(string: "socialtea://platform/instagram")!
+        if case .openPlatform(let p) = DeepLink(url: url) {
+            XCTAssertEqual(p, .instagram)
+        } else {
+            XCTFail("Expected .openPlatform(.instagram)")
+        }
+    }
+
+    func testCleanupRoute() {
+        let url = URL(string: "socialtea://platform/tiktok/cleanup")!
+        if case .openCleanup(let p) = DeepLink(url: url) {
+            XCTAssertEqual(p, .tiktok)
+        } else {
+            XCTFail("Expected .openCleanup(.tiktok)")
+        }
+    }
+
+    func testInsightsRoute() {
+        let url = URL(string: "socialtea://insights")!
+        if case .insights = DeepLink(url: url) { } else { XCTFail("Expected .insights") }
+    }
+
+    func testDashboardRoute() {
+        let url = URL(string: "socialtea://dashboard")!
+        if case .dashboard = DeepLink(url: url) { } else { XCTFail("Expected .dashboard") }
+    }
+
+    func testUnknownHostReturnsNil() {
+        XCTAssertNil(DeepLink(url: URL(string: "socialtea://unknown")!))
+    }
+
+    func testWrongSchemeReturnsNil() {
+        XCTAssertNil(DeepLink(url: URL(string: "https://socialtea.app")!))
+    }
+
+    func testInvalidPlatformReturnsNil() {
+        XCTAssertNil(DeepLink(url: URL(string: "socialtea://platform/myspace")!))
+    }
+}

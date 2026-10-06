@@ -3,9 +3,12 @@ import SwiftUI
 struct DashboardView: View {
     @Environment(SessionStore.self) private var store
     @Environment(ThemeSettings.self) private var themeSettings
+    @Environment(GoalManager.self) private var goalManager
     @State private var importPlatform: Platform?
     @State private var showSettings = false
     @State private var showThemePicker = false
+    @State private var showGoalSheet = false
+    @State private var showGlobalSearch = false
 
     var body: some View {
         NavigationStack {
@@ -30,6 +33,11 @@ struct DashboardView: View {
             .navigationTitle("SocialTea")
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button { showGlobalSearch = true } label: {
+                        Image(systemName: "magnifyingglass")
+                    }
+                    .accessibilityLabel("Search all platforms")
+
                     Button {
                         showThemePicker = true
                     } label: {
@@ -49,11 +57,13 @@ struct DashboardView: View {
                         .accessibilityLabel("Settings")
                 }
             }
-            .sheet(item: $importPlatform) { platform in
-                ImportView(platform: platform)
-            }
+            .sheet(item: $importPlatform) { platform in ImportView(platform: platform) }
             .sheet(isPresented: $showSettings) { SettingsView() }
             .sheet(isPresented: $showThemePicker) { ThemeCustomizerSheet() }
+            .sheet(isPresented: $showGlobalSearch) { GlobalSearchView() }
+            .sheet(isPresented: $showGoalSheet) {
+                GoalSetSheet(platform: focus, currentFollowers: store.stats(focus).followers)
+            }
         }
     }
 
@@ -74,6 +84,11 @@ struct DashboardView: View {
                 .font(.footnote.weight(.medium))
                 .foregroundStyle(.secondary)
             Spacer()
+            if goalManager.streakDays > 1 {
+                Label("\(goalManager.streakDays)-day streak", systemImage: "flame.fill")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.orange)
+            }
         }
         .accessibilityElement(children: .combine)
     }
@@ -137,6 +152,18 @@ struct DashboardView: View {
                     .frame(width: 120, height: 120)
                     .id(platform)
             }
+            if let progress = goalManager.progress(followers: stats.followers, for: platform) {
+                goalProgressRow(platform: platform, followers: stats.followers, progress: progress)
+            } else {
+                Button {
+                    showGoalSheet = true
+                } label: {
+                    Label("Set a follower goal", systemImage: "target")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+            }
             Text(store.sourceLabel(platform))
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -146,6 +173,32 @@ struct DashboardView: View {
         .onTapGesture { open(platform) }
     }
 
+    private func goalProgressRow(platform: Platform, followers: Int, progress: Double) -> some View {
+        let target = goalManager.goal(for: platform) ?? 0
+        return VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Label("Goal: \(target.formatted()) \(platform.followersNoun.lowercased())",
+                      systemImage: "target")
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Text("\(Int((progress * 100).rounded()))%")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(progress >= 1 ? .green : themeSettings.accentColor)
+                Button {
+                    showGoalSheet = true
+                } label: {
+                    Image(systemName: "pencil.circle")
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+            }
+            ProgressView(value: progress)
+                .tint(progress >= 1 ? .green : themeSettings.accentColor)
+        }
+        .allowsHitTesting(true)
+    }
+
     private func counter(_ value: Int, _ label: String, _ tint: Color) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             AnimatedCounter(value: value)
@@ -153,6 +206,55 @@ struct DashboardView: View {
             Text(label).font(.caption).foregroundStyle(.secondary)
         }
         .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Goal sheet
+
+private struct GoalSetSheet: View {
+    @Environment(GoalManager.self) private var goalManager
+    @Environment(\.dismiss) private var dismiss
+    let platform: Platform
+    let currentFollowers: Int
+    @State private var text = ""
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Target \(platform.followersNoun.lowercased())", text: $text)
+                        .keyboardType(.numberPad)
+                } header: {
+                    Text("Goal for \(platform.name)")
+                } footer: {
+                    Text("You currently have \(currentFollowers.formatted()) \(platform.followersNoun.lowercased()). Set a number higher than that to track progress.")
+                }
+                if goalManager.goal(for: platform) != nil {
+                    Section {
+                        Button(role: .destructive) {
+                            goalManager.setGoal(0, for: platform)
+                            dismiss()
+                        } label: {
+                            Label("Remove goal", systemImage: "trash")
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Follower Goal")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        if let n = Int(text), n > 0 { goalManager.setGoal(n, for: platform) }
+                        dismiss()
+                    }
+                }
+            }
+            .onAppear {
+                if let existing = goalManager.goal(for: platform) { text = "\(existing)" }
+            }
+        }
     }
 }
 

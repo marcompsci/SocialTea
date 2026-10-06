@@ -237,4 +237,9 @@ final class SessionStore {
     }
 
     func resetCleanup(_ p: Platform) { cleanup[p] = nil }
+
+    /// Decides every remaining card in the deck with the given decision.
+    func decideAll(_ decision: CleanupState.Decision, platform p: Platform) {
+        for person in cleanupDeck(p) { decide(person, decision, platform: p) }
+    }
 }

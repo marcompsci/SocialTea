@@ -8,11 +8,21 @@ struct SocialTeaApp: App {
     @State private var notifications = NotificationManager()
     @State private var subscriptions = SubscriptionManager()
     @State private var reviewManager  = ReviewManager()
+    @State private var goalManager    = GoalManager()
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
         ExportFile.purge()
         SocialTeaShortcuts.updateAppShortcutParameters()
+    }
+
+    private func handlePlatformIntent() {
+        let defaults = UserDefaults(suiteName: WidgetDataCache.suiteName) ?? .standard
+        guard let raw = defaults.string(forKey: "intent.openPlatform"),
+              let platform = Platform(rawValue: raw) else { return }
+        defaults.removeObject(forKey: "intent.openPlatform")
+        store.selectedPlatform = platform
+        store.selectedTab = .lists
     }
 
     var body: some Scene {
@@ -24,13 +34,20 @@ struct SocialTeaApp: App {
                 .environment(notifications)
                 .environment(subscriptions)
                 .environment(reviewManager)
+                .environment(goalManager)
                 .tint(themeSettings.accentColor)
                 .preferredColorScheme(themeSettings.colorScheme)
+                .onOpenURL { url in
+                    DeepLink(url: url)?.handle(store: store)
+                }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background {
                 lock.lockIfEnabled()
                 WidgetDataCache.update(from: store)
+            }
+            if phase == .active {
+                handlePlatformIntent()
             }
         }
     }

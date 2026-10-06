@@ -76,6 +76,26 @@ struct CleanupView: View {
                     }
                     .disabled(state.unfollowQueue.isEmpty)
                 }
+                if !deck.isEmpty {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Menu {
+                            Button {
+                                Haptics.light()
+                                withAnimation(.snappy) { store.decideAll(.keep, platform: platform) }
+                            } label: {
+                                Label("Keep all remaining", systemImage: "heart")
+                            }
+                            Button(role: .destructive) {
+                                Haptics.light()
+                                withAnimation(.snappy) { store.decideAll(.unfollow, platform: platform) }
+                            } label: {
+                                Label("Queue all to unfollow", systemImage: "xmark.circle")
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                        }
+                    }
+                }
             }
             .sheet(isPresented: $showQueue) {
                 UnfollowQueueView(platform: platform)

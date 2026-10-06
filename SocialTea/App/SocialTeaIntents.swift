@@ -52,6 +52,24 @@ struct CheckFollowerCountIntent: AppIntent {
     }
 }
 
+// MARK: - Open platform intent (used by interactive widget button, iOS 17+)
+
+/// Writes the desired platform to shared UserDefaults then opens the app.
+/// The app reads this on foreground and navigates to the right platform.
+struct OpenPlatformIntent: AppIntent {
+    static var title: LocalizedStringResource = "Open platform in SocialTea"
+    static var openAppWhenRun = true
+
+    @Parameter(title: "Platform")
+    var platform: PlatformAppEnum
+
+    func perform() async throws -> some IntentResult {
+        let defaults = UserDefaults(suiteName: WidgetDataCache.suiteName) ?? .standard
+        defaults.set(platform.rawValue, forKey: "intent.openPlatform")
+        return .result()
+    }
+}
+
 // MARK: - App Shortcuts (Siri phrases + Spotlight)
 
 struct SocialTeaShortcuts: AppShortcutsProvider {

@@ -3,6 +3,7 @@ import SwiftUI
 struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(SessionStore.self) private var store
     @State private var currentPage = 0
 
     var body: some View {
@@ -53,6 +54,17 @@ struct OnboardingView: View {
                         .padding(.vertical, 16)
                         .background(Capsule().fill(Theme.tea))
                         .foregroundStyle(.white)
+                }
+                Button {
+                    for p in Platform.allCases { store.loadDemo(p) }
+                    dismiss()
+                } label: {
+                    Text("Explore with demo data")
+                        .font(.subheadline.weight(.medium))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(Capsule().fill(Theme.tea.opacity(0.12)))
+                        .foregroundStyle(Theme.tea)
                 }
             }
         }

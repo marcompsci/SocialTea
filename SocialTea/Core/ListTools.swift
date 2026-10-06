@@ -18,7 +18,24 @@ enum SortOrder: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+struct FilterSet: Equatable {
+    var requireDate: Bool = false
+    var requireNote: Bool = false
+
+    var isActive: Bool { requireDate || requireNote }
+    var activeCount: Int { (requireDate ? 1 : 0) + (requireNote ? 1 : 0) }
+}
+
 enum ListTools {
+    static func filter(_ people: [Person], by set: FilterSet, hasNote: (Person) -> Bool) -> [Person] {
+        guard set.isActive else { return people }
+        return people.filter { p in
+            if set.requireDate && p.date == nil { return false }
+            if set.requireNote && !hasNote(p)   { return false }
+            return true
+        }
+    }
+
     /// Case-insensitive match on handle or display name. Ignores a leading "@".
     static func search(_ people: [Person], query: String) -> [Person] {
         var q = query.trimmingCharacters(in: .whitespaces).lowercased()

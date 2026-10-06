@@ -5,8 +5,10 @@ struct ListsView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @State private var query        = ""
     @State private var sort: SortOrder = .az
+    @State private var filterSet    = FilterSet()
     @State private var shareItem: ShareItem?
     @State private var showImport   = false
+    @State private var showGlobalSearch = false
     @State private var selectionMode  = false
     @State private var selectedIDs: Set<String> = []
     @State private var noteTarget: Person?
@@ -16,7 +18,8 @@ struct ListsView: View {
         let platform = store.selectedPlatform
         let view     = store.selectedView
         let result   = store.result(view, for: platform)
-        let people   = ListTools.sort(ListTools.search(result.people, query: query), by: sort)
+        let filtered = ListTools.filter(result.people, by: filterSet, hasNote: { store.note(for: $0) != nil })
+        let people   = ListTools.sort(ListTools.search(filtered, query: query), by: sort)
 
         NavigationStack {
             List {
@@ -61,14 +64,41 @@ struct ListsView: View {
                                 .font(.subheadline)
                         }
                     } else {
+                        Button { showGlobalSearch = true } label: {
+                            Image(systemName: "magnifyingglass.circle")
+                        }
+                        .accessibilityLabel("Search all platforms")
+
                         Menu {
                             Picker("Sort", selection: $sort) {
                                 ForEach(SortOrder.allCases) { s in Text(s.title).tag(s) }
                             }
+                            Divider()
+                            Section("Filter") {
+                                Button {
+                                    filterSet.requireDate.toggle()
+                                } label: {
+                                    Label("Has follow date",
+                                          systemImage: filterSet.requireDate ? "checkmark.circle.fill" : "circle")
+                                }
+                                Button {
+                                    filterSet.requireNote.toggle()
+                                } label: {
+                                    Label("Has my note",
+                                          systemImage: filterSet.requireNote ? "checkmark.circle.fill" : "circle")
+                                }
+                                if filterSet.isActive {
+                                    Button(role: .destructive) { filterSet = FilterSet() } label: {
+                                        Label("Clear filters", systemImage: "xmark.circle")
+                                    }
+                                }
+                            }
                         } label: {
-                            Image(systemName: "arrow.up.arrow.down")
+                            Image(systemName: filterSet.isActive
+                                  ? "line.3.horizontal.decrease.circle.fill"
+                                  : "line.3.horizontal.decrease.circle")
                         }
-                        .accessibilityLabel("Sort")
+                        .accessibilityLabel(filterSet.isActive ? "Sort & filter (\(filterSet.activeCount) active)" : "Sort & filter")
 
                         Menu {
                             ForEach(ExportBuilder.Format.allCases) { format in
@@ -100,10 +130,12 @@ struct ListsView: View {
             }
             .sheet(isPresented: $showImport) { ImportView(platform: platform) }
             .sheet(item: $noteTarget) { person in NoteEditorSheet(person: person) }
+            .sheet(isPresented: $showGlobalSearch) { GlobalSearchView() }
             .onChange(of: store.selectedPlatform) { _, _ in
                 query = ""
                 selectionMode = false
                 selectedIDs   = []
+                filterSet     = FilterSet()
             }
         }
     }
