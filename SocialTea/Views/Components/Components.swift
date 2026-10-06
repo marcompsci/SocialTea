@@ -276,6 +276,29 @@ enum ExportFile {
     }
 }
 
+// MARK: - Shimmer placeholder row
+
+/// Placeholder shown while a list is about to be populated. Uses SwiftUI's built-in
+/// `.redacted(reason:)` shimmer rather than a custom animation to stay system-consistent.
+struct ShimmerRow: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            Circle()
+                .frame(width: 40, height: 40)
+            VStack(alignment: .leading, spacing: 6) {
+                RoundedRectangle(cornerRadius: 4).frame(width: 130, height: 12)
+                RoundedRectangle(cornerRadius: 4).frame(width: 85, height: 10)
+            }
+            Spacer()
+            RoundedRectangle(cornerRadius: 12).frame(width: 52, height: 26)
+        }
+        .padding(.vertical, 4)
+        .redacted(reason: .placeholder)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+}
+
 // MARK: - Small pieces
 
 struct PlatformBadge: View {

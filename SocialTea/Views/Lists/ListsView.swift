@@ -255,6 +255,9 @@ struct ListsView: View {
                 Button("Import \(platform.name)") { showImport = true }
                 Button("Load demo data") { store.loadDemo(platform) }
             }
+            Section {
+                ForEach(0..<5, id: \.self) { _ in ShimmerRow() }
+            }
         case .countsOnly:
             Section {
                 NoticeCard(symbol: "number.circle",

@@ -6,6 +6,7 @@ import UniformTypeIdentifiers
 struct ImportView: View {
     let platform: Platform
     @Environment(SessionStore.self) private var store
+    @Environment(ReviewManager.self) private var reviewManager
     @Environment(\.dismiss) private var dismiss
 
     private struct Target: Equatable {
@@ -180,6 +181,7 @@ struct ImportView: View {
             }
             do {
                 let count = try store.importLists(files, platform: platform, role: target.role, slot: target.slot)
+                reviewManager.recordAction()
                 Haptics.success()
                 let noun = platform.friendsAreMutual ? "friends" : target.role.rawValue
                 message = ("Imported \(count.formatted()) \(noun) from \(files.count == 1 ? files[0].name : "\(files.count) files").", false)

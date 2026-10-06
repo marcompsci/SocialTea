@@ -6,6 +6,7 @@ struct CleanupView: View {
     @Environment(SessionStore.self) private var store
     @Environment(ThemeSettings.self) private var themeSettings
     @Environment(SubscriptionManager.self) private var subscriptions
+    @Environment(ReviewManager.self) private var reviewManager
     @State private var showQueue = false
     @State private var celebrated = false
 
@@ -55,6 +56,7 @@ struct CleanupView: View {
                     progress(done: state.history.count, total: total.count)
                         .padding(.horizontal)
                     SwipeDeck(people: Array(deck.prefix(3)), platform: platform) { person, decision in
+                        reviewManager.recordAction()
                         Haptics.light()
                         withAnimation(.snappy) { store.decide(person, decision, platform: platform) }
                     }

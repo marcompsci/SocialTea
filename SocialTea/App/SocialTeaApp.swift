@@ -7,6 +7,7 @@ struct SocialTeaApp: App {
     @State private var themeSettings = ThemeSettings()
     @State private var notifications = NotificationManager()
     @State private var subscriptions = SubscriptionManager()
+    @State private var reviewManager  = ReviewManager()
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -22,6 +23,7 @@ struct SocialTeaApp: App {
                 .environment(themeSettings)
                 .environment(notifications)
                 .environment(subscriptions)
+                .environment(reviewManager)
                 .tint(themeSettings.accentColor)
                 .preferredColorScheme(themeSettings.colorScheme)
         }

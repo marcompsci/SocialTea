@@ -6,7 +6,9 @@ struct SettingsView: View {
     @Environment(LockManager.self) private var lock
     @Environment(NotificationManager.self) private var notifications
     @Environment(SubscriptionManager.self) private var subscriptions
+    @Environment(ReviewManager.self) private var reviewManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @State private var showPaywall = false
     @State private var showManageSubscription = false
     @AppStorage(WidgetDataCache.optInKey) private var widgetOptIn = false
@@ -14,6 +16,12 @@ struct SettingsView: View {
     @State private var showPINSetup = false
     @State private var confirmStartOver = false
     @State private var confirmClearAll = false
+
+    private var versionString: String {
+        let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let b = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return "\(v) (\(b))"
+    }
 
     var body: some View {
         NavigationStack {
@@ -131,19 +139,36 @@ struct SettingsView: View {
                          : "Start over wipes every import for this session.")
                 }
 
-                Section("About") {
+                Section {
                     LabeledContent("Status", value: store.statusLabel)
                     LabeledContent("Network access", value: "None")
                     LabeledContent("Data collected", value: "None")
-                    LabeledContent("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0")
+                    LabeledContent("Version", value: versionString)
                     NavigationLink {
                         AppIconExportView()
                     } label: {
                         Label("App Icon Export", systemImage: "app.badge")
                     }
-                    Text("SocialTea is a follower tracker for Instagram, Facebook and TikTok exports. It is not affiliated with or endorsed by Instagram, Facebook, TikTok, or Meta.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                    Button {
+                        if let url = URL(string: "mailto:support@socialtea.app?subject=SocialTea%20Feedback") {
+                            openURL(url)
+                        }
+                    } label: {
+                        Label("Send feedback", systemImage: "envelope")
+                    }
+                    Button {
+                        reviewManager.recordAction()
+                        // Replace 0000000000 with your App Store ID once the app is published.
+                        if let url = URL(string: "https://apps.apple.com/app/id0000000000?action=write-review") {
+                            openURL(url)
+                        }
+                    } label: {
+                        Label("Write a review", systemImage: "star")
+                    }
+                } header: {
+                    Text("About")
+                } footer: {
+                    Text("SocialTea is not affiliated with or endorsed by Instagram, Facebook, TikTok, or Meta.")
                 }
             }
             .navigationTitle("Settings")
