@@ -10,8 +10,8 @@ struct SocialTeaApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
-        // Backstop: remove any leftover Share Sheet temp file from a previous run.
         ExportFile.purge()
+        SocialTeaShortcuts.updateAppShortcutParameters()
     }
 
     var body: some Scene {
@@ -42,6 +42,12 @@ struct RootView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @State private var showOnboarding = false
 
+    private var cleanupBadge: Int {
+        store.loadedPlatforms
+            .filter { !$0.friendsAreMutual }
+            .reduce(0) { $0 + store.cleanupDeck($1).count }
+    }
+
     var body: some View {
         @Bindable var store = store
         @Bindable var subscriptions = subscriptions
@@ -56,6 +62,7 @@ struct RootView: View {
                 CleanupView()
                     .tabItem { Label("Cleanup", systemImage: "rectangle.stack.fill") }
                     .tag(SessionStore.Tab.cleanup)
+                    .badge(cleanupBadge)
                 InsightsView()
                     .tabItem { Label("Insights", systemImage: "chart.bar.xaxis") }
                     .tag(SessionStore.Tab.insights)

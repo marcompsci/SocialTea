@@ -42,11 +42,16 @@ struct InsightsView: View {
             .navigationTitle("Insights")
             .toolbar {
                 if !store.loadedPlatforms.isEmpty && unlocked {
-                    ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Button { exportPDF() } label: {
+                            Image(systemName: "doc.richtext")
+                        }
+                        .accessibilityLabel("Export PDF report")
+
                         Button { shareStats() } label: {
                             Image(systemName: "square.and.arrow.up")
                         }
-                        .accessibilityLabel("Share stats")
+                        .accessibilityLabel("Share stats card")
                     }
                 }
             }
@@ -156,6 +161,25 @@ struct InsightsView: View {
     }
 
     // MARK: - Share
+
+    @MainActor
+    private func exportPDF() {
+        let platforms = store.loadedPlatforms.map { platform -> PDFReport.PlatformStats in
+            let stats = store.stats(platform)
+            let nfb = store.result(.notFollowingBack, for: platform)
+            return PDFReport.PlatformStats(
+                name: platform.name,
+                followers: stats.followers,
+                following: stats.following,
+                followBackRatio: stats.followBackRatio,
+                notFollowingBack: nfb.availability == .ready ? nfb.count : nil,
+                isMutual: platform.friendsAreMutual
+            )
+        }
+        let data = PDFReport.make(platforms: platforms)
+        let name = "SocialTea-Report-\(Date().formatted(.iso8601.year().month().day())).pdf"
+        shareCard = ExportFile.makeData(data, fileName: name)
+    }
 
     @MainActor
     private func shareStats() {

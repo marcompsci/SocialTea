@@ -7,21 +7,18 @@ struct PaywallView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(\.dismiss) private var dismiss
 
+    /// nil = still checking, false = the App Store couldn't return the product (offline, or not set up yet).
+    @State private var available: Bool?
+
     var body: some View {
-        SubscriptionStoreView(productIDs: [SubscriptionManager.productID]) {
-            marketing
-        }
-        .subscriptionStoreButtonLabel(.multiline)
-        .storeButton(.visible, for: .restorePurchases)
-        .subscriptionStorePolicyDestination(url: SubscriptionManager.termsURL, for: .termsOfService)
-        .subscriptionStorePolicyDestination(url: SubscriptionManager.privacyPolicyURL, for: .privacyPolicy)
-        .onInAppPurchaseCompletion { [subscriptions] _, result in
-            if case .success(.success(let verification)) = result,
-               case .verified(let transaction) = verification {
-                await transaction.finish()
-                await subscriptions.refresh()   // isPro flips → onChange below closes the sheet
+        Group {
+            if available == false {
+                unavailable
+            } else {
+                store
             }
         }
+        .task { await checkAvailability() }
         .overlay(alignment: .topTrailing) {
             Button { dismiss() } label: {
                 Image(systemName: "xmark.circle.fill")
@@ -36,6 +33,63 @@ struct PaywallView: View {
             if isPro {
                 Haptics.success()
                 dismiss()
+            }
+        }
+    }
+
+    private var store: some View {
+        SubscriptionStoreView(productIDs: [SubscriptionManager.productID]) {
+            marketing
+        }
+        .subscriptionStoreButtonLabel(.multiline)
+        .storeButton(.visible, for: .restorePurchases)
+        .subscriptionStorePolicyDestination(url: SubscriptionManager.termsURL, for: .termsOfService)
+        .subscriptionStorePolicyDestination(url: SubscriptionManager.privacyPolicyURL, for: .privacyPolicy)
+        .onInAppPurchaseCompletion { [subscriptions] _, result in
+            if case .success(.success(let verification)) = result,
+               case .verified(let transaction) = verification {
+                await transaction.finish()
+                await subscriptions.refresh()   // isPro flips → onChange closes the sheet
+            }
+        }
+    }
+
+    private func checkAvailability() async {
+        let products = (try? await Product.products(for: [SubscriptionManager.productID])) ?? []
+        available = !products.isEmpty
+    }
+
+    /// Shown when StoreKit can't load the product, so the screen is never blank.
+    private var unavailable: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                marketing
+                VStack(spacing: 10) {
+                    Text("The App Store couldn\u{2019}t be reached")
+                        .font(.headline)
+                    Text("Check your connection and try again. If you already subscribe, restore your purchase.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                    Button {
+                        available = nil
+                        Task { await checkAvailability() }
+                    } label: {
+                        Text("Try again").frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(Theme.tea)
+                    Button("Restore purchases") {
+                        Task { await subscriptions.restore() }
+                    }
+                    HStack(spacing: 16) {
+                        Link("Terms of Use", destination: SubscriptionManager.termsURL)
+                        Link("Privacy Policy", destination: SubscriptionManager.privacyPolicyURL)
+                    }
+                    .font(.caption)
+                }
+                .padding(.horizontal, 28)
+                .padding(.bottom, 24)
             }
         }
     }
