@@ -2,8 +2,10 @@ import SwiftUI
 
 struct DashboardView: View {
     @Environment(SessionStore.self) private var store
+    @Environment(ThemeSettings.self) private var themeSettings
     @State private var importPlatform: Platform?
     @State private var showSettings = false
+    @State private var showThemePicker = false
 
     var body: some View {
         NavigationStack {
@@ -27,7 +29,22 @@ struct DashboardView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("SocialTea")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        showThemePicker = true
+                    } label: {
+                        Image(systemName: "paintpalette")
+                    }
+                    .accessibilityLabel("Customize theme")
+
+                    Button {
+                        themeSettings.toggleNightMode()
+                        Haptics.light()
+                    } label: {
+                        Image(systemName: themeSettings.nightMode ? "sun.max.fill" : "moon.fill")
+                    }
+                    .accessibilityLabel(themeSettings.nightMode ? "Night mode on, tap to turn off" : "Night mode off, tap to turn on")
+
                     Button { showSettings = true } label: { Image(systemName: "gearshape") }
                         .accessibilityLabel("Settings")
                 }
@@ -36,6 +53,7 @@ struct DashboardView: View {
                 ImportView(platform: platform)
             }
             .sheet(isPresented: $showSettings) { SettingsView() }
+            .sheet(isPresented: $showThemePicker) { ThemeCustomizerSheet() }
         }
     }
 
@@ -50,7 +68,7 @@ struct DashboardView: View {
     private var statusHeader: some View {
         HStack(spacing: 8) {
             Circle()
-                .fill(store.loadedPlatforms.isEmpty ? Color.secondary : Theme.tea)
+                .fill(store.loadedPlatforms.isEmpty ? Color.secondary : themeSettings.accentColor)
                 .frame(width: 8, height: 8)
             Text(store.statusLabel)
                 .font(.footnote.weight(.medium))
@@ -107,14 +125,15 @@ struct DashboardView: View {
             }
             HStack(alignment: .center, spacing: 18) {
                 VStack(alignment: .leading, spacing: 14) {
-                    counter(stats.followers, platform.followersNoun, Theme.tea)
+                    counter(stats.followers, platform.followersNoun, themeSettings.accentColor)
                     if !platform.friendsAreMutual {
                         counter(stats.following, "Following", Theme.honey)
                         counter(stats.notFollowingBack, "Not following back", Theme.berry)
                     }
                 }
                 Spacer(minLength: 0)
-                RatioRing(ratio: platform.friendsAreMutual ? (stats.followers > 0 ? 1 : 0) : stats.followBackRatio)
+                RatioRing(ratio: platform.friendsAreMutual ? (stats.followers > 0 ? 1 : 0) : stats.followBackRatio,
+                          tint: themeSettings.accentColor)
                     .frame(width: 120, height: 120)
                     .id(platform)
             }
@@ -134,6 +153,71 @@ struct DashboardView: View {
             Text(label).font(.caption).foregroundStyle(.secondary)
         }
         .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Theme customizer sheet
+
+private struct ThemeCustomizerSheet: View {
+    @Environment(ThemeSettings.self) private var theme
+    @Environment(\.dismiss) private var dismiss
+    @State private var pickedColor: Color = Theme.tea
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    ColorPicker("Accent color", selection: $pickedColor, supportsOpacity: false)
+                } header: {
+                    Text("Theme Color")
+                } footer: {
+                    Text("Changes the accent color throughout your dashboard — counters, the follow-back ring, and status indicator.")
+                }
+
+                Section("Preview") {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Circle()
+                                .fill(pickedColor.opacity(0.15))
+                                .frame(width: 52, height: 52)
+                            Circle()
+                                .fill(pickedColor)
+                                .frame(width: 34, height: 34)
+                        }
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("1,234")
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundStyle(pickedColor)
+                            Text("Followers")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        RatioRing(ratio: 0.72, tint: pickedColor)
+                            .frame(width: 72, height: 72)
+                    }
+                    .padding(.vertical, 4)
+                }
+
+                Section {
+                    Button("Reset to default") {
+                        pickedColor = Color(red: 0.07, green: 0.55, blue: 0.52)
+                    }
+                    .foregroundStyle(.secondary)
+                }
+            }
+            .navigationTitle("Customize Theme")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+            .onChange(of: pickedColor) { _, new in
+                theme.setAccentColor(new)
+            }
+            .onAppear { pickedColor = theme.accentColor }
+        }
     }
 }
 

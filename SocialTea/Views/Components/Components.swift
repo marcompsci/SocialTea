@@ -258,6 +258,18 @@ enum ExportFile {
         }
     }
 
+    static func makeData(_ data: Data, fileName: String) -> ShareItem? {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("share", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let url = dir.appendingPathComponent(fileName)
+        do {
+            try data.write(to: url, options: .atomic)
+            return ShareItem(url: url)
+        } catch {
+            return nil
+        }
+    }
+
     static func purge() {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("share", isDirectory: true)
         try? FileManager.default.removeItem(at: dir)

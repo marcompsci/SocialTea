@@ -39,6 +39,17 @@
                ReferencedContainer = "container:SocialTea.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "49A25E2E7B70CCC83AC5CA91"
+               BuildableName = "SocialTeaUITests.xctest"
+               BlueprintName = "SocialTeaUITests"
+               ReferencedContainer = "container:SocialTea.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -7,7 +7,7 @@ import Observation
 @Observable
 final class SessionStore {
 
-    enum Tab: Hashable { case dashboard, lists, cleanup, guide }
+    enum Tab: Hashable { case dashboard, lists, cleanup, insights, guide }
     enum Slot: String, Hashable, Identifiable {
         case baseline, newer
         var id: String { rawValue }
@@ -41,6 +41,12 @@ final class SessionStore {
     init(bundledBaseline: [Platform: Snapshot]? = nil) {
         self.bundledBaseline = bundledBaseline ?? SessionStore.loadBundledBaseline()
         restoreBaseline()
+        #if DEBUG
+        // UI tests: start with demo data on every platform.
+        if ProcessInfo.processInfo.arguments.contains("-UITestDemo") {
+            for p in Platform.allCases { loadDemo(p) }
+        }
+        #endif
     }
 
     static func loadBundledBaseline() -> [Platform: Snapshot] {

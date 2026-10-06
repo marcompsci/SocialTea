@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(SessionStore.self) private var store
     @Environment(LockManager.self) private var lock
+    @Environment(NotificationManager.self) private var notifications
     @Environment(\.dismiss) private var dismiss
 
     @State private var showPINSetup = false
@@ -45,6 +46,32 @@ struct SettingsView: View {
                     Text("App lock")
                 } footer: {
                     Text("Off by default. The lock kicks in when you leave the app. A session PIN is kept in memory and forgotten when the app closes.")
+                }
+
+                Section {
+                    Toggle(isOn: Binding(
+                        get: { notifications.enabled },
+                        set: { on in
+                            if on { Task { await notifications.requestAndEnable() } }
+                            else  { notifications.setEnabled(false) }
+                        }
+                    )) {
+                        Label("Check-in reminder", systemImage: "bell.fill")
+                    }
+                    if notifications.enabled {
+                        Picker("Frequency", selection: Binding(
+                            get: { notifications.interval },
+                            set: { notifications.updateInterval($0) }
+                        )) {
+                            ForEach(NotificationManager.ReminderInterval.allCases) { interval in
+                                Text(interval.rawValue).tag(interval)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Reminders")
+                } footer: {
+                    Text("A private nudge to open the app and check your latest follower activity.")
                 }
 
                 Section {

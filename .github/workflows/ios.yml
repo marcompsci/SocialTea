@@ -2,19 +2,24 @@ name: iOS build & test
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   test:
     runs-on: macos-15
-    timeout-minutes: 40
+    timeout-minutes: 50
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Xcode version
         run: |
-          sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)"
+          XC=$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$XC" ]; then sudo xcode-select -s "$XC"; fi
           xcodebuild -version
 
       - name: Pick an iPhone simulator
@@ -26,25 +31,50 @@ jobs:
           for rt in sorted(d, reverse=True):
               if 'iOS' in rt:
                   for dev in d[rt]:
+                      if dev['name'].startswith('iPhone') and 'Pro Max' in dev['name']:
+                          print(dev['udid']); sys.exit()
+              if 'iOS' in rt:
+                  for dev in d[rt]:
                       if dev['name'].startswith('iPhone'):
                           print(dev['udid']); sys.exit()
           ")
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices | grep "$UDID"
 
-      - name: Build and test
+      - name: Build and test (unit + UI walkthrough)
         run: |
-          set -o pipefail
-          xcodebuild test \
+          mkdir -p screenshots
+          set +e
+          TEST_RUNNER_SCREENSHOT_DIR="$PWD/screenshots" xcodebuild test \
             -project SocialTea.xcodeproj \
             -scheme SocialTea \
             -destination "id=${{ steps.sim.outputs.udid }}" \
-            CODE_SIGNING_ALLOWED=NO \
-            | tee build.log | grep -E "error:|warning:|Test Case|Executed|BUILD|TEST" || true
-          test ${PIPESTATUS[0]} -eq 0
+            -resultBundlePath Results.xcresult \
+            CODE_SIGNING_ALLOWED=NO > build.log 2>&1
+          echo $? > exit_code
+          grep -E "error:|Test Case .*(passed|failed)|Executed|\*\* (BUILD|TEST)" build.log || true
+          exit 0
 
-      - name: Upload log
+      - name: Publish screenshots and results to ci-screenshots branch
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: build.log
+        run: |
+          OUT="$RUNNER_TEMP/pub"
+          mkdir -p "$OUT"
+          cp -R screenshots "$OUT/" 2>/dev/null || true
+          cp build.log "$OUT/" 2>/dev/null || true
+          grep -E "warning:" build.log | grep -v "appintentsmetadataprocessor" | sort -u > "$OUT/warnings.txt" || true
+          grep -E "error:" build.log | sort -u > "$OUT/errors.txt" || true
+          grep -E "Test Case .*(passed|failed)" build.log > "$OUT/tests.txt" || true
+          xcrun xcresulttool get test-results summary --path Results.xcresult --compact > "$OUT/summary.json" 2>/dev/null || true
+          echo "commit: $GITHUB_SHA" > "$OUT/RUN.txt"
+          echo "exit: $(cat exit_code 2>/dev/null)" >> "$OUT/RUN.txt"
+          xcodebuild -version >> "$OUT/RUN.txt"
+          cd "$OUT"
+          git init -q -b ci-screenshots
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -qm "CI results for $GITHUB_SHA"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-screenshots
+
+      - name: Fail if tests failed
+        run: test "$(cat exit_code)" = "0"

@@ -2,8 +2,10 @@ import SwiftUI
 
 @main
 struct SocialTeaApp: App {
-    @State private var store = SessionStore()
-    @State private var lock = LockManager()
+    @State private var store         = SessionStore()
+    @State private var lock          = LockManager()
+    @State private var themeSettings = ThemeSettings()
+    @State private var notifications = NotificationManager()
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -16,7 +18,10 @@ struct SocialTeaApp: App {
             RootView()
                 .environment(store)
                 .environment(lock)
-                .tint(Theme.tea)
+                .environment(themeSettings)
+                .environment(notifications)
+                .tint(themeSettings.accentColor)
+                .preferredColorScheme(themeSettings.colorScheme)
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { lock.lockIfEnabled() }
@@ -28,6 +33,8 @@ struct RootView: View {
     @Environment(SessionStore.self) private var store
     @Environment(LockManager.self) private var lock
     @Environment(\.scenePhase) private var scenePhase
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @State private var showOnboarding = false
 
     var body: some View {
         @Bindable var store = store
@@ -42,6 +49,9 @@ struct RootView: View {
                 CleanupView()
                     .tabItem { Label("Cleanup", systemImage: "rectangle.stack.fill") }
                     .tag(SessionStore.Tab.cleanup)
+                InsightsView()
+                    .tabItem { Label("Insights", systemImage: "chart.bar.xaxis") }
+                    .tag(SessionStore.Tab.insights)
                 GuideView()
                     .tabItem { Label("Guide", systemImage: "questionmark.circle.fill") }
                     .tag(SessionStore.Tab.guide)
@@ -55,5 +65,14 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut(duration: 0.2), value: lock.isLocked)
+        .onAppear {
+            #if DEBUG
+            if ProcessInfo.processInfo.arguments.contains("-UITestSkipOnboarding") { return }
+            #endif
+            if !hasSeenOnboarding { showOnboarding = true }
+        }
+        .fullScreenCover(isPresented: $showOnboarding, onDismiss: { hasSeenOnboarding = true }) {
+            OnboardingView()
+        }
     }
 }

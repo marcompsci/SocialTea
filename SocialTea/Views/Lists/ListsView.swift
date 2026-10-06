@@ -105,10 +105,12 @@ struct ListsView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityAddTraits(selected ? .isSelected : [])
+                    .accessibilityIdentifier("chip.\(v.rawValue)")
                 }
             }
             .padding(.vertical, 4)
         }
+        .accessibilityIdentifier("chipRow")
     }
 
     private func header(view: RelationshipView, platform: Platform, result: ViewResult) -> some View {
