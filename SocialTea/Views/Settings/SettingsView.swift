@@ -9,6 +9,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showPaywall = false
     @State private var showManageSubscription = false
+    @AppStorage(WidgetDataCache.optInKey) private var widgetOptIn = false
 
     @State private var showPINSetup = false
     @State private var confirmStartOver = false
@@ -97,6 +98,22 @@ struct SettingsView: View {
                     Text("Reminders")
                 } footer: {
                     Text("A private reminder to download a fresh export and compare it with your last snapshot. Scheduled on your phone — nothing is sent anywhere.")
+                }
+
+                Section {
+                    Toggle(isOn: Binding(
+                        get: { widgetOptIn },
+                        set: { on in
+                            widgetOptIn = on
+                            if on { WidgetDataCache.update(from: store) } else { WidgetDataCache.clear() }
+                        }
+                    )) {
+                        Label("Save counts for widget & Siri", systemImage: "square.grid.2x2")
+                    }
+                } header: {
+                    Text("Home Screen & Siri")
+                } footer: {
+                    Text("Off by default. When on, your latest follower and following totals \u{2014} numbers only, no names \u{2014} are saved on this phone so the widget and Siri can show them. Turn it off to erase them.")
                 }
 
                 Section {

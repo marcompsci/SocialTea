@@ -4,6 +4,10 @@ import WidgetKit
 // Persists last-known follower counts so the home-screen widget can display them.
 // Requires App Groups — see SocialTeaWidget.swift for full setup instructions.
 enum WidgetDataCache {
+    /// Off by default. Only when the user turns this on are follower counts saved on the
+    /// device for the widget and Siri. Turning it off erases them.
+    static let optInKey = "widget.optIn"
+    static var isEnabled: Bool { UserDefaults.standard.bool(forKey: optInKey) }
     // Must match the App Group identifier you add in Xcode Signing & Capabilities.
     static let suiteName = "group.com.socialtea"
 
@@ -17,6 +21,7 @@ enum WidgetDataCache {
 
     @MainActor
     static func update(from store: SessionStore) {
+        guard isEnabled else { return }
         let entries: [Entry] = store.loadedPlatforms.map { platform in
             let stats = store.stats(platform)
             return Entry(
@@ -36,6 +41,13 @@ enum WidgetDataCache {
         if let data = try? JSONEncoder().encode(entries) {
             defaults.set(data, forKey: "widget.entries")
         }
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    /// Removes every saved count (used when the user turns the feature off).
+    static func clear() {
+        let defaults = UserDefaults(suiteName: suiteName) ?? .standard
+        defaults.removeObject(forKey: "widget.entries")
         WidgetCenter.shared.reloadAllTimelines()
     }
 
