@@ -71,7 +71,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Reminders")
                 } footer: {
-                    Text("A private nudge to open the app and check your latest follower activity.")
+                    Text("A private reminder to download a fresh export and compare it with your last snapshot. Scheduled on your phone — nothing is sent anywhere.")
                 }
 
                 Section {
@@ -94,6 +94,11 @@ struct SettingsView: View {
                     LabeledContent("Network access", value: "None")
                     LabeledContent("Data collected", value: "None")
                     LabeledContent("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0")
+                    NavigationLink {
+                        AppIconExportView()
+                    } label: {
+                        Label("App Icon Export", systemImage: "app.badge")
+                    }
                     Text("SocialTea is a follower tracker for Instagram, Facebook and TikTok exports. It is not affiliated with or endorsed by Instagram, Facebook, TikTok, or Meta.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)

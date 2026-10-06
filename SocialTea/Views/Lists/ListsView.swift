@@ -2,17 +2,20 @@ import SwiftUI
 
 struct ListsView: View {
     @Environment(SessionStore.self) private var store
-    @State private var query = ""
+    @State private var query        = ""
     @State private var sort: SortOrder = .az
     @State private var shareItem: ShareItem?
-    @State private var showImport = false
+    @State private var showImport   = false
+    @State private var selectionMode  = false
+    @State private var selectedIDs: Set<String> = []
+    @State private var noteTarget: Person?
 
     var body: some View {
         @Bindable var store = store
         let platform = store.selectedPlatform
-        let view = store.selectedView
-        let result = store.result(view, for: platform)
-        let people = ListTools.sort(ListTools.search(result.people, query: query), by: sort)
+        let view     = store.selectedView
+        let result   = store.result(view, for: platform)
+        let people   = ListTools.sort(ListTools.search(result.people, query: query), by: sort)
 
         NavigationStack {
             List {
@@ -41,49 +44,146 @@ struct ListsView: View {
             .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search usernames")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button { showImport = true } label: { Image(systemName: "square.and.arrow.down") }
-                        .accessibilityLabel("Import lists")
+                    if selectionMode {
+                        Button("Done") { selectionMode = false; selectedIDs = [] }
+                    } else {
+                        Button { showImport = true } label: { Image(systemName: "square.and.arrow.down") }
+                            .accessibilityLabel("Import lists")
+                    }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Menu {
-                        Picker("Sort", selection: $sort) {
-                            ForEach(SortOrder.allCases) { s in
-                                Text(s.title).tag(s)
+                    if selectionMode {
+                        Button {
+                            selectedIDs = selectedIDs.count == people.count ? [] : Set(people.map(\.id))
+                        } label: {
+                            Text(selectedIDs.count == people.count ? "Deselect All" : "Select All")
+                                .font(.subheadline)
+                        }
+                    } else {
+                        Menu {
+                            Picker("Sort", selection: $sort) {
+                                ForEach(SortOrder.allCases) { s in Text(s.title).tag(s) }
                             }
+                        } label: {
+                            Image(systemName: "arrow.up.arrow.down")
                         }
-                    } label: {
-                        Image(systemName: "arrow.up.arrow.down")
-                    }
-                    .accessibilityLabel("Sort")
+                        .accessibilityLabel("Sort")
 
-                    Menu {
-                        ForEach(ExportBuilder.Format.allCases) { format in
-                            Button("Share as \(format.title)") { share(people, platform: platform, view: view, format: format) }
+                        Menu {
+                            ForEach(ExportBuilder.Format.allCases) { format in
+                                Button("Share as \(format.title)") { share(people, platform: platform, view: view, format: format) }
+                            }
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
                         }
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
+                        .disabled(people.isEmpty)
+                        .accessibilityLabel("Share list")
+
+                        Button { selectionMode = true } label: { Image(systemName: "checkmark.circle") }
+                            .disabled(people.isEmpty)
+                            .accessibilityLabel("Select multiple")
                     }
-                    .disabled(people.isEmpty)
-                    .accessibilityLabel("Share list")
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                selectionBar(people: people, platform: platform, view: view)
+            }
             .sheet(item: $shareItem) { item in
-                ActivityView(item: item)
-                    .presentationDetents([.medium, .large])
+                ActivityView(item: item).presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $showImport) { ImportView(platform: platform) }
-            .onChange(of: store.selectedPlatform) { _, _ in query = "" }
+            .sheet(item: $noteTarget) { person in NoteEditorSheet(person: person) }
+            .onChange(of: store.selectedPlatform) { _, _ in
+                query = ""
+                selectionMode = false
+                selectedIDs   = []
+            }
         }
     }
 
-    // MARK: Pieces
+    // MARK: - Selection bar
+
+    @ViewBuilder
+    private func selectionBar(people: [Person], platform: Platform, view: RelationshipView) -> some View {
+        if selectionMode && !selectedIDs.isEmpty {
+            HStack(spacing: 12) {
+                Text("\(selectedIDs.count) selected")
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+                Button {
+                    let chosen = people.filter { selectedIDs.contains($0.id) }
+                    UIPasteboard.general.string = chosen.map(\.username).joined(separator: "\n")
+                    Haptics.success()
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+                .buttonStyle(.bordered)
+
+                Menu {
+                    ForEach(ExportBuilder.Format.allCases) { format in
+                        Button("Export as \(format.title)") {
+                            let chosen = people.filter { selectedIDs.contains($0.id) }
+                            share(chosen, platform: platform, view: view, format: format)
+                        }
+                    }
+                } label: { Label("Export", systemImage: "square.and.arrow.up") }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            .background(.regularMaterial)
+        }
+    }
+
+    private func toggleSelect(_ person: Person) {
+        Haptics.selection()
+        if selectedIDs.contains(person.id) { selectedIDs.remove(person.id) }
+        else { selectedIDs.insert(person.id) }
+    }
+
+    // MARK: - Row wrapper (selection + note)
+
+    private func personRow(_ person: Person, platform: Platform, view: RelationshipView) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 10) {
+                if selectionMode {
+                    Image(systemName: selectedIDs.contains(person.id) ? "checkmark.circle.fill" : "circle")
+                        .font(.title3)
+                        .foregroundStyle(selectedIDs.contains(person.id) ? Color.accentColor : Color.secondary)
+                        .animation(.spring(duration: 0.2), value: selectionMode)
+                }
+                PersonRow(person: person, platform: platform, view: view)
+                    .allowsHitTesting(!selectionMode)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture { if selectionMode { toggleSelect(person) } }
+
+            if let note = store.note(for: person), !note.isEmpty {
+                Label(note, systemImage: "note.text")
+                    .font(.caption2)
+                    .foregroundStyle(.orange)
+                    .lineLimit(1)
+                    .padding(.leading, 52)
+                    .padding(.bottom, 6)
+            }
+        }
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+            Button { noteTarget = person } label: {
+                Label(store.note(for: person) == nil ? "Add Note" : "Edit Note",
+                      systemImage: "note.text")
+            }
+            .tint(.orange)
+        }
+    }
+
+    // MARK: - Existing pieces (unchanged)
 
     private func viewChips(platform: Platform) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(RelationshipView.allCases) { v in
                     let selected = v == store.selectedView
-                    let count = store.result(v, for: platform)
+                    let count    = store.result(v, for: platform)
                     Button {
                         Haptics.selection()
                         store.selectedView = v
@@ -105,12 +205,10 @@ struct ListsView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityAddTraits(selected ? .isSelected : [])
-                    .accessibilityIdentifier("chip.\(v.rawValue)")
                 }
             }
             .padding(.vertical, 4)
         }
-        .accessibilityIdentifier("chipRow")
     }
 
     private func header(view: RelationshipView, platform: Platform, result: ViewResult) -> some View {
@@ -152,7 +250,7 @@ struct ListsView: View {
             Section {
                 NoticeCard(symbol: "number.circle",
                            title: "Counts only",
-                           message: "This snapshot holds totals but no usernames, so there's no list to show. Import your export to see the names behind the number.",
+                           message: "This snapshot holds totals but no usernames. Import your export to see the names behind the numbers.",
                            tint: Theme.honey)
                 Button("Import \(platform.name) export") { showImport = true }
             }
@@ -184,10 +282,10 @@ struct ListsView: View {
             } else {
                 Section {
                     ForEach(people) { person in
-                        PersonRow(person: person, platform: platform, view: view)
+                        personRow(person, platform: platform, view: view)
                     }
                 } footer: {
-                    Text("Tap anyone to open their profile in \(platform.name). Follow, unfollow and block happen in the official app — SocialTea never acts on your account.")
+                    Text("Swipe right on any row to add a private note. Tap to open their profile in \(platform.name).")
                 }
             }
         }
@@ -198,17 +296,17 @@ struct ListsView: View {
         if let base = d.baseline, base.followers == nil, base.summary != nil {
             return "Your current snapshot (\(base.label)) holds counts only. Import an export with names as your baseline, then a newer one later to compare."
         }
-        return "You have one snapshot, and it's marked as your baseline. Download a fresh export later and import it as the newer snapshot — then this view fills in."
+        return "You have one snapshot marked as your baseline. Download a fresh export later and import it as the newer snapshot — then this view fills in."
     }
 
     private func emptyMessage(_ view: RelationshipView, _ platform: Platform) -> String {
         switch view {
         case .notFollowingBack: return platform.friendsAreMutual ? view.explanation(for: platform) : "Everyone you follow follows you back."
-        case .fans: return platform.friendsAreMutual ? view.explanation(for: platform) : "You follow back everyone who follows you."
-        case .mutuals: return "No mutual follows found."
-        case .unfollowed: return "Nobody disappeared between your snapshots."
-        case .newFollowers: return "No new names between your snapshots."
-        case .goneQuiet: return "No mutuals vanished from both of your lists."
+        case .fans:             return platform.friendsAreMutual ? view.explanation(for: platform) : "You follow back everyone who follows you."
+        case .mutuals:          return "No mutual follows found."
+        case .unfollowed:       return "Nobody disappeared between your snapshots."
+        case .newFollowers:     return "No new names between your snapshots."
+        case .goneQuiet:        return "No mutuals vanished from both of your lists."
         }
     }
 
@@ -216,5 +314,49 @@ struct ListsView: View {
         let text = ExportBuilder.text(for: people, platform: platform, format: format)
         let name = ExportBuilder.fileName(platform: platform, view: view.title(for: platform), format: format)
         shareItem = ExportFile.make(text: text, fileName: name)
+    }
+}
+
+// MARK: - Note editor
+
+private struct NoteEditorSheet: View {
+    @Environment(SessionStore.self) private var store
+    @Environment(\.dismiss) private var dismiss
+    let person: Person
+    @State private var text = ""
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Type a note…", text: $text, axis: .vertical)
+                        .lineLimit(3...10)
+                } header: {
+                    Text(person.title)
+                } footer: {
+                    Text("Notes are private and session-only — they disappear when the app closes.")
+                }
+
+                if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Section {
+                        Button(role: .destructive) { text = "" } label: {
+                            Label("Clear note", systemImage: "trash")
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Note")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        store.setNote(text, for: person)
+                        dismiss()
+                    }
+                }
+            }
+            .onAppear { text = store.note(for: person) ?? "" }
+        }
     }
 }

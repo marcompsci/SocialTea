@@ -56,7 +56,7 @@ final class NotificationManager {
         center.removePendingNotificationRequests(withIdentifiers: ["socialtea.reminder"])
         let content = UNMutableNotificationContent()
         content.title = "Time for a tea check ☕"
-        content.body  = "See who has been following and unfollowing you lately."
+        content.body  = "Grab a fresh export and see what\u{2019}s changed since your last snapshot."
         content.sound = .default
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval.seconds, repeats: true)
         center.add(UNNotificationRequest(identifier: "socialtea.reminder", content: content, trigger: trigger))

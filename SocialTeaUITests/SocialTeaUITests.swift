@@ -148,6 +148,9 @@ final class SocialTeaUITests: XCTestCase {
             search.typeText("coral")
             snap("27-lists-search")
             app.buttons["Cancel"].firstMatch.tap()
+            if app.keyboards.firstMatch.waitForExistence(timeout: 1) {
+                app.buttons["Cancel"].firstMatch.tap()
+            }
         } else {
             XCTFail("Search field missing")
         }
