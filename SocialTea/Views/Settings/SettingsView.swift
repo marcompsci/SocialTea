@@ -1,10 +1,14 @@
+import StoreKit
 import SwiftUI
 
 struct SettingsView: View {
     @Environment(SessionStore.self) private var store
     @Environment(LockManager.self) private var lock
     @Environment(NotificationManager.self) private var notifications
+    @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(\.dismiss) private var dismiss
+    @State private var showPaywall = false
+    @State private var showManageSubscription = false
 
     @State private var showPINSetup = false
     @State private var confirmStartOver = false
@@ -17,6 +21,27 @@ struct SettingsView: View {
                     PrivacyPromise()
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
+                }
+
+                Section {
+                    if subscriptions.isPro {
+                        Label("SocialTea Pro is active", systemImage: "checkmark.seal.fill")
+                            .foregroundStyle(Theme.tea)
+                        Button { showManageSubscription = true } label: {
+                            Label("Manage subscription", systemImage: "creditcard")
+                        }
+                    } else {
+                        Button { showPaywall = true } label: {
+                            Label("Upgrade to SocialTea Pro", systemImage: "sparkles")
+                        }
+                        Button { Task { await subscriptions.restore() } } label: {
+                            Label("Restore purchases", systemImage: "arrow.clockwise")
+                        }
+                    }
+                } header: {
+                    Text("SocialTea Pro")
+                } footer: {
+                    Text("Every name, snapshot comparisons, Cleanup, Insights and export. Billed monthly through your Apple ID; cancel anytime in Settings.")
                 }
 
                 Section {
@@ -105,6 +130,8 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .sheet(isPresented: $showPaywall) { PaywallView() }
+            .manageSubscriptionsSheet(isPresented: $showManageSubscription)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }

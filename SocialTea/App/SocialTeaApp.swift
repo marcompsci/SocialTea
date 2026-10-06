@@ -6,6 +6,7 @@ struct SocialTeaApp: App {
     @State private var lock          = LockManager()
     @State private var themeSettings = ThemeSettings()
     @State private var notifications = NotificationManager()
+    @State private var subscriptions = SubscriptionManager()
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -20,11 +21,15 @@ struct SocialTeaApp: App {
                 .environment(lock)
                 .environment(themeSettings)
                 .environment(notifications)
+                .environment(subscriptions)
                 .tint(themeSettings.accentColor)
                 .preferredColorScheme(themeSettings.colorScheme)
         }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .background { lock.lockIfEnabled() }
+            if phase == .background {
+                lock.lockIfEnabled()
+                WidgetDataCache.update(from: store)
+            }
         }
     }
 }
@@ -32,12 +37,14 @@ struct SocialTeaApp: App {
 struct RootView: View {
     @Environment(SessionStore.self) private var store
     @Environment(LockManager.self) private var lock
+    @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @State private var showOnboarding = false
 
     var body: some View {
         @Bindable var store = store
+        @Bindable var subscriptions = subscriptions
         ZStack {
             TabView(selection: $store.selectedTab) {
                 DashboardView()
@@ -71,6 +78,7 @@ struct RootView: View {
             #endif
             if !hasSeenOnboarding { showOnboarding = true }
         }
+        .sheet(isPresented: $subscriptions.showPaywall) { PaywallView() }
         .fullScreenCover(isPresented: $showOnboarding, onDismiss: { hasSeenOnboarding = true }) {
             OnboardingView()
         }

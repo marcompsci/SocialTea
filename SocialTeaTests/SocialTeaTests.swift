@@ -114,6 +114,35 @@ final class RelationshipTests: XCTestCase {
     }
 }
 
+@MainActor
+final class SessionStoreTests: XCTestCase {
+
+    func testPersonNotes() {
+        let store = SessionStore()
+        let alice = Person(username: "alice")
+        XCTAssertNil(store.note(for: alice))
+
+        store.setNote("great content", for: alice)
+        XCTAssertEqual(store.note(for: alice), "great content")
+
+        store.setNote("  \n  ", for: alice) // whitespace-only clears the note
+        XCTAssertNil(store.note(for: alice))
+
+        store.setNote("updated", for: alice)
+        XCTAssertEqual(store.note(for: alice), "updated")
+        XCTAssertNil(store.note(for: Person(username: "bob"))) // different person is unaffected
+    }
+
+    func testClearAllAlsoWipesCleanup() {
+        let store = SessionStore()
+        store.loadDemo(.instagram)
+        XCTAssertTrue(store.platformData(.instagram).isLoaded)
+        store.clearAll()
+        XCTAssertFalse(store.platformData(.instagram).isLoaded)
+        XCTAssertTrue(store.loadedPlatforms.isEmpty)
+    }
+}
+
 final class ParserTests: XCTestCase {
 
     func testTXTOnePerLine() throws {
@@ -175,7 +204,37 @@ final class ParserTests: XCTestCase {
         XCTAssertEqual(ListTools.sort(people, by: .az).map(\.id), ["amy", "bo", "zed"])
         XCTAssertEqual(ListTools.sort(people, by: .za).map(\.id), ["zed", "bo", "amy"])
         XCTAssertEqual(ListTools.sort(people, by: .newest).map(\.id), ["zed", "amy", "bo"])
+        XCTAssertEqual(ListTools.sort(people, by: .oldest).map(\.id), ["bo", "amy", "zed"])
         XCTAssertEqual(ListTools.search(people, query: "@AM").map(\.id), ["amy"])
+    }
+
+    func testOldestSortWithDates() {
+        let t1 = Date(timeIntervalSince1970: 100_000)
+        let t2 = Date(timeIntervalSince1970: 500_000)
+        let t3 = Date(timeIntervalSince1970: 900_000)
+        let dated = [
+            Person(username: "recent", date: t3, order: 0),
+            Person(username: "oldest", date: t1, order: 1),
+            Person(username: "middle", date: t2, order: 2),
+        ]
+        XCTAssertEqual(ListTools.sort(dated, by: .oldest).map(\.id),  ["oldest", "middle", "recent"])
+        XCTAssertEqual(ListTools.sort(dated, by: .newest).map(\.id),  ["recent", "middle", "oldest"])
+    }
+
+    func testExportBuilderOutput() {
+        let people = [
+            Person(username: "alice"),
+            Person(username: "bob", displayName: "Bob Smith"),
+        ]
+        let txt = ExportBuilder.text(for: people, platform: .instagram, format: .txt)
+        XCTAssertEqual(txt, "alice\nbob\n")
+
+        let csv = ExportBuilder.text(for: people, platform: .instagram, format: .csv)
+        let lines = csv.components(separatedBy: "\n").filter { !$0.isEmpty }
+        XCTAssertEqual(lines.count, 3)          // header + 2 rows
+        XCTAssertTrue(lines[0].hasPrefix("username,"))
+        XCTAssertTrue(lines[1].hasPrefix("alice,"))
+        XCTAssertTrue(lines[2].contains("bob,Bob Smith,"))
     }
 
     func testCSVExportEscapesFormulas() {

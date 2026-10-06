@@ -4,14 +4,16 @@ enum SortOrder: String, CaseIterable, Identifiable, Sendable {
     case az
     case za
     case newest
+    case oldest
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .az: return "A–Z"
-        case .za: return "Z–A"
+        case .az:     return "A–Z"
+        case .za:     return "Z–A"
         case .newest: return "Newest first"
+        case .oldest: return "Oldest first"
         }
     }
 }
@@ -41,6 +43,12 @@ enum ListTools {
                 return people.sorted { ($0.date ?? .distantPast) > ($1.date ?? .distantPast) }
             }
             return people.sorted { $0.order < $1.order }
+        case .oldest:
+            let hasDates = people.contains { $0.date != nil }
+            if hasDates {
+                return people.sorted { ($0.date ?? .distantFuture) < ($1.date ?? .distantFuture) }
+            }
+            return people.sorted { $0.order > $1.order }
         }
     }
 

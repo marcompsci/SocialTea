@@ -202,4 +202,42 @@ final class SocialTeaUITests: XCTestCase {
             app.buttons["Done"].firstMatch.tap()
         }
     }
+
+    // MARK: Free tier vs Pro
+
+    func testProGating() {
+        app.launchArguments = ["-UITestLockedSample", "-UITestSkipOnboarding"]
+        app.launch()
+
+        tab("Lists")
+        platform("Instagram")
+        chip("notFollowingBack")
+        app.swipeUp()
+        snap("60-free-lists-preview")
+        XCTAssertTrue(element(containing: "Unlock SocialTea Pro").waitForExistence(timeout: 3), "Pro upsell missing in Lists")
+        app.swipeDown()
+        chip("unfollowed")
+        snap("61-free-lists-comparison-locked")
+
+        tab("Cleanup")
+        platform("Instagram")
+        snap("62-free-cleanup-locked")
+
+        tab("Insights")
+        snap("63-free-insights-locked")
+
+        let unlock = app.buttons["Unlock SocialTea Pro"].firstMatch
+        if unlock.waitForExistence(timeout: 3) {
+            unlock.tap()
+            snap("64-paywall", wait: 3)
+            let close = app.buttons["Close"].firstMatch
+            if close.exists { close.tap() }
+        } else {
+            XCTFail("Unlock button missing")
+        }
+
+        tab("Dashboard")
+        app.buttons["Settings"].firstMatch.tap()
+        snap("65-settings-pro-section")
+    }
 }

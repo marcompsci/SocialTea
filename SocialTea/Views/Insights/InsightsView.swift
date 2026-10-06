@@ -4,7 +4,12 @@ import Charts
 struct InsightsView: View {
     @Environment(SessionStore.self) private var store
     @Environment(ThemeSettings.self) private var themeSettings
+    @Environment(SubscriptionManager.self) private var subscriptions
     @State private var shareCard: ShareItem?
+
+    private var unlocked: Bool {
+        subscriptions.isUnlocked(platforms: store.loadedPlatforms.map { store.platformData($0) })
+    }
 
     var body: some View {
         NavigationStack {
@@ -15,6 +20,13 @@ struct InsightsView: View {
                         systemImage: "chart.bar.xaxis",
                         description: Text("Import data on the Dashboard to see your insights here.")
                     )
+                } else if !unlocked {
+                    ScrollView {
+                        ProLockedCard(title: "Insights is part of Pro",
+                                      message: "Charts across every platform, follower changes between exports, and a shareable stats card.")
+                            .padding()
+                    }
+                    .background(Color(.systemGroupedBackground))
                 } else {
                     ScrollView {
                         VStack(spacing: 20) {
@@ -29,7 +41,7 @@ struct InsightsView: View {
             }
             .navigationTitle("Insights")
             .toolbar {
-                if !store.loadedPlatforms.isEmpty {
+                if !store.loadedPlatforms.isEmpty && unlocked {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button { shareStats() } label: {
                             Image(systemName: "square.and.arrow.up")

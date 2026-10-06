@@ -138,6 +138,16 @@ struct ImportView: View {
             }
         }
         .accessibilityHint("Opens the file picker. JSON, CSV, or TXT.")
+        .dropDestination(for: URL.self) { urls, _ in
+            handleDropped(urls: urls, slot: slot, role: role)
+        }
+    }
+
+    private func handleDropped(urls: [URL], slot: SessionStore.Slot, role: ListRole) -> Bool {
+        guard !urls.isEmpty else { return false }
+        target = Target(slot: slot, role: role)
+        handle(.success(urls))
+        return true
     }
 
     private var howToText: String {

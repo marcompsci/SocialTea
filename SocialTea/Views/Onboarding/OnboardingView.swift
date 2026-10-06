@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var currentPage = 0
 
     var body: some View {
@@ -25,13 +26,13 @@ struct OnboardingView: View {
                     Capsule()
                         .fill(i == currentPage ? Theme.tea : Color.secondary.opacity(0.3))
                         .frame(width: i == currentPage ? 24 : 8, height: 8)
-                        .animation(.spring(duration: 0.4), value: currentPage)
+                        .animation(reduceMotion ? nil : .spring(duration: 0.4), value: currentPage)
                 }
             }
 
             if currentPage < OnboardingPage.all.count - 1 {
                 Button {
-                    withAnimation(.spring(duration: 0.4)) { currentPage += 1 }
+                    withAnimation(reduceMotion ? nil : .spring(duration: 0.4)) { currentPage += 1 }
                 } label: {
                     Text("Continue")
                         .font(.headline)

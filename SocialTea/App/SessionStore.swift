@@ -25,6 +25,16 @@ final class SessionStore {
     private(set) var data: [Platform: PlatformData] = [:]
     private let bundledBaseline: [Platform: Snapshot]
 
+    // MARK: Person notes (session-only)
+
+    private(set) var notes: [String: String] = [:]
+
+    func setNote(_ text: String, for person: Person) {
+        notes[person.id] = text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : text
+    }
+
+    func note(for person: Person) -> String? { notes[person.id] }
+
     // MARK: Cleanup deck state (memory only)
 
     struct CleanupState {
@@ -45,6 +55,15 @@ final class SessionStore {
         // UI tests: start with demo data on every platform.
         if ProcessInfo.processInfo.arguments.contains("-UITestDemo") {
             for p in Platform.allCases { loadDemo(p) }
+        }
+        // UI tests: demo names treated as real imports, to show the free-tier limits.
+        if ProcessInfo.processInfo.arguments.contains("-UITestLockedSample") {
+            for p in Platform.allCases {
+                var pd = DemoData.data(for: p)
+                pd.baseline?.isDemo = false
+                pd.newer?.isDemo = false
+                data[p] = pd
+            }
         }
         #endif
     }

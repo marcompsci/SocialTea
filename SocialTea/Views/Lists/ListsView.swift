@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ListsView: View {
     @Environment(SessionStore.self) private var store
+    @Environment(SubscriptionManager.self) private var subscriptions
     @State private var query        = ""
     @State private var sort: SortOrder = .az
     @State private var shareItem: ShareItem?
@@ -79,7 +80,13 @@ struct ListsView: View {
                         .disabled(people.isEmpty)
                         .accessibilityLabel("Share list")
 
-                        Button { selectionMode = true } label: { Image(systemName: "checkmark.circle") }
+                        Button {
+                            if subscriptions.isUnlocked(store.platformData(platform)) {
+                                selectionMode = true
+                            } else {
+                                subscriptions.showPaywall = true
+                            }
+                        } label: { Image(systemName: "checkmark.circle") }
                             .disabled(people.isEmpty)
                             .accessibilityLabel("Select multiple")
                     }
@@ -205,10 +212,12 @@ struct ListsView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityAddTraits(selected ? .isSelected : [])
+                    .accessibilityIdentifier("chip.\(v.rawValue)")
                 }
             }
             .padding(.vertical, 4)
         }
+        .accessibilityIdentifier("chipRow")
     }
 
     private func header(view: RelationshipView, platform: Platform, result: ViewResult) -> some View {
@@ -280,12 +289,32 @@ struct ListsView: View {
                     Text("No matches for \"\(query)\"").foregroundStyle(.secondary)
                 }
             } else {
-                Section {
-                    ForEach(people) { person in
-                        personRow(person, platform: platform, view: view)
+                let unlocked = subscriptions.isUnlocked(store.platformData(platform))
+                let preview = view.needsTwoSnapshots ? 0 : SubscriptionManager.freePreviewCount
+                let shown = unlocked ? people : Array(people.prefix(preview))
+                if !shown.isEmpty {
+                    Section {
+                        ForEach(shown) { person in
+                            personRow(person, platform: platform, view: view)
+                        }
+                    } footer: {
+                        if unlocked {
+                            Text("Swipe right on any row to add a private note. Tap to open their profile in \(platform.name).")
+                        }
                     }
-                } footer: {
-                    Text("Swipe right on any row to add a private note. Tap to open their profile in \(platform.name).")
+                }
+                if !unlocked && people.count > shown.count {
+                    Section {
+                        ProLockedCard(
+                            title: shown.isEmpty
+                                ? "See all \(people.count.formatted()) names"
+                                : "\((people.count - shown.count).formatted()) more names",
+                            message: view.needsTwoSnapshots
+                                ? "Comparing snapshots is part of SocialTea Pro."
+                                : "SocialTea Pro shows every name, plus export, Cleanup and Insights.")
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                    }
                 }
             }
         }
@@ -311,6 +340,10 @@ struct ListsView: View {
     }
 
     private func share(_ people: [Person], platform: Platform, view: RelationshipView, format: ExportBuilder.Format) {
+        guard subscriptions.isUnlocked(store.platformData(platform)) else {
+            subscriptions.showPaywall = true
+            return
+        }
         let text = ExportBuilder.text(for: people, platform: platform, format: format)
         let name = ExportBuilder.fileName(platform: platform, view: view.title(for: platform), format: format)
         shareItem = ExportFile.make(text: text, fileName: name)

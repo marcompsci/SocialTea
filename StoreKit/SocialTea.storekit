@@ -1,0 +1,47 @@
+{
+  "identifier": "6B50E5DE",
+  "nonRenewingSubscriptions": [],
+  "products": [],
+  "settings": {
+    "_applicationInternalID": "",
+    "_developerTeamID": "",
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [
+    {
+      "id": "21000001",
+      "localizations": [],
+      "name": "SocialTea Pro",
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "7.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "6700000001",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Every name, comparisons, Cleanup, Insights and export.",
+              "displayName": "SocialTea Pro",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.phoronomics.socialtea.pro.monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "SocialTea Pro Monthly",
+          "subscriptionGroupID": "21000001",
+          "type": "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version": {
+    "major": 4,
+    "minor": 0
+  }
+}

@@ -4,6 +4,8 @@ import SwiftUI
 /// unfollow it yourself in the official app — SocialTea never unfollows anyone.
 struct CleanupView: View {
     @Environment(SessionStore.self) private var store
+    @Environment(ThemeSettings.self) private var themeSettings
+    @Environment(SubscriptionManager.self) private var subscriptions
     @State private var showQueue = false
     @State private var celebrated = false
 
@@ -26,6 +28,12 @@ struct CleanupView: View {
                     Spacer()
                     NoticeCard(symbol: "person.2", title: "Nothing to clean up on Facebook",
                                message: "Facebook friends are always mutual, so nobody is \"not following back\".")
+                        .padding(.horizontal)
+                    Spacer()
+                } else if total.availability == .ready && !subscriptions.isUnlocked(store.platformData(platform)) {
+                    Spacer()
+                    ProLockedCard(title: "Cleanup is part of Pro",
+                                  message: "Swipe through the \(total.count.formatted()) people who don\u{2019}t follow you back and build your unfollow to-do list.")
                         .padding(.horizontal)
                     Spacer()
                 } else if total.availability != .ready {
@@ -82,7 +90,7 @@ struct CleanupView: View {
                 Text("← Unfollow · Keep →").font(.caption).foregroundStyle(.secondary)
             }
             ProgressView(value: Double(done), total: Double(max(total, 1)))
-                .tint(Theme.tea)
+                .tint(themeSettings.accentColor)
         }
     }
 
@@ -245,7 +253,11 @@ private struct CompletionView: View {
 
     var body: some View {
         ZStack {
-            if !state.history.isEmpty { ConfettiView().allowsHitTesting(false) }
+            if !state.history.isEmpty {
+                ConfettiView()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
             VStack(spacing: 18) {
                 Spacer()
                 Image(systemName: total == 0 ? "checkmark.seal.fill" : "party.popper.fill")
