@@ -1,0 +1,83 @@
+/* Tab bar */
+"Dashboard" = "Dashboard";
+"Lists" = "Lists";
+"Cleanup" = "Cleanup";
+"Insights" = "Insights";
+"Guide" = "Guide";
+
+/* Onboarding */
+"Welcome to SocialTea" = "Welcome to SocialTea";
+"Your private, all-in-one follower tracker for Instagram, Facebook, and TikTok." = "Your private, all-in-one follower tracker for Instagram, Facebook, and TikTok.";
+"Import your export" = "Import your export";
+"Download your official data export from each platform and drop it here. No logins, no passwords — ever." = "Download your official data export from each platform and drop it here. No logins, no passwords — ever.";
+"100% on-device" = "100% on-device";
+"Your data never leaves your phone. SocialTea has no network access and collects absolutely nothing." = "Your data never leaves your phone. SocialTea has no network access and collects absolutely nothing.";
+"Make it yours" = "Make it yours";
+"Pick a theme color, flip on night mode, and customize the dashboard to your taste." = "Pick a theme color, flip on night mode, and customize the dashboard to your taste.";
+"Continue" = "Continue";
+"Skip intro" = "Skip intro";
+"Get Started" = "Get Started";
+"Explore with demo data" = "Explore with demo data";
+
+/* Cleanup */
+"Deck complete!" = "Deck complete!";
+"Everyone follows you back" = "Everyone follows you back";
+"Kept" = "Kept";
+"To unfollow" = "To unfollow";
+"Open queue" = "Open queue";
+"Start again" = "Start again";
+"Queue to unfollow" = "Queue to unfollow";
+"Keep following" = "Keep following";
+"Undo" = "Undo";
+"Keep all remaining" = "Keep all remaining";
+"Queue all to unfollow" = "Queue all to unfollow";
+"Unfollow queue" = "Unfollow queue";
+"Queue is empty" = "Queue is empty";
+
+/* Settings */
+"Settings" = "Settings";
+"Done" = "Done";
+"Cancel" = "Cancel";
+"Save" = "Save";
+"SocialTea Pro" = "SocialTea Pro";
+"App lock" = "App lock";
+"Reminders" = "Reminders";
+"Home Screen & Siri" = "Home Screen & Siri";
+"Data" = "Data";
+"About" = "About";
+"Check-in reminder" = "Check-in reminder";
+"Save counts for widget & Siri" = "Save counts for widget & Siri";
+"Network access" = "Network access";
+"None" = "None";
+"Data collected" = "Data collected";
+"Version" = "Version";
+"Status" = "Status";
+"Start over" = "Start over";
+"Send feedback" = "Send feedback";
+"Write a review" = "Write a review";
+"Set a session PIN" = "Set a session PIN";
+"Remove session PIN" = "Remove session PIN";
+"Manage subscription" = "Manage subscription";
+"Restore purchases" = "Restore purchases";
+"Upgrade to SocialTea Pro" = "Upgrade to SocialTea Pro";
+"App Icon" = "App Icon";
+"Choose your icon" = "Choose your icon";
+
+/* Dashboard */
+"Set a follower goal →" = "Set a follower goal →";
+
+/* Lists */
+"A → Z" = "A → Z";
+"Z → A" = "Z → A";
+"Newest first" = "Newest first";
+"Oldest first" = "Oldest first";
+"Has date" = "Has date";
+"Has note" = "Has note";
+
+/* General */
+"Delete" = "Delete";
+"Close" = "Close";
+"Search" = "Search";
+"Daily" = "Daily";
+"Every 3 days" = "Every 3 days";
+"Weekly" = "Weekly";

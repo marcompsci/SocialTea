@@ -1,0 +1,83 @@
+/* Tab bar */
+"Dashboard" = "Panel";
+"Lists" = "Listas";
+"Cleanup" = "Limpieza";
+"Insights" = "Estadísticas";
+"Guide" = "Guía";
+
+/* Onboarding */
+"Welcome to SocialTea" = "Bienvenido a SocialTea";
+"Your private, all-in-one follower tracker for Instagram, Facebook, and TikTok." = "Tu rastreador privado de seguidores para Instagram, Facebook y TikTok.";
+"Import your export" = "Importa tu exportación";
+"Download your official data export from each platform and drop it here. No logins, no passwords — ever." = "Descarga tu exportación oficial de datos de cada plataforma y colócala aquí. Sin inicios de sesión, sin contraseñas — nunca.";
+"100% on-device" = "100% en el dispositivo";
+"Your data never leaves your phone. SocialTea has no network access and collects absolutely nothing." = "Tus datos nunca salen de tu teléfono. SocialTea no tiene acceso a la red y no recopila absolutamente nada.";
+"Make it yours" = "Personalízalo";
+"Pick a theme color, flip on night mode, and customize the dashboard to your taste." = "Elige un color de tema, activa el modo nocturno y personaliza el panel a tu gusto.";
+"Continue" = "Continuar";
+"Skip intro" = "Omitir intro";
+"Get Started" = "Empezar";
+"Explore with demo data" = "Explorar con datos de demostración";
+
+/* Cleanup */
+"Deck complete!" = "¡Mazo completado!";
+"Everyone follows you back" = "Todos te siguen de vuelta";
+"Kept" = "Conservados";
+"To unfollow" = "Para dejar de seguir";
+"Open queue" = "Abrir cola";
+"Start again" = "Volver a empezar";
+"Queue to unfollow" = "Cola para dejar de seguir";
+"Keep following" = "Seguir siguiendo";
+"Undo" = "Deshacer";
+"Keep all remaining" = "Conservar todos los restantes";
+"Queue all to unfollow" = "Poner todos en la cola";
+"Unfollow queue" = "Cola de dejar de seguir";
+"Queue is empty" = "La cola está vacía";
+
+/* Settings */
+"Settings" = "Ajustes";
+"Done" = "Hecho";
+"Cancel" = "Cancelar";
+"Save" = "Guardar";
+"SocialTea Pro" = "SocialTea Pro";
+"App lock" = "Bloqueo de app";
+"Reminders" = "Recordatorios";
+"Home Screen & Siri" = "Pantalla de inicio y Siri";
+"Data" = "Datos";
+"About" = "Acerca de";
+"Check-in reminder" = "Recordatorio de revisión";
+"Save counts for widget & Siri" = "Guardar recuentos para widget y Siri";
+"Network access" = "Acceso a la red";
+"None" = "Ninguno";
+"Data collected" = "Datos recopilados";
+"Version" = "Versión";
+"Status" = "Estado";
+"Start over" = "Empezar de nuevo";
+"Send feedback" = "Enviar comentarios";
+"Write a review" = "Escribir una reseña";
+"Set a session PIN" = "Establecer un PIN de sesión";
+"Remove session PIN" = "Eliminar PIN de sesión";
+"Manage subscription" = "Gestionar suscripción";
+"Restore purchases" = "Restaurar compras";
+"Upgrade to SocialTea Pro" = "Actualizar a SocialTea Pro";
+"App Icon" = "Icono de app";
+"Choose your icon" = "Elige tu icono";
+
+/* Dashboard */
+"Set a follower goal →" = "Establece una meta de seguidores →";
+
+/* Lists */
+"A → Z" = "A → Z";
+"Z → A" = "Z → A";
+"Newest first" = "Más reciente primero";
+"Oldest first" = "Más antiguo primero";
+"Has date" = "Tiene fecha";
+"Has note" = "Tiene nota";
+
+/* General */
+"Delete" = "Eliminar";
+"Close" = "Cerrar";
+"Search" = "Buscar";
+"Daily" = "Diario";
+"Every 3 days" = "Cada 3 días";
+"Weekly" = "Semanal";

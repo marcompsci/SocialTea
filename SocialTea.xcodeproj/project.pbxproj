@@ -192,6 +192,9 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
+				fr,
+				de,
 			);
 			mainGroup = FAD58DE7366495DB4650CFEF;
 			minimizedProjectReferenceProxies = 1;
@@ -472,6 +475,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/SocialTea-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SocialTea;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -504,6 +508,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/SocialTea-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SocialTea;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";

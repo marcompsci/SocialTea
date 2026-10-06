@@ -43,6 +43,10 @@ struct SocialTeaApp: App {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background {
+                let streak = goalManager.streakDays
+                let queueCount = store.loadedPlatforms.reduce(0) { $0 + store.cleanupState($1).unfollowQueue.count }
+                let totalFollowers = store.loadedPlatforms.reduce(0) { $0 + store.stats($1).followers }
+                notifications.updateDigest(streak: streak, queueCount: queueCount, totalFollowers: totalFollowers)
                 lock.lockIfEnabled()
                 WidgetDataCache.update(from: store)
             }

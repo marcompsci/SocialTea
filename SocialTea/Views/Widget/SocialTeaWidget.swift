@@ -61,6 +61,7 @@ struct SocialTeaWidgetView: View {
         case .systemMedium:          mediumView
         case .accessoryCircular:     circularView
         case .accessoryRectangular:  rectangularView
+        case .accessoryInline:       inlineView
         default:                     smallView
         }
     }
@@ -137,6 +138,21 @@ struct SocialTeaWidgetView: View {
         .widgetBackground(Color(.systemBackground))
     }
 
+    // MARK: Lock screen inline (single text row above clock)
+
+    private var inlineView: some View {
+        let total = entry.stats.reduce(0) { $0 + $1.followers }
+        return Label {
+            if total > 0 {
+                Text("\(total.formatted(.number.notation(.compactName))) followers")
+            } else {
+                Text("SocialTea — open to import")
+            }
+        } icon: {
+            Image(systemName: "cup.and.saucer.fill")
+        }
+    }
+
     // MARK: Lock screen circular
 
     private var circularView: some View {
@@ -206,6 +222,6 @@ struct SocialTeaWidget: Widget {
         }
         .configurationDisplayName("SocialTea")
         .description("Quick glance at your follower stats.")
-        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular])
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryInline, .accessoryCircular, .accessoryRectangular])
     }
 }

@@ -145,9 +145,9 @@ struct SettingsView: View {
                     LabeledContent("Data collected", value: "None")
                     LabeledContent("Version", value: versionString)
                     NavigationLink {
-                        AppIconExportView()
+                        AlternateIconPickerView()
                     } label: {
-                        Label("App Icon Export", systemImage: "app.badge")
+                        Label("App Icon", systemImage: "app.badge")
                     }
                     Button {
                         if let url = URL(string: "mailto:support@socialtea.app?subject=SocialTea%20Feedback") {

@@ -51,13 +51,32 @@ final class NotificationManager {
         if enabled { scheduleReminder() }
     }
 
-    private func scheduleReminder() {
+    /// Reschedules the reminder with live context data. Call whenever the app moves to the background.
+    func updateDigest(streak: Int, queueCount: Int, totalFollowers: Int) {
+        guard enabled else { return }
+        scheduleReminder(streak: streak, queueCount: queueCount, totalFollowers: totalFollowers)
+    }
+
+    private func scheduleReminder(streak: Int = 0, queueCount: Int = 0, totalFollowers: Int = 0) {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: ["socialtea.reminder"])
         let content = UNMutableNotificationContent()
-        content.title = "Time for a tea check ☕"
-        content.body  = "Grab a fresh export and see what\u{2019}s changed since your last snapshot."
         content.sound = .default
+
+        var parts: [String] = []
+        if streak > 1 { parts.append("🔥 \(streak)-day streak") }
+        if queueCount > 0 { parts.append("\(queueCount) in your unfollow queue") }
+
+        if !parts.isEmpty {
+            content.title = "SocialTea check-in"
+            content.body  = parts.joined(separator: " · ")
+        } else {
+            content.title = "Time for a tea check ☕"
+            content.body  = totalFollowers > 0
+                ? "You have \(totalFollowers.formatted()) followers. Grab a fresh export to see what's changed."
+                : "Grab a fresh export and see what\u{2019}s changed since your last snapshot."
+        }
+
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval.seconds, repeats: true)
         center.add(UNNotificationRequest(identifier: "socialtea.reminder", content: content, trigger: trigger))
     }
