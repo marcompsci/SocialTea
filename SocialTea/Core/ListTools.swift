@@ -75,14 +75,23 @@ enum ListTools {
     }
 }
 
-/// Builds TXT and CSV text for user-initiated exports. The Share Sheet decides where
-/// the file goes — the user is saving their own file; the app keeps nothing.
+/// Builds TXT, CSV, and JSON text for user-initiated exports. The Share Sheet decides
+/// where the file goes — the user is saving their own file; the app keeps nothing.
 enum ExportBuilder {
     enum Format: String, CaseIterable, Identifiable, Sendable {
         case txt
         case csv
+        case json
         var id: String { rawValue }
         var title: String { rawValue.uppercased() }
+    }
+
+    // Used for JSON encoding of a single person entry.
+    private struct PersonJSON: Encodable {
+        let username: String
+        let display_name: String?
+        let date: String?
+        let profile_url: String?
     }
 
     static func text(for people: [Person], platform: Platform, format: Format) -> String {
@@ -98,6 +107,19 @@ enum ExportBuilder {
                 lines.append([p.username, p.displayName ?? "", date, url].map(csvEscape).joined(separator: ","))
             }
             return lines.joined(separator: "\n") + "\n"
+        case .json:
+            let iso = ISO8601DateFormatter()
+            let entries = people.map { p in
+                PersonJSON(
+                    username: p.username,
+                    display_name: p.displayName,
+                    date: p.date.map { iso.string(from: $0) },
+                    profile_url: platform.profileURL(for: p)?.absoluteString
+                )
+            }
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            return (try? String(data: encoder.encode(entries), encoding: .utf8)) ?? "[]"
         }
     }
 
@@ -106,6 +128,17 @@ enum ExportBuilder {
             .replacingOccurrences(of: " ", with: "-")
             .filter { $0.isLetter || $0.isNumber || $0 == "-" }
         return "SocialTea-\(platform.name)-\(slug).\(format.rawValue)"
+    }
+
+    /// Exports follower/following history as a flat RFC 4180 CSV.
+    /// Pass the combined records from HistoryManager for one or all platforms.
+    static func historyCSV(records: [(date: Date, platform: String, followers: Int, following: Int)]) -> String {
+        let iso = ISO8601DateFormatter()
+        var lines = ["date,platform,followers,following"]
+        for r in records.sorted(by: { $0.date < $1.date }) {
+            lines.append([iso.string(from: r.date), r.platform, "\(r.followers)", "\(r.following)"].joined(separator: ","))
+        }
+        return lines.joined(separator: "\n") + "\n"
     }
 
     static func csvEscape(_ value: String) -> String {

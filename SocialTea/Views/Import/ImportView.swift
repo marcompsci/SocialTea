@@ -8,6 +8,7 @@ struct ImportView: View {
     @Environment(SessionStore.self) private var store
     @Environment(ReviewManager.self) private var reviewManager
     @Environment(GoalManager.self) private var goalManager
+    @Environment(NotificationManager.self) private var notifications
     @Environment(\.dismiss) private var dismiss
 
     private struct Target: Equatable {
@@ -20,7 +21,7 @@ struct ImportView: View {
     @State private var message: (text: String, isError: Bool)?
     @State private var confirmClear = false
 
-    private static let types: [UTType] = [.json, .commaSeparatedText, .plainText, .text, .utf8PlainText]
+    private static let types: [UTType] = [.zip, .json, .commaSeparatedText, .plainText, .text, .utf8PlainText]
 
     var body: some View {
         NavigationStack {
@@ -155,11 +156,11 @@ struct ImportView: View {
     private var howToText: String {
         switch platform {
         case .instagram:
-            return "Instagram: Settings → Accounts Centre → Your information and permissions → Download your information → choose JSON. Unzip it in Files, then pick followers_1.json (and any followers_2.json) for Followers and following.json for Following."
+            return "Instagram: Settings → Accounts Centre → Your information and permissions → Download your information → choose JSON. Pick the ZIP directly, or unzip first and choose followers_1.json (Followers) and following.json (Following)."
         case .facebook:
-            return "Facebook: Settings → Accounts Centre → Your information and permissions → Download your information → Friends → JSON. Unzip it in Files, then pick your_friends.json (or friends.json)."
+            return "Facebook: Settings → Accounts Centre → Your information and permissions → Download your information → Friends → JSON. Pick the ZIP directly, or unzip and choose your_friends.json."
         case .tiktok:
-            return "TikTok: Profile → ☰ → Settings and privacy → Account → Download your data → JSON. Pick user_data.json (or the Follower / Following text files) for each list."
+            return "TikTok: Profile → ☰ → Settings and privacy → Account → Download your data → JSON. Pick the ZIP directly, or choose user_data.json (or the Follower / Following text files)."
         }
     }
 
@@ -176,7 +177,15 @@ struct ImportView: View {
             for url in urls {
                 let scoped = url.startAccessingSecurityScopedResource()
                 defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-                if let data = try? Data(contentsOf: url) {
+                if url.pathExtension.lowercased() == "zip",
+                   let zipData = try? Data(contentsOf: url),
+                   let entries = try? ZIPReader.entries(from: zipData) {
+                    let relevant = entries.filter { isRelevantZIPEntry($0.path, for: target.role) }
+                    for entry in relevant {
+                        let name = entry.path.components(separatedBy: "/").last ?? entry.path
+                        files.append((name, entry.data))
+                    }
+                } else if let data = try? Data(contentsOf: url) {
                     files.append((url.lastPathComponent, data))
                 }
             }
@@ -187,10 +196,29 @@ struct ImportView: View {
                 Haptics.success()
                 let noun = platform.friendsAreMutual ? "friends" : target.role.rawValue
                 message = ("Imported \(count.formatted()) \(noun) from \(files.count == 1 ? files[0].name : "\(files.count) files").", false)
+                if target.slot == .newer && target.role == .followers {
+                    let pd = store.platformData(platform)
+                    let oldCount = pd.baseline?.followers?.count ?? pd.baseline?.summary?.followers ?? 0
+                    let newCount = pd.newer?.followers?.count ?? pd.newer?.summary?.followers ?? 0
+                    notifications.notifyIfDropped(platform: platform, oldCount: oldCount, newCount: newCount)
+                }
             } catch {
                 Haptics.warning()
                 message = ((error as? LocalizedError)?.errorDescription ?? error.localizedDescription, true)
             }
+        }
+    }
+
+    private func isRelevantZIPEntry(_ path: String, for role: ListRole) -> Bool {
+        let filename = (path.components(separatedBy: "/").last ?? path).lowercased()
+        let ext = URL(fileURLWithPath: filename).pathExtension
+        guard ["json", "txt", "csv"].contains(ext) else { return false }
+        guard !filename.hasPrefix("._"), !filename.hasPrefix(".") else { return false }
+        switch role {
+        case .followers:
+            return !["following.json", "following.txt"].contains(filename)
+        case .following:
+            return !filename.hasPrefix("follower") && !filename.hasPrefix("fan") && !filename.hasPrefix("subscriber")
         }
     }
 }

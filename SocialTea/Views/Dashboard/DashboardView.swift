@@ -4,6 +4,7 @@ struct DashboardView: View {
     @Environment(SessionStore.self) private var store
     @Environment(ThemeSettings.self) private var themeSettings
     @Environment(GoalManager.self) private var goalManager
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var importPlatform: Platform?
     @State private var showSettings = false
     @State private var showThemePicker = false
@@ -20,10 +21,23 @@ struct DashboardView: View {
                     } else {
                         totalsCard
                     }
-                    ForEach(Platform.allCases) { platform in
-                        PlatformCard(platform: platform,
-                                     onOpen: { open(platform) },
-                                     onImport: { importPlatform = platform })
+                    if sizeClass == .regular {
+                        LazyVGrid(
+                            columns: [GridItem(.flexible(), alignment: .top), GridItem(.flexible(), alignment: .top)],
+                            spacing: 18
+                        ) {
+                            ForEach(Platform.allCases) { platform in
+                                PlatformCard(platform: platform,
+                                             onOpen: { open(platform) },
+                                             onImport: { importPlatform = platform })
+                            }
+                        }
+                    } else {
+                        ForEach(Platform.allCases) { platform in
+                            PlatformCard(platform: platform,
+                                         onOpen: { open(platform) },
+                                         onImport: { importPlatform = platform })
+                        }
                     }
                     PrivacyPromise()
                 }
@@ -63,6 +77,12 @@ struct DashboardView: View {
             .sheet(isPresented: $showGlobalSearch) { GlobalSearchView() }
             .sheet(isPresented: $showGoalSheet) {
                 GoalSetSheet(platform: focus, currentFollowers: store.stats(focus).followers)
+            }
+            .userActivity("com.socialtea.dashboard", isActive: store.selectedTab == .dashboard) { activity in
+                activity.title = "Open SocialTea Dashboard"
+                activity.isEligibleForSearch = true
+                activity.isEligibleForPrediction = true
+                activity.suggestedInvocationPhrase = "Open SocialTea"
             }
         }
     }
@@ -386,5 +406,6 @@ private struct PlatformCard: View {
             Text(label).font(.caption2).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
     }
 }

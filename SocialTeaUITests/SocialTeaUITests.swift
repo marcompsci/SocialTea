@@ -203,6 +203,37 @@ final class SocialTeaUITests: XCTestCase {
         }
     }
 
+    // MARK: Navigation structure (tab bar on iPhone; NavigationSplitView sidebar on iPad)
+    // Run on an iPad simulator to exercise the sidebar branch.
+
+    func testAllNavigationDestinationsPresent() {
+        app.launchArguments = ["-UITestSkipOnboarding"]
+        app.launch()
+
+        let tabNames = ["Dashboard", "Lists", "Cleanup", "Insights", "Guide"]
+        for name in tabNames {
+            // Matches tab bar items on iPhone or sidebar list labels on iPad.
+            let found = app.descendants(matching: .any)
+                .matching(NSPredicate(format: "label == %@", name))
+                .firstMatch
+                .waitForExistence(timeout: 5)
+            XCTAssertTrue(found, "Navigation item '\(name)' not found")
+        }
+        snap("70-navigation-structure")
+
+        // Tap Cleanup and confirm its navigation bar appears.
+        let cleanup = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "label == %@", "Cleanup"))
+            .firstMatch
+        XCTAssertTrue(cleanup.waitForExistence(timeout: 3), "Cleanup item missing")
+        cleanup.tap()
+        XCTAssertTrue(
+            app.navigationBars["Cleanup"].waitForExistence(timeout: 4),
+            "Cleanup navigation bar did not appear"
+        )
+        snap("71-cleanup-selected")
+    }
+
     // MARK: Free tier vs Pro
 
     func testProGating() {

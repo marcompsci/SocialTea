@@ -81,3 +81,37 @@
 "Daily" = "Täglich";
 "Every 3 days" = "Alle 3 Tage";
 "Weekly" = "Wöchentlich";
+
+/* Insights (Phase 11) */
+"Follower Trend" = "Follower-Trend";
+"One point per import session" = "Ein Punkt pro Import-Sitzung";
+"Follower Change" = "Follower-Änderung";
+"Newer snapshot vs. baseline" = "Neuerer Snapshot vs. Basiswert";
+"Follow-back Ratio" = "Gegenseitige Follower-Quote";
+"Export PDF report" = "PDF-Bericht exportieren";
+"Export history as CSV" = "Verlauf als CSV exportieren";
+"No Data Yet" = "Noch keine Daten";
+
+/* TipKit (Phase 13) */
+"Keyboard shortcuts" = "Tastaturkürzel";
+"← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too." = "← entfolgen  ·  → behalten  ·  ⌘Z rückgängig — auch mit externer Tastatur.";
+"Decide all at once" = "Alle auf einmal entscheiden";
+"Tap ··· to keep every remaining card — or queue them all to unfollow in one go." = "Tippe ··· um alle verbleibenden Karten zu behalten – oder stelle sie alle in die Warteschlange.";
+"Your follower trend" = "Dein Follower-Trend";
+"Grows with each import session. Export the full history as CSV from the report menu." = "Wächst mit jeder Import-Sitzung. Exportiere den Verlauf als CSV über das Bericht-Menü.";
+"Share your stats" = "Statistiken teilen";
+"Tap ↑ to generate a polished stats card — privacy-safe, no names included." = "Tippe ↑ um eine ansprechende Statistik-Karte zu erstellen – datenschutzsicher, ohne Namen.";
+
+/* Phase 14 — ZIP import / Control Center / Shortcuts */
+"Import from ZIP" = "Aus ZIP importieren";
+"SocialTea Cleanup" = "SocialTea Bereinigung";
+"Open your cleanup deck." = "Öffne deinen Bereinigungsstapel.";
+"Get platform stats" = "Plattform-Statistiken abrufen";
+"Social Platform" = "Soziale Plattform";
+
+/* Phase 15 — Accessibility / Notifications / Share */
+"Share handle" = "Handle teilen";
+"Copy username" = "Benutzername kopieren";
+"Doesn't follow you back on %@." = "Folgt dir auf %@ nicht zurück.";
+"followers dropped" = "Follower gesunken";
+"You lost %@ followers compared to your baseline." = "Du hast %@ Follower im Vergleich zum Basiswert verloren.";

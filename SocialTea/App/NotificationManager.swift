@@ -24,8 +24,8 @@ final class NotificationManager {
     var interval: ReminderInterval = .weekly
 
     init() {
-        enabled  = UserDefaults.standard.bool(forKey: "notif.enabled")
-        interval = ReminderInterval(rawValue: UserDefaults.standard.string(forKey: "notif.interval") ?? "") ?? .weekly
+        enabled  = SyncedPrefs.bool(forKey: "notif.enabled")
+        interval = ReminderInterval(rawValue: SyncedPrefs.string(forKey: "notif.interval") ?? "") ?? .weekly
     }
 
     func requestAndEnable() async {
@@ -41,19 +41,20 @@ final class NotificationManager {
 
     func setEnabled(_ on: Bool) {
         enabled = on
-        UserDefaults.standard.set(on, forKey: "notif.enabled")
+        SyncedPrefs.set(on, forKey: "notif.enabled")
         on ? scheduleReminder() : cancelReminder()
     }
 
     func updateInterval(_ newInterval: ReminderInterval) {
         interval = newInterval
-        UserDefaults.standard.set(newInterval.rawValue, forKey: "notif.interval")
+        SyncedPrefs.set(newInterval.rawValue, forKey: "notif.interval")
         if enabled { scheduleReminder() }
     }
 
     /// Reschedules the reminder with live context data. Call whenever the app moves to the background.
     func updateDigest(streak: Int, queueCount: Int, totalFollowers: Int) {
         guard enabled else { return }
+        guard !UserDefaults.standard.bool(forKey: "focus.silentDigest") else { return }
         scheduleReminder(streak: streak, queueCount: queueCount, totalFollowers: totalFollowers)
     }
 
@@ -83,5 +84,24 @@ final class NotificationManager {
 
     private func cancelReminder() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["socialtea.reminder"])
+    }
+
+    /// Posts an immediate local notification when a newer-snapshot import reveals a significant follower drop.
+    /// Threshold: ≥10 lost OR ≥5% of the baseline count — whichever is larger.
+    func notifyIfDropped(platform: Platform, oldCount: Int, newCount: Int) {
+        guard oldCount > 0, newCount > 0 else { return }
+        let drop = oldCount - newCount
+        guard drop >= max(10, Int(Double(oldCount) * 0.05)) else { return }
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: ["socialtea.drop.\(platform.rawValue)"])
+        let content = UNMutableNotificationContent()
+        content.title = "\(platform.name) \(platform.followersNoun.lowercased()) dropped"
+        content.body  = "You lost \(drop.formatted()) \(platform.followersNoun.lowercased()) compared to your baseline."
+        content.sound = .default
+        center.add(UNNotificationRequest(
+            identifier: "socialtea.drop.\(platform.rawValue)",
+            content: content,
+            trigger: nil
+        ))
     }
 }

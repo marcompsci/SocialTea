@@ -1,4 +1,5 @@
 import Foundation
+import CoreTransferable
 
 // MARK: - Platform
 
@@ -98,6 +99,12 @@ struct Person: Identifiable, Hashable, Sendable {
 
     static func == (lhs: Person, rhs: Person) -> Bool { lhs.id == rhs.id }
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
+}
+
+extension Person: Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        ProxyRepresentation(exporting: \.username)
+    }
 }
 
 // MARK: - Snapshot

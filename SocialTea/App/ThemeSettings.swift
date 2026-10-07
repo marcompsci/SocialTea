@@ -10,11 +10,11 @@ final class ThemeSettings {
     var accentB: Double = 0.52
 
     init() {
-        nightMode = UserDefaults.standard.bool(forKey: "theme.nightMode")
-        if UserDefaults.standard.object(forKey: "theme.accentR") != nil {
-            accentR = UserDefaults.standard.double(forKey: "theme.accentR")
-            accentG = UserDefaults.standard.double(forKey: "theme.accentG")
-            accentB = UserDefaults.standard.double(forKey: "theme.accentB")
+        nightMode = SyncedPrefs.bool(forKey: "theme.nightMode")
+        if SyncedPrefs.object(forKey: "theme.accentR") != nil {
+            accentR = SyncedPrefs.double(forKey: "theme.accentR")
+            accentG = SyncedPrefs.double(forKey: "theme.accentG")
+            accentB = SyncedPrefs.double(forKey: "theme.accentB")
         }
     }
 
@@ -24,7 +24,7 @@ final class ThemeSettings {
 
     func toggleNightMode() {
         nightMode.toggle()
-        UserDefaults.standard.set(nightMode, forKey: "theme.nightMode")
+        SyncedPrefs.set(nightMode, forKey: "theme.nightMode")
     }
 
     func setAccentColor(_ color: Color) {
@@ -34,9 +34,9 @@ final class ThemeSettings {
         accentR = Double(r)
         accentG = Double(g)
         accentB = Double(b)
-        UserDefaults.standard.set(accentR, forKey: "theme.accentR")
-        UserDefaults.standard.set(accentG, forKey: "theme.accentG")
-        UserDefaults.standard.set(accentB, forKey: "theme.accentB")
+        SyncedPrefs.set(accentR, forKey: "theme.accentR")
+        SyncedPrefs.set(accentG, forKey: "theme.accentG")
+        SyncedPrefs.set(accentB, forKey: "theme.accentB")
     }
 
     func resetAccentColor() {

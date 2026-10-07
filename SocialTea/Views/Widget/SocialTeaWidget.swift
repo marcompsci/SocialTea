@@ -5,33 +5,44 @@
 //
 // Steps to activate:
 //   1. Xcode → File → New → Target → Widget Extension
-//      Name: "SocialTeaWidget"  |  Uncheck Live Activity & Configuration Intent
+//      Name: "SocialTeaWidget"  |  Check "Include Live Activity"
 //   2. Main app target → Signing & Capabilities → + App Groups
 //      Add: "group.com.socialtea"
 //   3. SocialTeaWidget target → same capability, same group name
 //   4. Move this file to the new SocialTeaWidget folder in Xcode
 //      (drag from SocialTea/Views/Widget to SocialTeaWidget group)
-//   5. Also add WidgetDataCache.swift to the SocialTeaWidget target
-//      (File Inspector → Target Membership → tick SocialTeaWidget)
-//   6. Add "@main" on the line above "struct SocialTeaWidget: Widget {" below
+//   5. Also add WidgetDataCache.swift, CleanupLiveActivity.swift, AND
+//      SocialTeaIntents.swift to the SocialTeaWidget target (File Inspector → Target Membership)
+//   6. Add "@main" on the line above "struct SocialTeaWidgetBundle: WidgetBundle {"
+//      in CleanupLiveActivity.swift — that bundle includes both widgets.
 // ============================================================
 
 import WidgetKit
 import SwiftUI
+import AppIntents
 
-// MARK: - Timeline provider
+// MARK: - Timeline provider (configurable per-platform)
 
-struct SocialTeaProvider: TimelineProvider {
+struct SocialTeaProvider: AppIntentTimelineProvider {
+    typealias Intent = SelectPlatformIntent
+
     func placeholder(in context: Context) -> SocialTeaEntry { .placeholder }
 
-    func getSnapshot(in context: Context, completion: @escaping (SocialTeaEntry) -> Void) {
-        completion(SocialTeaEntry(date: Date(), stats: WidgetDataCache.load()))
+    func snapshot(for configuration: SelectPlatformIntent, in context: Context) async -> SocialTeaEntry {
+        let all = WidgetDataCache.load()
+        return SocialTeaEntry(date: Date(), stats: filtered(all, by: configuration.platform))
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SocialTeaEntry>) -> Void) {
-        let entry = SocialTeaEntry(date: Date(), stats: WidgetDataCache.load())
+    func timeline(for configuration: SelectPlatformIntent, in context: Context) async -> Timeline<SocialTeaEntry> {
+        let all = WidgetDataCache.load()
+        let entry = SocialTeaEntry(date: Date(), stats: filtered(all, by: configuration.platform))
         let next  = Calendar.current.date(byAdding: .hour, value: 6, to: Date())!
-        completion(Timeline(entries: [entry], policy: .after(next)))
+        return Timeline(entries: [entry], policy: .after(next))
+    }
+
+    private func filtered(_ stats: [WidgetDataCache.Entry], by platform: PlatformAppEnum?) -> [WidgetDataCache.Entry] {
+        guard let p = platform else { return stats }
+        return stats.filter { $0.platform.lowercased() == p.displayName.lowercased() }
     }
 }
 
@@ -98,7 +109,7 @@ struct SocialTeaWidgetView: View {
         .widgetBackground(Color(.systemBackground))
     }
 
-    // MARK: Medium (4×2)
+    // MARK: Medium (4×2) — each platform cell is an interactive button (iOS 17+)
 
     private var mediumView: some View {
         ZStack {
@@ -120,15 +131,7 @@ struct SocialTeaWidgetView: View {
                         spacing: 4
                     ) {
                         ForEach(entry.stats, id: \.platform) { stat in
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(stat.followers.formatted())
-                                    .font(.title3.weight(.bold)).foregroundStyle(accent)
-                                Text(stat.platform).font(.caption2).foregroundStyle(.secondary)
-                                if stat.followBackRatio > 0 {
-                                    Text("\(Int(stat.followBackRatio * 100))% back")
-                                        .font(.caption2).foregroundStyle(.tertiary)
-                                }
-                            }
+                            platformCell(stat)
                         }
                     }
                 }
@@ -136,6 +139,33 @@ struct SocialTeaWidgetView: View {
             }
         }
         .widgetBackground(Color(.systemBackground))
+    }
+
+    @ViewBuilder
+    private func platformCell(_ stat: WidgetDataCache.Entry) -> some View {
+        if let platformEnum = PlatformAppEnum(rawValue: stat.platform.lowercased()) {
+            let intent: OpenPlatformIntent = {
+                var i = OpenPlatformIntent()
+                i.platform = platformEnum
+                return i
+            }()
+            Button(intent: intent) { platformStatStack(stat) }
+                .buttonStyle(.plain)
+        } else {
+            platformStatStack(stat)
+        }
+    }
+
+    private func platformStatStack(_ stat: WidgetDataCache.Entry) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(stat.followers.formatted())
+                .font(.title3.weight(.bold)).foregroundStyle(accent)
+            Text(stat.platform).font(.caption2).foregroundStyle(.secondary)
+            if stat.followBackRatio > 0 {
+                Text("\(Int(stat.followBackRatio * 100))% back")
+                    .font(.caption2).foregroundStyle(.tertiary)
+            }
+        }
     }
 
     // MARK: Lock screen inline (single text row above clock)
@@ -211,17 +241,16 @@ extension View {
 }
 
 // MARK: - Widget entry point
-// Add @main here when you move this file to the SocialTeaWidget target.
 
 struct SocialTeaWidget: Widget {
     let kind = "SocialTeaWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: SocialTeaProvider()) { entry in
+        AppIntentConfiguration(kind: kind, intent: SelectPlatformIntent.self, provider: SocialTeaProvider()) { entry in
             SocialTeaWidgetView(entry: entry)
         }
         .configurationDisplayName("SocialTea")
-        .description("Quick glance at your follower stats.")
+        .description("Quick glance at your follower stats. Long-press to choose a platform.")
         .supportedFamilies([.systemSmall, .systemMedium, .accessoryInline, .accessoryCircular, .accessoryRectangular])
     }
 }

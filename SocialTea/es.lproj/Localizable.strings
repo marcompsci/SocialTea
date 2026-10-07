@@ -81,3 +81,37 @@
 "Daily" = "Diario";
 "Every 3 days" = "Cada 3 días";
 "Weekly" = "Semanal";
+
+/* Insights (Phase 11) */
+"Follower Trend" = "Tendencia de seguidores";
+"One point per import session" = "Un punto por sesión de importación";
+"Follower Change" = "Cambio de seguidores";
+"Newer snapshot vs. baseline" = "Snapshot más reciente vs. base";
+"Follow-back Ratio" = "Proporción de seguimiento mutuo";
+"Export PDF report" = "Exportar informe PDF";
+"Export history as CSV" = "Exportar historial como CSV";
+"No Data Yet" = "Sin datos aún";
+
+/* TipKit (Phase 13) */
+"Keyboard shortcuts" = "Atajos de teclado";
+"← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too." = "← dejar de seguir  ·  → conservar  ·  ⌘Z deshacer — también con teclado externo.";
+"Decide all at once" = "Decidir todo de una vez";
+"Tap ··· to keep every remaining card — or queue them all to unfollow in one go." = "Toca ··· para conservar todas las tarjetas restantes o ponerlas en la cola de un solo paso.";
+"Your follower trend" = "Tu tendencia de seguidores";
+"Grows with each import session. Export the full history as CSV from the report menu." = "Crece con cada sesión de importación. Exporta el historial completo como CSV desde el menú de informe.";
+"Share your stats" = "Compartir estadísticas";
+"Tap ↑ to generate a polished stats card — privacy-safe, no names included." = "Toca ↑ para generar una tarjeta de estadísticas elegante — sin nombres, totalmente privada.";
+
+/* Phase 14 — ZIP import / Control Center / Shortcuts */
+"Import from ZIP" = "Importar desde ZIP";
+"SocialTea Cleanup" = "Limpieza de SocialTea";
+"Open your cleanup deck." = "Abre tu mazo de limpieza.";
+"Get platform stats" = "Obtener estadísticas de plataforma";
+"Social Platform" = "Plataforma social";
+
+/* Phase 15 — Accessibility / Notifications / Share */
+"Share handle" = "Compartir usuario";
+"Copy username" = "Copiar nombre de usuario";
+"Doesn't follow you back on %@." = "No te sigue de vuelta en %@.";
+"followers dropped" = "seguidores caídos";
+"You lost %@ followers compared to your baseline." = "Perdiste %@ seguidores en comparación con tu base.";

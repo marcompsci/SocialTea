@@ -81,3 +81,37 @@
 "Daily" = "Quotidien";
 "Every 3 days" = "Tous les 3 jours";
 "Weekly" = "Hebdomadaire";
+
+/* Insights (Phase 11) */
+"Follower Trend" = "Tendance d'abonnés";
+"One point per import session" = "Un point par session d'importation";
+"Follower Change" = "Évolution des abonnés";
+"Newer snapshot vs. baseline" = "Capture récente vs. référence";
+"Follow-back Ratio" = "Taux d'abonnement mutuel";
+"Export PDF report" = "Exporter le rapport PDF";
+"Export history as CSV" = "Exporter l'historique en CSV";
+"No Data Yet" = "Aucune donnée pour l'instant";
+
+/* TipKit (Phase 13) */
+"Keyboard shortcuts" = "Raccourcis clavier";
+"← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too." = "← ne plus suivre  ·  → conserver  ·  ⌘Z annuler — fonctionne aussi avec un clavier externe.";
+"Decide all at once" = "Tout décider en une fois";
+"Tap ··· to keep every remaining card — or queue them all to unfollow in one go." = "Appuyez sur ··· pour conserver toutes les cartes restantes ou les mettre toutes en file d'un coup.";
+"Your follower trend" = "Votre tendance d'abonnés";
+"Grows with each import session. Export the full history as CSV from the report menu." = "Évolue à chaque session d'importation. Exportez l'historique complet en CSV depuis le menu rapport.";
+"Share your stats" = "Partager vos stats";
+"Tap ↑ to generate a polished stats card — privacy-safe, no names included." = "Appuyez sur ↑ pour générer une carte de stats soignée — sans noms, respectueuse de la vie privée.";
+
+/* Phase 14 — ZIP import / Control Center / Shortcuts */
+"Import from ZIP" = "Importer depuis ZIP";
+"SocialTea Cleanup" = "Nettoyage SocialTea";
+"Open your cleanup deck." = "Ouvrez votre pile de nettoyage.";
+"Get platform stats" = "Obtenir les stats de plateforme";
+"Social Platform" = "Plateforme sociale";
+
+/* Phase 15 — Accessibility / Notifications / Share */
+"Share handle" = "Partager le pseudo";
+"Copy username" = "Copier le nom d'utilisateur";
+"Doesn't follow you back on %@." = "Ne vous suit pas en retour sur %@.";
+"followers dropped" = "abonnés en baisse";
+"You lost %@ followers compared to your baseline." = "Vous avez perdu %@ abonnés par rapport à votre référence.";

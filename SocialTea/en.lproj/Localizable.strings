@@ -81,3 +81,37 @@
 "Daily" = "Daily";
 "Every 3 days" = "Every 3 days";
 "Weekly" = "Weekly";
+
+/* Insights (Phase 11) */
+"Follower Trend" = "Follower Trend";
+"One point per import session" = "One point per import session";
+"Follower Change" = "Follower Change";
+"Newer snapshot vs. baseline" = "Newer snapshot vs. baseline";
+"Follow-back Ratio" = "Follow-back Ratio";
+"Export PDF report" = "Export PDF report";
+"Export history as CSV" = "Export history as CSV";
+"No Data Yet" = "No Data Yet";
+
+/* TipKit (Phase 13) */
+"Keyboard shortcuts" = "Keyboard shortcuts";
+"← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too." = "← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too.";
+"Decide all at once" = "Decide all at once";
+"Tap ··· to keep every remaining card — or queue them all to unfollow in one go." = "Tap ··· to keep every remaining card — or queue them all to unfollow in one go.";
+"Your follower trend" = "Your follower trend";
+"Grows with each import session. Export the full history as CSV from the report menu." = "Grows with each import session. Export the full history as CSV from the report menu.";
+"Share your stats" = "Share your stats";
+"Tap ↑ to generate a polished stats card — privacy-safe, no names included." = "Tap ↑ to generate a polished stats card — privacy-safe, no names included.";
+
+/* Phase 14 — ZIP import / Control Center / Shortcuts */
+"Import from ZIP" = "Import from ZIP";
+"SocialTea Cleanup" = "SocialTea Cleanup";
+"Open your cleanup deck." = "Open your cleanup deck.";
+"Get platform stats" = "Get platform stats";
+"Social Platform" = "Social Platform";
+
+/* Phase 15 — Accessibility / Notifications / Share */
+"Share handle" = "Share handle";
+"Copy username" = "Copy username";
+"Doesn't follow you back on %@." = "Doesn't follow you back on %@.";
+"followers dropped" = "followers dropped";
+"You lost %@ followers compared to your baseline." = "You lost %@ followers compared to your baseline.";

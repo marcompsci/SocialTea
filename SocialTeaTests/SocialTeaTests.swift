@@ -545,3 +545,148 @@ final class DeepLinkTests: XCTestCase {
         XCTAssertNil(DeepLink(url: URL(string: "socialtea://platform/myspace")!))
     }
 }
+
+// MARK: - HistoryManager
+
+@MainActor
+final class HistoryManagerTests: XCTestCase {
+
+    private let key = "history.snapshots"
+
+    override func tearDown() {
+        super.tearDown()
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+
+    func testRecordSingleEntry() {
+        let m = HistoryManager()
+        m.record(platform: .instagram, followers: 100, following: 50)
+        XCTAssertEqual(m.history(for: .instagram).count, 1)
+        XCTAssertEqual(m.records.first?.followers, 100)
+        XCTAssertEqual(m.records.first?.following, 50)
+    }
+
+    func testRecordDedupSameDay() {
+        let m = HistoryManager()
+        m.record(platform: .instagram, followers: 100, following: 50)
+        m.record(platform: .instagram, followers: 200, following: 80) // same day — skipped
+        XCTAssertEqual(m.history(for: .instagram).count, 1)
+        XCTAssertEqual(m.records.first?.followers, 100) // original value kept
+    }
+
+    func testRecordSkipsZeroFollowers() {
+        let m = HistoryManager()
+        m.record(platform: .instagram, followers: 0, following: 0)
+        XCTAssertTrue(m.history(for: .instagram).isEmpty)
+    }
+
+    func testRecordIsolatedPerPlatform() {
+        let m = HistoryManager()
+        m.record(platform: .instagram, followers: 100, following: 50)
+        m.record(platform: .tiktok,    followers: 200, following: 80)
+        XCTAssertEqual(m.history(for: .instagram).count, 1)
+        XCTAssertEqual(m.history(for: .tiktok).count, 1)
+        XCTAssertTrue(m.history(for: .facebook).isEmpty)
+    }
+
+    func testClear() {
+        let m = HistoryManager()
+        m.record(platform: .instagram, followers: 100, following: 50)
+        m.clear()
+        XCTAssertTrue(m.records.isEmpty)
+        XCTAssertTrue(m.history(for: .instagram).isEmpty)
+    }
+
+    func testMaxCapPerPlatform() throws {
+        // Inject 35 records with distinct dates to bypass the one-per-day guard in record().
+        // JSONDecoder's default Date strategy reads timeIntervalSinceReferenceDate as a Double.
+        let injected: [[String: Any]] = (1...35).map { i in
+            let date = Date(timeIntervalSinceNow: -Double(i) * 86400)
+            return [
+                "id":        UUID().uuidString,
+                "date":      date.timeIntervalSinceReferenceDate,
+                "platform":  "instagram",
+                "followers": 100 + i,
+                "following": 50
+            ]
+        }
+        let data = try JSONSerialization.data(withJSONObject: injected)
+        UserDefaults.standard.set(data, forKey: key)
+
+        let m = HistoryManager() // loads all 35 without trimming
+        XCTAssertEqual(m.records.count, 35)
+
+        // record() for today (not in the injected set) adds one more then trims to 30
+        m.record(platform: .instagram, followers: 999, following: 100)
+        XCTAssertEqual(m.history(for: .instagram).count, 30)
+    }
+}
+
+// MARK: - ExportBuilder extensions
+
+final class ExportBuilderExtendedTests: XCTestCase {
+
+    func testJSONOutputContainsExpectedKeys() throws {
+        let people = [Person(username: "alice"), Person(username: "bob", displayName: "Bob Smith")]
+        let json = ExportBuilder.text(for: people, platform: .instagram, format: .json)
+        let data = try XCTUnwrap(json.data(using: .utf8))
+        let array = try XCTUnwrap(try JSONSerialization.jsonObject(with: data) as? [[String: Any]])
+        XCTAssertEqual(array.count, 2)
+        let first = try XCTUnwrap(array.first)
+        XCTAssertNotNil(first["username"])
+        XCTAssertNotNil(first["display_name"])
+        // date and profile_url are present as null when absent — key still exists
+        XCTAssertTrue(first.keys.contains("date"))
+        XCTAssertTrue(first.keys.contains("profile_url"))
+    }
+
+    func testJSONEmptyInputProducesEmptyArray() {
+        let json = ExportBuilder.text(for: [], platform: .instagram, format: .json)
+        XCTAssertEqual(json.trimmingCharacters(in: .whitespacesAndNewlines), "[]")
+    }
+
+    func testHistoryCSVHeaderOnly() {
+        let csv = ExportBuilder.historyCSV(records: [])
+        let lines = csv.components(separatedBy: "\n").filter { !$0.isEmpty }
+        XCTAssertEqual(lines.count, 1)
+        XCTAssertEqual(lines[0], "date,platform,followers,following")
+    }
+
+    func testHistoryCSVSortedByDate() {
+        let t1 = Date(timeIntervalSince1970: 100_000)
+        let t2 = Date(timeIntervalSince1970: 200_000)
+        let t3 = Date(timeIntervalSince1970: 300_000)
+        let records = [
+            (date: t3, platform: "Instagram", followers: 300, following: 100),
+            (date: t1, platform: "Instagram", followers: 100, following:  50),
+            (date: t2, platform: "TikTok",    followers: 200, following:  80),
+        ]
+        let csv = ExportBuilder.historyCSV(records: records)
+        let lines = csv.components(separatedBy: "\n").filter { !$0.isEmpty }
+        XCTAssertEqual(lines.count, 4) // header + 3 data rows
+        // After sorting by date: t1 (Instagram/100), t2 (TikTok/200), t3 (Instagram/300)
+        XCTAssertTrue(lines[1].contains(",Instagram,100,"))
+        XCTAssertTrue(lines[2].contains(",TikTok,200,"))
+        XCTAssertTrue(lines[3].contains(",Instagram,300,"))
+    }
+
+    func testHistoryCSVContainsAllFields() {
+        let date = Date(timeIntervalSince1970: 1_000_000)
+        let records = [(date: date, platform: "Instagram", followers: 1234, following: 567)]
+        let csv = ExportBuilder.historyCSV(records: records)
+        XCTAssertTrue(csv.contains("Instagram"))
+        XCTAssertTrue(csv.contains("1234"))
+        XCTAssertTrue(csv.contains("567"))
+    }
+}
+
+// MARK: - BGRefreshManager
+
+final class BGRefreshManagerTests: XCTestCase {
+
+    func testIdentifierMatchesPlistKey() {
+        // Verifies the identifier constant matches what must be in
+        // BGTaskSchedulerPermittedIdentifiers in the app's Info.plist.
+        XCTAssertEqual(BGRefreshManager.identifier, "com.socialtea.refresh")
+    }
+}

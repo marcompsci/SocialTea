@@ -1,4 +1,6 @@
+import ActivityKit
 import SwiftUI
+import TipKit
 
 /// Swipe through "Not following back". Swiping left only QUEUES a profile so you can
 /// unfollow it yourself in the official app — SocialTea never unfollows anyone.
@@ -9,6 +11,10 @@ struct CleanupView: View {
     @Environment(ReviewManager.self) private var reviewManager
     @State private var showQueue = false
     @State private var celebrated = false
+    @State private var cleanupActivity: Activity<CleanupActivityAttributes>?
+
+    private let bulkDecideTip = BulkDecideTip()
+    private let keyboardTip   = KeyboardCleanupTip()
 
     var body: some View {
         @Bindable var store = store
@@ -59,10 +65,15 @@ struct CleanupView: View {
                         reviewManager.recordAction()
                         Haptics.light()
                         withAnimation(.snappy) { store.decide(person, decision, platform: platform) }
+                        Task { await KeyboardCleanupTip.cardDecided.donate() }
                     }
                     .padding(.horizontal, 24)
+                    TipView(keyboardTip, arrowEdge: .none)
+                        .padding(.horizontal)
                     controls(platform: platform, top: deck.first, canUndo: !state.history.isEmpty)
                         .padding(.bottom, 8)
+                    // Hardware-keyboard shortcuts for the swipe deck
+                    keyboardDeckShortcuts(platform: platform, top: deck.first, canUndo: !state.history.isEmpty)
                 }
             }
             .padding(.top, 8)
@@ -94,13 +105,80 @@ struct CleanupView: View {
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
+                        .popoverTip(bulkDecideTip)
                     }
                 }
             }
             .sheet(isPresented: $showQueue) {
                 UnfollowQueueView(platform: platform)
             }
-            .onChange(of: store.selectedPlatform) { _, _ in celebrated = false }
+            .onAppear {
+                if !deck.isEmpty { startCleanupActivity(platform: platform, deckCount: deck.count) }
+                BulkDecideTip.deckSize = deck.count
+            }
+            .onChange(of: deck.count) { _, count in BulkDecideTip.deckSize = count }
+            .userActivity("com.socialtea.cleanup", isActive: store.selectedTab == .cleanup) { activity in
+                activity.title = "Review your cleanup deck in SocialTea"
+                activity.isEligibleForSearch = true
+                activity.isEligibleForPrediction = true
+                activity.suggestedInvocationPhrase = "Open my SocialTea cleanup"
+            }
+            .onChange(of: state.history.count) { _, _ in
+                updateCleanupActivity(platform: store.selectedPlatform)
+            }
+            .onChange(of: deck.isEmpty) { old, new in
+                let p = store.selectedPlatform
+                if new {
+                    let cs = store.cleanupState(p)
+                    endCleanupActivity(kept: cs.keep.count, queued: cs.unfollowQueue.count)
+                } else if old {
+                    startCleanupActivity(platform: p, deckCount: store.cleanupDeck(p).count)
+                }
+            }
+            .onChange(of: store.selectedPlatform) { _, _ in
+                celebrated = false
+                Task {
+                    await cleanupActivity?.end(
+                        .init(state: .init(remaining: 0, kept: 0, queued: 0), staleDate: nil),
+                        dismissalPolicy: .immediate
+                    )
+                    cleanupActivity = nil
+                }
+            }
+        }
+    }
+
+    private func startCleanupActivity(platform: Platform, deckCount: Int) {
+        guard cleanupActivity == nil,
+              ActivityAuthorizationInfo().areActivitiesEnabled else { return }
+        let attrs = CleanupActivityAttributes(platformName: platform.name)
+        let cs = store.cleanupState(platform)
+        let initState = CleanupActivityAttributes.ContentState(
+            remaining: deckCount, kept: cs.keep.count, queued: cs.unfollowQueue.count
+        )
+        cleanupActivity = try? Activity<CleanupActivityAttributes>.request(
+            attributes: attrs,
+            content: .init(state: initState, staleDate: nil)
+        )
+    }
+
+    private func updateCleanupActivity(platform: Platform) {
+        let remaining = store.cleanupDeck(platform).count
+        let cs = store.cleanupState(platform)
+        let newState = CleanupActivityAttributes.ContentState(
+            remaining: remaining, kept: cs.keep.count, queued: cs.unfollowQueue.count
+        )
+        Task { await cleanupActivity?.update(.init(state: newState, staleDate: nil)) }
+    }
+
+    private func endCleanupActivity(kept: Int, queued: Int) {
+        let finalState = CleanupActivityAttributes.ContentState(remaining: 0, kept: kept, queued: queued)
+        Task {
+            await cleanupActivity?.end(
+                .init(state: finalState, staleDate: nil),
+                dismissalPolicy: .after(Date().addingTimeInterval(30))
+            )
+            cleanupActivity = nil
         }
     }
 
@@ -118,31 +196,60 @@ struct CleanupView: View {
 
     private func controls(platform: Platform, top: Person?, canUndo: Bool) -> some View {
         HStack(spacing: 28) {
-            circleButton("xmark", tint: Theme.berry, label: "Queue to unfollow") {
+            circleButton("xmark", tint: Theme.berry, label: "Add to unfollow queue",
+                         hint: "Queues this person as someone to unfollow in \(platform.name)") {
                 if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .unfollow, platform: platform) } }
             }
-            circleButton("arrow.uturn.backward", tint: .secondary, label: "Undo", small: true) {
+            circleButton("arrow.uturn.backward", tint: .secondary, label: "Undo last decision",
+                         hint: "Brings the previous card back so you can decide again", small: true) {
                 Haptics.light()
                 withAnimation(.snappy) { _ = store.undo(platform: platform) }
             }
             .disabled(!canUndo)
             .opacity(canUndo ? 1 : 0.4)
-            circleButton("heart.fill", tint: Theme.tea, label: "Keep following") {
+            circleButton("heart.fill", tint: Theme.tea, label: "Keep following",
+                         hint: "Marks this person as keep and moves to the next card") {
                 if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .keep, platform: platform) } }
             }
         }
     }
 
-    private func circleButton(_ symbol: String, tint: Color, label: String, small: Bool = false,
-                              action: @escaping () -> Void) -> some View {
+    private func keyboardDeckShortcuts(platform: Platform, top: Person?, canUndo: Bool) -> some View {
+        Group {
+            Button("Keep") {
+                if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .keep, platform: platform) } }
+            }
+            .keyboardShortcut(.rightArrow, modifiers: [])
+            Button("Queue to unfollow") {
+                if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .unfollow, platform: platform) } }
+            }
+            .keyboardShortcut(.leftArrow, modifiers: [])
+            Button("Undo") {
+                Haptics.light(); withAnimation(.snappy) { _ = store.undo(platform: platform) }
+            }
+            .keyboardShortcut("z", modifiers: .command)
+            .disabled(!canUndo)
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
+        .accessibilityHidden(true)
+    }
+
+    @ScaledMetric private var controlSize: CGFloat = 68
+    @ScaledMetric private var controlSmallSize: CGFloat = 52
+
+    private func circleButton(_ symbol: String, tint: Color, label: String, hint: String = "",
+                              small: Bool = false, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(small ? .title3.weight(.bold) : .title.weight(.bold))
                 .foregroundStyle(tint)
-                .frame(width: small ? 52 : 68, height: small ? 52 : 68)
+                .frame(width: small ? controlSmallSize : controlSize,
+                       height: small ? controlSmallSize : controlSize)
                 .background(Circle().fill(Color(.secondarySystemGroupedBackground)).shadow(color: .black.opacity(0.08), radius: 8, y: 3))
         }
         .accessibilityLabel(label)
+        .accessibilityHint(hint)
     }
 
     @ViewBuilder
@@ -191,11 +298,14 @@ private struct SwipeCard: View {
 
     @State private var offset: CGSize = .zero
     @Environment(\.openURL) private var openURL
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric private var avatarSize: CGFloat = 96
+    @ScaledMetric private var cardMinHeight: CGFloat = 340
     private let threshold: CGFloat = 110
 
     var body: some View {
         VStack(spacing: 14) {
-            InitialAvatar(person: person, size: 96)
+            InitialAvatar(person: person, size: avatarSize)
             Text(person.title)
                 .font(.title2.weight(.bold))
                 .lineLimit(1)
@@ -215,7 +325,7 @@ private struct SwipeCard: View {
             .font(.subheadline)
         }
         .padding(28)
-        .frame(maxWidth: .infinity, minHeight: 340)
+        .frame(maxWidth: .infinity, minHeight: cardMinHeight)
         .background(RoundedRectangle(cornerRadius: 28).fill(Color(.secondarySystemGroupedBackground)))
         .overlay(alignment: .topLeading) { stamp("KEEP", Theme.tea, visible: offset.width > 30).padding(20) }
         .overlay(alignment: .topTrailing) { stamp("UNFOLLOW", Theme.berry, visible: offset.width < -30).padding(20) }
@@ -225,6 +335,9 @@ private struct SwipeCard: View {
         .rotationEffect(.degrees(Double(offset.width / 18)))
         .allowsHitTesting(isTop)
         .gesture(drag, including: isTop ? .all : .none)
+        .accessibilityLabel("\(person.title)\(person.displayName.map { ", \($0)" } ?? "")")
+        .accessibilityValue("Doesn't follow you back on \(platform.name)")
+        .accessibilityHint("Swipe up to keep, swipe down to queue to unfollow")
         .accessibilityElement(children: .contain)
         .accessibilityAction(named: "Keep following") { onDecide(.keep) }
         .accessibilityAction(named: "Queue to unfollow") { onDecide(.unfollow) }
@@ -239,17 +352,24 @@ private struct SwipeCard: View {
                     fling(to: 600, .keep)
                 } else if dx < -threshold {
                     fling(to: -600, .unfollow)
-                } else {
+                } else if !reduceMotion {
                     withAnimation(.spring(duration: 0.35, bounce: 0.3)) { offset = .zero }
+                } else {
+                    offset = .zero
                 }
             }
     }
 
     private func fling(to x: CGFloat, _ decision: SessionStore.CleanupState.Decision) {
-        withAnimation(.easeIn(duration: 0.2)) { offset = CGSize(width: x, height: offset.height) }
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(200))
+        if reduceMotion {
+            offset = .zero
             onDecide(decision)
+        } else {
+            withAnimation(.easeIn(duration: 0.2)) { offset = CGSize(width: x, height: offset.height) }
+            Task { @MainActor in
+                try? await Task.sleep(for: .milliseconds(200))
+                onDecide(decision)
+            }
         }
     }
 
@@ -272,10 +392,11 @@ private struct CompletionView: View {
     let total: Int
     let onShowQueue: () -> Void
     let onRestart: () -> Void
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
-            if !state.history.isEmpty {
+            if !state.history.isEmpty && !reduceMotion {
                 ConfettiView()
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)

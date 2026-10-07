@@ -17,14 +17,14 @@ final class GoalManager {
     private(set) var streakDays: Int
 
     init() {
-        if let data = UserDefaults.standard.data(forKey: Key.goals),
+        if let data = SyncedPrefs.data(forKey: Key.goals),
            let decoded = try? JSONDecoder().decode([String: Int].self, from: data) {
             goals = decoded
         } else {
             goals = [:]
         }
-        lastCheckInDate = UserDefaults.standard.object(forKey: Key.lastCheckIn) as? Date
-        streakDays      = UserDefaults.standard.integer(forKey: Key.streak)
+        lastCheckInDate = SyncedPrefs.object(forKey: Key.lastCheckIn) as? Date
+        streakDays      = SyncedPrefs.integer(forKey: Key.streak)
     }
 
     // MARK: - Goals
@@ -33,7 +33,7 @@ final class GoalManager {
         if count <= 0 { goals.removeValue(forKey: platform.rawValue) }
         else          { goals[platform.rawValue] = count }
         if let data = try? JSONEncoder().encode(goals) {
-            UserDefaults.standard.set(data, forKey: Key.goals)
+            SyncedPrefs.set(data, forKey: Key.goals)
         }
     }
 
@@ -61,8 +61,8 @@ final class GoalManager {
         }
 
         lastCheckInDate = Date()
-        UserDefaults.standard.set(lastCheckInDate, forKey: Key.lastCheckIn)
-        UserDefaults.standard.set(streakDays, forKey: Key.streak)
+        SyncedPrefs.set(lastCheckInDate, forKey: Key.lastCheckIn)
+        SyncedPrefs.set(streakDays, forKey: Key.streak)
     }
 
     var daysSinceCheckIn: Int? {

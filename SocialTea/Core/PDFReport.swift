@@ -1,4 +1,6 @@
 import UIKit
+import SwiftUI
+import Charts
 
 enum PDFReport {
     struct PlatformStats {
@@ -10,6 +12,7 @@ enum PDFReport {
         let isMutual: Bool
     }
 
+    @MainActor
     static func make(platforms: [PlatformStats]) -> Data {
         let pageWidth: CGFloat = 595   // A4 at 72 dpi
         let pageHeight: CGFloat = 842
@@ -17,6 +20,9 @@ enum PDFReport {
         let contentWidth = pageWidth - margin * 2
 
         let teal = UIColor(red: 0.07, green: 0.55, blue: 0.52, alpha: 1)
+
+        // Pre-render chart image so it's available inside the synchronous PDF closure
+        let chartImg = chartImage(platforms: platforms)
 
         let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight))
 
@@ -55,6 +61,15 @@ enum PDFReport {
             teal.withAlphaComponent(0.4).setStroke()
             sep.stroke()
             y += 22
+
+            // ── Follower bar chart ───────────────────────────────────────────
+            if let img = chartImg {
+                let aspect   = img.size.height / img.size.width
+                let imgW     = contentWidth
+                let imgH     = imgW * aspect
+                img.draw(in: CGRect(x: margin, y: y, width: imgW, height: imgH))
+                y += imgH + 18
+            }
 
             // ── Platform sections ────────────────────────────────────────────
             for platform in platforms {
@@ -118,6 +133,55 @@ enum PDFReport {
             )
             footerAS.draw(with: CGRect(x: margin, y: footerY, width: contentWidth, height: 20),
                           options: .usesLineFragmentOrigin, context: nil)
+        }
+    }
+
+    // MARK: -
+
+    @MainActor
+    private static func chartImage(platforms: [PlatformStats]) -> UIImage? {
+        guard !platforms.isEmpty else { return nil }
+        let view = PDFBarChart(platforms: platforms)
+            .colorScheme(.light)
+            .frame(width: 491, height: 120)
+        let r = ImageRenderer(content: view)
+        r.scale = 2
+        return r.uiImage
+    }
+}
+
+// MARK: - Chart view for PDF embed
+
+private struct PDFBarChart: View {
+    let platforms: [PDFReport.PlatformStats]
+
+    var body: some View {
+        Chart {
+            ForEach(Array(platforms.enumerated()), id: \.offset) { _, p in
+                BarMark(
+                    x: .value("Platform", p.name),
+                    y: .value("Followers", p.followers)
+                )
+                .foregroundStyle(platformColor(p.name).gradient)
+                .cornerRadius(7)
+                .annotation(position: .top, alignment: .center) {
+                    Text(p.followers.formatted())
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .chartYAxis(.hidden)
+        .frame(height: 120)
+        .padding(.top, 4)
+    }
+
+    private func platformColor(_ name: String) -> Color {
+        switch name.lowercased() {
+        case "instagram": return Color(red: 0.84, green: 0.27, blue: 0.53)
+        case "facebook":  return Color(red: 0.23, green: 0.45, blue: 0.86)
+        case "tiktok":    return Color(red: 0.12, green: 0.70, blue: 0.72)
+        default:          return Color(red: 0.07, green: 0.55, blue: 0.52)
         }
     }
 }

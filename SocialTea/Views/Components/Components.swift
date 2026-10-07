@@ -128,6 +128,9 @@ struct PersonRow: View {
             Button { open() } label: { Label("Open profile", systemImage: "person.crop.circle") }
             Button(role: .destructive) { open() } label: { Label("Block in \(platform.name)", systemImage: "hand.raised") }
             Button { UIPasteboard.general.string = person.username } label: { Label("Copy username", systemImage: "doc.on.doc") }
+            ShareLink(item: person, preview: SharePreview(person.title, image: Image(systemName: "person.circle"))) {
+                Label("Share handle", systemImage: "square.and.arrow.up")
+            }
         } label: {
             Text(label ?? "Open")
                 .font(.caption.weight(.semibold))
@@ -150,6 +153,7 @@ struct AnimatedCounter: View {
     let value: Int
     var font: Font = .system(size: 34, weight: .bold, design: .rounded)
     @State private var shown: Int = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Text(shown, format: .number)
@@ -161,7 +165,11 @@ struct AnimatedCounter: View {
     }
 
     private func animate(to target: Int) {
-        withAnimation(.spring(duration: 0.9, bounce: 0.15)) { shown = target }
+        if reduceMotion {
+            shown = target
+        } else {
+            withAnimation(.spring(duration: 0.9, bounce: 0.15)) { shown = target }
+        }
     }
 }
 
