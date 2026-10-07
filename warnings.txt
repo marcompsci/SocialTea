@@ -1,0 +1,1 @@
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets: warning: Could not get trait set for device iPhone18,2 with version 26.2

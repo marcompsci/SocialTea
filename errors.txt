@@ -1,0 +1,4 @@
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift:20:8: error: type 'BulkDecideTip' does not conform to protocol 'Tip'
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift:35:8: error: type 'TrendChartTip' does not conform to protocol 'Tip'
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift:5:8: error: type 'KeyboardCleanupTip' does not conform to protocol 'Tip'
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift:50:8: error: type 'ShareCardTip' does not conform to protocol 'Tip'
