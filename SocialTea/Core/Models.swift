@@ -109,7 +109,8 @@ extension Person: Transferable {
 
 // MARK: - Snapshot
 
-/// One point-in-time copy of a platform's lists. Lives in memory only.
+/// One point-in-time copy of a platform's lists. Lives in memory, unless the user turns on
+/// "Remember last snapshot" (see `SnapshotMemory`), which keeps usernames on this phone.
 struct Snapshot: Sendable {
     /// Counts recorded without names (used by the bundled baseline when it ships counts only).
     struct Summary: Sendable, Equatable {
@@ -125,6 +126,8 @@ struct Snapshot: Sendable {
     var summary: Summary?
     var isBundledBaseline: Bool = false
     var isDemo: Bool = false
+    /// Loaded from the opt-in on-device "Remember last snapshot" file.
+    var isRemembered: Bool = false
 
     var hasNames: Bool { !(followers ?? []).isEmpty || !(following ?? []).isEmpty }
     var isEmpty: Bool { followers == nil && following == nil && summary == nil }

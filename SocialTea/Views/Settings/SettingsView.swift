@@ -7,11 +7,13 @@ struct SettingsView: View {
     @Environment(NotificationManager.self) private var notifications
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(ReviewManager.self) private var reviewManager
+    @Environment(HistoryManager.self) private var historyManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var showPaywall = false
     @State private var showManageSubscription = false
     @AppStorage(WidgetDataCache.optInKey) private var widgetOptIn = false
+    @AppStorage(SnapshotMemory.optInKey) private var rememberOptIn = false
 
     @State private var showPINSetup = false
     @State private var confirmStartOver = false
@@ -50,7 +52,7 @@ struct SettingsView: View {
                 } header: {
                     Text("SocialTea Pro")
                 } footer: {
-                    Text("Every name, snapshot comparisons, Cleanup, Insights and export. Billed monthly through your Apple ID; cancel anytime in Settings.")
+                    Text("Every name, snapshot comparisons, Cleanup, Insights and export. Choose monthly, yearly, or a one-time Lifetime purchase. Subscriptions are billed through your Apple ID and can be cancelled anytime in Settings.")
                 }
 
                 Section {
@@ -110,18 +112,42 @@ struct SettingsView: View {
 
                 Section {
                     Toggle(isOn: Binding(
+                        get: { rememberOptIn },
+                        set: { on in
+                            store.setRemembersSnapshot(on)
+                            rememberOptIn = on
+                            if !on { historyManager.clear() }
+                        }
+                    )) {
+                        Label("Remember last snapshot", systemImage: "clock.arrow.circlepath")
+                    }
+                    .accessibilityIdentifier("toggle.rememberSnapshot")
+                } header: {
+                    Text("Comparisons")
+                } footer: {
+                    Text(SnapshotMemory.settingsFooter)
+                }
+
+                Section {
+                    Toggle(isOn: Binding(
                         get: { widgetOptIn },
                         set: { on in
                             widgetOptIn = on
-                            if on { WidgetDataCache.update(from: store) } else { WidgetDataCache.clear() }
+                            if on {
+                                WidgetDataCache.update(from: store)
+                                SpotlightIndexer.reindex(using: store)
+                            } else {
+                                WidgetDataCache.clear()
+                                SpotlightIndexer.removeAll()
+                            }
                         }
                     )) {
-                        Label("Save counts for widget & Siri", systemImage: "square.grid.2x2")
+                        Label("Save counts for widget, Siri & Spotlight", systemImage: "square.grid.2x2")
                     }
                 } header: {
                     Text("Home Screen & Siri")
                 } footer: {
-                    Text("Off by default. When on, your latest follower and following totals \u{2014} numbers only, no names \u{2014} are saved on this phone so the widget and Siri can show them. Turn it off to erase them.")
+                    Text("Off by default. When on, your latest follower and following totals \u{2014} numbers only, no names \u{2014} are saved on this phone so the widget, Siri and Spotlight can show them. Turn it off to erase them.")
                 }
 
                 Section {
@@ -135,8 +161,8 @@ struct SettingsView: View {
                     Text("Data")
                 } footer: {
                     Text(store.hasBundledBaseline
-                         ? "Start over wipes every import and restores your labeled baseline snapshot. Clear everything removes the baseline too, until the next launch."
-                         : "Start over wipes every import for this session.")
+                         ? "Start over wipes every import (and any remembered snapshot) and restores your labeled baseline snapshot. Clear everything removes the baseline too, until the next launch."
+                         : "Start over wipes every import and any remembered snapshot.")
                 }
 
                 Section {

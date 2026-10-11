@@ -3,8 +3,8 @@ import SwiftUI
 
 // Keyboard shortcuts in the Cleanup swipe deck.
 struct KeyboardCleanupTip: Tip {
-    var title: LocalizedStringResource { "Keyboard shortcuts" }
-    var message: LocalizedStringResource? { "← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too." }
+    var title: Text { Text("Keyboard shortcuts") }
+    var message: Text? { Text("← unfollow  ·  → keep  ·  ⌘Z undo — works with any external keyboard too.") }
     var image: Image? { Image(systemName: "keyboard") }
 
     static let cardDecided = Event(id: "socialtea.tip.cardDecided")
@@ -18,8 +18,8 @@ struct KeyboardCleanupTip: Tip {
 
 // Bulk-decide menu (keep all / queue all) in the Cleanup toolbar.
 struct BulkDecideTip: Tip {
-    var title: LocalizedStringResource { "Decide all at once" }
-    var message: LocalizedStringResource? { "Tap ··· to keep every remaining card — or queue them all to unfollow in one go." }
+    var title: Text { Text("Decide all at once") }
+    var message: Text? { Text("Tap ··· to keep every remaining card — or queue them all to unfollow in one go.") }
     var image: Image? { Image(systemName: "ellipsis.circle") }
 
     @Parameter static var deckSize: Int = 0
@@ -33,8 +33,8 @@ struct BulkDecideTip: Tip {
 
 // Trend chart in Insights — shown once the chart first appears.
 struct TrendChartTip: Tip {
-    var title: LocalizedStringResource { "Your follower trend" }
-    var message: LocalizedStringResource? { "Grows with each import session. Export the full history as CSV from the report menu." }
+    var title: Text { Text("Your follower trend") }
+    var message: Text? { Text("Grows with each import session. Export the full history as CSV from the report menu.") }
     var image: Image? { Image(systemName: "chart.line.uptrend.xyaxis") }
 
     @Parameter static var isVisible: Bool = false
@@ -48,8 +48,8 @@ struct TrendChartTip: Tip {
 
 // Share card button in the Insights toolbar.
 struct ShareCardTip: Tip {
-    var title: LocalizedStringResource { "Share your stats" }
-    var message: LocalizedStringResource? { "Tap ↑ to generate a polished stats card — privacy-safe, no names included." }
+    var title: Text { Text("Share your stats") }
+    var message: Text? { Text("Tap ↑ to generate a polished stats card — privacy-safe, no names included.") }
     var image: Image? { Image(systemName: "square.and.arrow.up") }
 
     static let insightsOpened = Event(id: "socialtea.tip.insightsOpened")

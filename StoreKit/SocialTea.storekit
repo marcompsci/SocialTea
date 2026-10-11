@@ -1,7 +1,23 @@
 {
   "identifier": "6B50E5DE",
   "nonRenewingSubscriptions": [],
-  "products": [],
+  "products": [
+    {
+      "displayPrice": "49.99",
+      "familyShareable": false,
+      "internalID": "6700000003",
+      "localizations": [
+        {
+          "description": "Pay once. Every Pro feature, forever.",
+          "displayName": "Lifetime Pro",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.phoronomics.socialtea.pro.lifetime",
+      "referenceName": "SocialTea Lifetime Pro",
+      "type": "NonConsumable"
+    }
+  ],
   "settings": {
     "_applicationInternalID": "",
     "_developerTeamID": "",
@@ -34,6 +50,27 @@
           "productID": "com.phoronomics.socialtea.pro.monthly",
           "recurringSubscriptionPeriod": "P1M",
           "referenceName": "SocialTea Pro Monthly",
+          "subscriptionGroupID": "21000001",
+          "type": "RecurringSubscription"
+        },
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "29.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "6700000002",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Every name, comparisons, Cleanup, Insights and export.",
+              "displayName": "SocialTea Pro Yearly",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.phoronomics.socialtea.pro.yearly",
+          "recurringSubscriptionPeriod": "P1Y",
+          "referenceName": "SocialTea Pro Yearly",
           "subscriptionGroupID": "21000001",
           "type": "RecurringSubscription"
         }

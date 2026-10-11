@@ -28,7 +28,7 @@ SocialTeaTests/  XCTest suite
 | Requirement | Where |
 |---|---|
 | Zero network calls, no SDKs, no keys | No `URLSession`/web views anywhere. Profile buttons hand a URL to iOS (`openURL`) on the user's tap only. |
-| Imported data in memory only | `SessionStore` holds everything in properties. The only `UserDefaults` value is the Face ID on/off *preference*. Share exports use a temp file deleted when the Share Sheet closes (and purged on launch). |
+| Imported data in memory only (by default) | `SessionStore` holds everything in properties. Share exports use a temp file deleted when the Share Sheet closes (and purged on launch). The one exception is the opt-in **Remember last snapshot** setting (off by default, `SnapshotMemory`): the latest usernames go to one Application Support file with complete file protection, excluded from backup, erased when the setting is turned off or on Start over / Clear everything. Preferences are local `UserDefaults` only — no iCloud sync. |
 | In-app privacy statement | `PrivacyPromise` on Dashboard, Import, Settings; full promise in Guide. |
 | Five tabs | Dashboard, Lists, Cleanup, Insights, Guide. Settings is the gear on Dashboard. |
 | Import JSON/CSV/TXT incl. official exports | `ImportParser` — Instagram `followers_1.json` (+ `followers_2.json`, multi-select merges) and `following.json` in old and new layouts, TikTok `user_data.json` (auto-scopes to Follower/Following) and its text export, Facebook `your_friends.json`. |
@@ -46,8 +46,9 @@ It currently holds **counts only** (no usernames), so the Dashboard shows the re
 that names need an import. To ship names too, fill `followerUsernames` / `followingUsernames` in
 `BaselineSnapshot.json` — lists then take over and every count is derived from them.
 
-### SocialTea Pro ($7.99/month)
-StoreKit 2 auto-renewing subscription (`com.phoronomics.socialtea.pro.monthly`). Free: import, Dashboard numbers,
+### SocialTea Pro ($7.99/month · $29.99/year · $49.99 Lifetime)
+StoreKit 2: auto-renewing subscriptions `com.phoronomics.socialtea.pro.monthly` and `com.phoronomics.socialtea.pro.yearly`
+(same group, "SocialTea Pro") plus the non-consumable `com.phoronomics.socialtea.pro.lifetime`. Any one unlocks Pro. Free: import, Dashboard numbers,
 list counts, first 5 names per list, Guide, App Lock. Pro: every name, comparisons, Cleanup, Insights, export.
 Demo data is always fully unlocked. Test purchases locally with `StoreKit/SocialTea.storekit` (already set in the scheme).
 

@@ -2,8 +2,9 @@ import Foundation
 import Observation
 import StoreKit
 
-/// SocialTea Pro — one auto-renewing subscription at $7.99/month, handled entirely by
-/// StoreKit 2. Apple processes the payment; SocialTea has no server and stores nothing.
+/// SocialTea Pro — $7.99/month or $29.99/year (auto-renewing, same subscription group) or a
+/// one-time $49.99 Lifetime purchase, handled entirely by StoreKit 2. Any one unlocks Pro.
+/// Apple processes the payment; SocialTea has no server and stores nothing.
 ///
 /// Free: import, Dashboard numbers, every list's count, the first few names in each list,
 /// the Guide, App Lock, and demo data with everything unlocked.
@@ -11,8 +12,14 @@ import StoreKit
 @MainActor
 @Observable
 final class SubscriptionManager {
-    /// Must match the product you create in App Store Connect.
-    static let productID = "com.phoronomics.socialtea.pro.monthly"
+    /// Must match the products created in App Store Connect.
+    static let monthlyID = "com.phoronomics.socialtea.pro.monthly"
+    static let yearlyID = "com.phoronomics.socialtea.pro.yearly"
+    static let lifetimeID = "com.phoronomics.socialtea.pro.lifetime"
+    static let subscriptionIDs = [monthlyID, yearlyID]
+    static let allProductIDs: Set<String> = [monthlyID, yearlyID, lifetimeID]
+    /// Kept for older call sites.
+    static let productID = monthlyID
     /// Names shown per list before the Pro upsell.
     static let freePreviewCount = 5
 
@@ -20,6 +27,8 @@ final class SubscriptionManager {
     static let termsURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
 
     private(set) var isPro = false
+    /// True when Pro comes from the one-time Lifetime purchase.
+    private(set) var hasLifetime = false
     var showPaywall = false
 
     init() {
@@ -41,14 +50,17 @@ final class SubscriptionManager {
         if ProcessInfo.processInfo.arguments.contains("-UITestPro") { isPro = true; return }
         #endif
         var active = false
+        var lifetime = false
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
-               transaction.productID == Self.productID,
+               Self.allProductIDs.contains(transaction.productID),
                transaction.revocationDate == nil {
                 active = true
+                if transaction.productID == Self.lifetimeID { lifetime = true }
             }
         }
         isPro = active
+        hasLifetime = lifetime
     }
 
     func restore() async {

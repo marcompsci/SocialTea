@@ -1,8 +1,9 @@
 import StoreKit
 import SwiftUI
 
-/// SocialTea Pro paywall. Uses Apple's SubscriptionStoreView so the price, renewal terms,
-/// restore button and legal links are always shown the way App Review expects.
+/// SocialTea Pro paywall. Monthly and yearly plans use Apple's SubscriptionStoreView so the
+/// price, renewal terms, restore button and legal links are always shown the way App Review
+/// expects; the one-time Lifetime purchase is an Apple ProductView underneath.
 struct PaywallView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(\.dismiss) private var dismiss
@@ -38,8 +39,11 @@ struct PaywallView: View {
     }
 
     private var store: some View {
-        SubscriptionStoreView(productIDs: [SubscriptionManager.productID]) {
-            marketing
+        SubscriptionStoreView(productIDs: SubscriptionManager.subscriptionIDs) {
+            VStack(spacing: 14) {
+                marketing
+                lifetimeOffer
+            }
         }
         .subscriptionStoreButtonLabel(.multiline)
         .storeButton(.visible, for: .restorePurchases)
@@ -55,7 +59,7 @@ struct PaywallView: View {
     }
 
     private func checkAvailability() async {
-        let products = (try? await Product.products(for: [SubscriptionManager.productID])) ?? []
+        let products = (try? await Product.products(for: SubscriptionManager.allProductIDs)) ?? []
         available = !products.isEmpty
     }
 
@@ -94,6 +98,34 @@ struct PaywallView: View {
         }
     }
 
+    /// One-time purchase for people who don't want a subscription.
+    private var lifetimeOffer: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Prefer to pay once?")
+                .font(.subheadline.weight(.semibold))
+            ProductView(id: SubscriptionManager.lifetimeID) {
+                Image(systemName: "infinity.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundStyle(Theme.tea)
+            }
+            .productViewStyle(.compact)
+            .onInAppPurchaseCompletion { [subscriptions] _, result in
+                if case .success(.success(let verification)) = result,
+                   case .verified(let transaction) = verification {
+                    await transaction.finish()
+                    await subscriptions.refresh()
+                }
+            }
+            Text("Lifetime Pro is a one-time purchase \u{2014} no renewals.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+        .padding(14)
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+        .padding(.horizontal, 24)
+        .accessibilityIdentifier("paywall.lifetime")
+    }
+
     private var marketing: some View {
         VStack(spacing: 18) {
             Image(systemName: "cup.and.saucer.fill")
@@ -117,6 +149,11 @@ struct PaywallView: View {
                 feature("square.and.arrow.up", "Export", "Share any list as TXT or CSV")
             }
             .padding(.horizontal, 28)
+            Text("Pick monthly, yearly (best value), or pay once for Lifetime.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 28)
             Label("Still 100% on your phone. Apple handles the payment.", systemImage: "lock.shield.fill")
                 .font(.footnote)
                 .foregroundStyle(.secondary)

@@ -40,10 +40,8 @@ struct ImportView: View {
                     }
                 }
 
-                snapshotSection(.baseline,
-                                footer: "Start here. This is the snapshot everything else is compared against.")
-                snapshotSection(.newer,
-                                footer: "Optional. Import a later export to see who unfollowed you and who's new.")
+                snapshotSection(.baseline, footer: baselineFooter)
+                snapshotSection(.newer, footer: newerFooter)
 
                 Section {
                     Button {
@@ -95,6 +93,21 @@ struct ImportView: View {
     }
 
     // MARK: Sections
+
+    private var baselineFooter: String {
+        if store.platformData(platform).baseline?.isRemembered == true {
+            return "Remembered on this phone from your last import. Add your new export under Newer snapshot to see who unfollowed you."
+        }
+        return "Start here. This is the snapshot everything else is compared against."
+    }
+
+    private var newerFooter: String {
+        var text = "Optional. Import a later export to see who unfollowed you and who's new."
+        if !store.remembersSnapshot {
+            text += " Tip: turn on Remember last snapshot in Settings so next time you only need your new export."
+        }
+        return text
+    }
 
     @ViewBuilder
     private func snapshotSection(_ slot: SessionStore.Slot, footer: String) -> some View {

@@ -1,8 +1,9 @@
 import Foundation
 import Observation
 
-/// All imported data for this session. Held in memory only — there is deliberately no
-/// persistence layer. Force-quitting the app wipes everything.
+/// All imported data for this session. Held in memory only — force-quitting the app wipes
+/// everything — unless the user turns on the optional "Remember last snapshot" setting,
+/// which keeps the latest usernames in one on-device file (see `SnapshotMemory`).
 @MainActor
 @Observable
 final class SessionStore {
@@ -24,6 +25,7 @@ final class SessionStore {
 
     private(set) var data: [Platform: PlatformData] = [:]
     private let bundledBaseline: [Platform: Snapshot]
+    let memory: SnapshotMemory
 
     // MARK: Person notes (session-only)
 
@@ -48,9 +50,11 @@ final class SessionStore {
 
     // MARK: Init
 
-    init(bundledBaseline: [Platform: Snapshot]? = nil) {
+    init(bundledBaseline: [Platform: Snapshot]? = nil, memory: SnapshotMemory = .shared) {
         self.bundledBaseline = bundledBaseline ?? SessionStore.loadBundledBaseline()
+        self.memory = memory
         restoreBaseline()
+        restoreRemembered()
         #if DEBUG
         // UI tests: start with demo data on every platform.
         if ProcessInfo.processInfo.arguments.contains("-UITestDemo") {
@@ -139,6 +143,7 @@ final class SessionStore {
             snapshot.following = merged
         }
         snapshot.summary = nil
+        snapshot.isRemembered = false
         snapshot.label = (slot == .baseline ? "Imported · " : "Newer · ")
             + Date().formatted(date: .abbreviated, time: .shortened)
 
@@ -152,6 +157,7 @@ final class SessionStore {
         }
         data[platform] = pd
         cleanup[platform] = nil
+        rememberIfEnabled()
         return merged.count
     }
 
@@ -182,17 +188,46 @@ final class SessionStore {
         cleanup[p] = nil
     }
 
-    /// Wipes every import and restores the labeled baseline snapshot.
+    /// Wipes every import (and any remembered snapshot) and restores the labeled baseline.
     func startOver() {
         data = [:]
         cleanup = [:]
+        memory.erase()
         restoreBaseline()
     }
 
-    /// Wipes everything, including the baseline, for this session.
+    /// Wipes everything, including the baseline and any remembered snapshot.
     func clearAll() {
         data = [:]
         cleanup = [:]
+        memory.erase()
+    }
+
+    // MARK: Remember last snapshot (opt-in, off by default)
+
+    var remembersSnapshot: Bool { memory.isEnabled }
+
+    /// Turns the on-device snapshot memory on (saving what's loaded now) or off (deleting it).
+    func setRemembersSnapshot(_ on: Bool) {
+        memory.isEnabled = on
+        if on { rememberIfEnabled() }
+    }
+
+    /// Writes the latest imported usernames to the phone — only if the user opted in.
+    func rememberIfEnabled() {
+        guard memory.isEnabled else { return }
+        memory.save(data)
+    }
+
+    /// Platforms whose current baseline came from the remembered file.
+    var rememberedPlatforms: [Platform] {
+        Platform.allCases.filter { platformData($0).baseline?.isRemembered == true }
+    }
+
+    private func restoreRemembered() {
+        for (platform, snapshot) in memory.load() {
+            data[platform] = PlatformData(baseline: snapshot, newer: nil)
+        }
     }
 
     private func restoreBaseline() {

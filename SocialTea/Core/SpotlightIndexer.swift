@@ -6,8 +6,10 @@ import Foundation
 struct SpotlightIndexer {
     private static let domainID = "com.socialtea.platforms"
 
+    /// Spotlight is part of the opt-in "Save counts for widget, Siri & Spotlight" setting.
+    /// Only totals are indexed — never names.
     static func reindex(using store: SessionStore) {
-        guard !store.loadedPlatforms.isEmpty else {
+        guard WidgetDataCache.isEnabled, !store.loadedPlatforms.isEmpty else {
             CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: [domainID])
             return
         }
@@ -26,5 +28,9 @@ struct SpotlightIndexer {
             return item
         }
         CSSearchableIndex.default().indexSearchableItems(items) { _ in }
+    }
+
+    static func removeAll() {
+        CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: [domainID])
     }
 }

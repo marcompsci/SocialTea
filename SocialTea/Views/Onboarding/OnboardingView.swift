@@ -140,7 +140,7 @@ private struct OnboardingPage {
                 colors: [Color(red: 0.18, green: 0.65, blue: 0.40), Color(red: 0.07, green: 0.55, blue: 0.52)],
                 startPoint: .topLeading, endPoint: .bottomTrailing),
             title: "100% on-device",
-            body: "Your data never leaves your phone. SocialTea has no network access and collects absolutely nothing."
+            body: "Your data never leaves your phone. SocialTea has no network access and collects absolutely nothing. Lists are forgotten when you close the app unless you choose to remember them."
         ),
         .init(
             symbol: "paintpalette.fill",

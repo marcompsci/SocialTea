@@ -6,7 +6,6 @@
 // □ App Groups: group.com.socialtea on both main + SocialTeaWidget targets
 // □ URL Types: scheme "socialtea" in main target Info tab
 // □ NSSupportsLiveActivities = YES in main target Info tab
-// □ BGTaskSchedulerPermittedIdentifiers: com.socialtea.refresh in main target Info tab
 // □ ITSAppUsesNonExemptEncryption = NO in main target Info tab
 // □ CFBundleAlternateIcons entries for dark/berry/slate icons
 // □ All alternate icon PNGs added to Assets.xcassets
@@ -34,8 +33,6 @@ struct SocialTeaApp: App {
 
     init() {
         try? Tips.configure()
-        BGRefreshManager.registerHandler()
-        SyncedPrefs.synchronize()
         ExportFile.purge()
         SocialTeaShortcuts.updateAppShortcutParameters()
     }
@@ -84,10 +81,13 @@ struct SocialTeaApp: App {
                 notifications.updateDigest(streak: streak, queueCount: queueCount, totalFollowers: totalFollowers)
                 lock.lockIfEnabled()
                 WidgetDataCache.update(from: store)
-                BGRefreshManager.schedule()
-                for p in store.loadedPlatforms {
-                    let s = store.stats(p)
-                    historyManager.record(platform: p, followers: s.followers, following: s.following)
+                store.rememberIfEnabled()
+                // The trend history (totals only) is part of the opt-in "Remember last snapshot".
+                if store.remembersSnapshot {
+                    for p in store.loadedPlatforms where !(store.platformData(p).current?.isDemo ?? false) {
+                        let s = store.stats(p)
+                        historyManager.record(platform: p, followers: s.followers, following: s.following)
+                    }
                 }
             }
             if phase == .active {

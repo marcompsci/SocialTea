@@ -690,3 +690,110 @@ final class BGRefreshManagerTests: XCTestCase {
         XCTAssertEqual(BGRefreshManager.identifier, "com.socialtea.refresh")
     }
 }
+
+// MARK: - Remember last snapshot (opt-in)
+
+@MainActor
+final class SnapshotMemoryTests: XCTestCase {
+    private var dir: URL!
+    private var defaults: UserDefaults!
+    private var suite: String!
+
+    override func setUp() {
+        dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        suite = "SnapshotMemoryTests.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suite)
+    }
+
+    override func tearDown() {
+        try? FileManager.default.removeItem(at: dir)
+        defaults.removePersistentDomain(forName: suite)
+    }
+
+    private func names(_ list: [String]) -> Data { Data(list.joined(separator: "\n").utf8) }
+
+    func testOffByDefaultSavesNothing() throws {
+        let memory = SnapshotMemory(directory: dir, defaults: defaults)
+        XCTAssertFalse(memory.isEnabled)
+        let store = SessionStore(bundledBaseline: [:], memory: memory)
+        _ = try store.importLists([("followers.txt", names(["alice", "bob"]))], platform: .instagram, role: .followers, slot: .baseline)
+        store.rememberIfEnabled()
+        XCTAssertFalse(memory.hasSavedSnapshot)
+        XCTAssertTrue(SessionStore(bundledBaseline: [:], memory: memory).loadedPlatforms.isEmpty)
+    }
+
+    func testRemembersAndEnablesComparisonNextLaunch() throws {
+        let memory = SnapshotMemory(directory: dir, defaults: defaults)
+        let first = SessionStore(bundledBaseline: [:], memory: memory)
+        _ = try first.importLists([("followers.txt", names(["alice", "bob", "carol"]))], platform: .instagram, role: .followers, slot: .baseline)
+        _ = try first.importLists([("following.txt", names(["bob", "erin"]))], platform: .instagram, role: .following, slot: .baseline)
+        first.setRemembersSnapshot(true)
+        XCTAssertTrue(memory.hasSavedSnapshot)
+
+        // "Next launch"
+        let second = SessionStore(bundledBaseline: [:], memory: memory)
+        XCTAssertEqual(second.rememberedPlatforms, [.instagram])
+        XCTAssertEqual(second.platformData(.instagram).baseline?.followers?.count, 3)
+        XCTAssertEqual(second.platformData(.instagram).baseline?.following?.count, 2)
+
+        _ = try second.importLists([("followers.txt", names(["alice", "bob", "zoe"]))], platform: .instagram, role: .followers, slot: .newer)
+        XCTAssertEqual(second.result(.unfollowed, for: .instagram).people.map(\.id), ["carol"])
+        XCTAssertEqual(second.result(.newFollowers, for: .instagram).people.map(\.id), ["zoe"])
+
+        // The newest followers plus the older following list are what's remembered now.
+        let third = SessionStore(bundledBaseline: [:], memory: memory)
+        XCTAssertEqual(Set(third.platformData(.instagram).baseline?.followers?.map(\.id) ?? []), ["alice", "bob", "zoe"])
+        XCTAssertEqual(third.platformData(.instagram).baseline?.following?.count, 2)
+    }
+
+    func testTurningOffErases() throws {
+        let memory = SnapshotMemory(directory: dir, defaults: defaults)
+        let store = SessionStore(bundledBaseline: [:], memory: memory)
+        _ = try store.importLists([("followers.txt", names(["alice"]))], platform: .tiktok, role: .followers, slot: .baseline)
+        store.setRemembersSnapshot(true)
+        XCTAssertTrue(memory.hasSavedSnapshot)
+        store.setRemembersSnapshot(false)
+        XCTAssertFalse(memory.hasSavedSnapshot)
+        XCTAssertTrue(SessionStore(bundledBaseline: [:], memory: memory).loadedPlatforms.isEmpty)
+    }
+
+    func testStartOverAndClearAllErase() throws {
+        let memory = SnapshotMemory(directory: dir, defaults: defaults)
+        let store = SessionStore(bundledBaseline: [:], memory: memory)
+        store.setRemembersSnapshot(true)
+        _ = try store.importLists([("followers.txt", names(["alice"]))], platform: .instagram, role: .followers, slot: .baseline)
+        XCTAssertTrue(memory.hasSavedSnapshot)
+        store.startOver()
+        XCTAssertFalse(memory.hasSavedSnapshot)
+        _ = try store.importLists([("followers.txt", names(["bob"]))], platform: .instagram, role: .followers, slot: .baseline)
+        XCTAssertTrue(memory.hasSavedSnapshot)
+        store.clearAll()
+        XCTAssertFalse(memory.hasSavedSnapshot)
+    }
+
+    func testDemoDataIsNeverSaved() {
+        let memory = SnapshotMemory(directory: dir, defaults: defaults)
+        let store = SessionStore(bundledBaseline: [:], memory: memory)
+        store.setRemembersSnapshot(true)
+        store.loadDemo(.instagram)
+        store.rememberIfEnabled()
+        XCTAssertFalse(memory.hasSavedSnapshot)
+    }
+
+    func testFileIsExcludedFromBackup() throws {
+        let memory = SnapshotMemory(directory: dir, defaults: defaults)
+        let store = SessionStore(bundledBaseline: [:], memory: memory)
+        store.setRemembersSnapshot(true)
+        _ = try store.importLists([("followers.txt", names(["alice"]))], platform: .instagram, role: .followers, slot: .baseline)
+        let values = try memory.fileURL.resourceValues(forKeys: [.isExcludedFromBackupKey])
+        XCTAssertEqual(values.isExcludedFromBackup, true)
+    }
+}
+
+final class PricingTests: XCTestCase {
+    func testProductIDs() {
+        XCTAssertEqual(SubscriptionManager.subscriptionIDs, ["com.phoronomics.socialtea.pro.monthly", "com.phoronomics.socialtea.pro.yearly"])
+        XCTAssertTrue(SubscriptionManager.allProductIDs.contains("com.phoronomics.socialtea.pro.lifetime"))
+        XCTAssertEqual(SubscriptionManager.allProductIDs.count, 3)
+    }
+}

@@ -207,6 +207,13 @@ struct RatioRing: View {
 
 struct PrivacyPromise: View {
     var compact = false
+    @AppStorage(SnapshotMemory.optInKey) private var remembers = false
+
+    private var detail: String {
+        remembers
+            ? "SocialTea does not collect or send your data. No logins, no passwords. Remember last snapshot is on, so the usernames from your latest import are saved on this phone only. Turn it off in Settings to erase them."
+            : "SocialTea does not save, collect, or send your data. No logins, no passwords. Close the app and your imported lists are gone."
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
@@ -216,7 +223,7 @@ struct PrivacyPromise: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Your data stays on your phone")
                     .font(compact ? .footnote.weight(.semibold) : .subheadline.weight(.semibold))
-                Text("SocialTea does not save, collect, or send your data. No logins, no passwords. Close the app and your imported lists are gone.")
+                Text(detail)
                     .font(compact ? .caption : .footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

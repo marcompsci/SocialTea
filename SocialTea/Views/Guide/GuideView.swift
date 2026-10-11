@@ -153,7 +153,8 @@ struct GuideView: View {
             VStack(alignment: .leading, spacing: 10) {
                 promise("iphone", "Everything happens on your phone.")
                 promise("icloud.slash", "Nothing is uploaded or sent anywhere. Ever.")
-                promise("externaldrive.badge.xmark", "Nothing is saved. Close the app and your lists are gone.")
+                promise("externaldrive.badge.xmark", "Nothing is saved by default. Close the app and your lists are gone.")
+                promise("clock.arrow.circlepath", "Optional: turn on Remember last snapshot in Settings to keep the usernames from your latest import on this phone, so next time you only need your new export. It's off until you turn it on, stays on your phone, and turning it off erases it.")
                 promise("key.slash", "No logins, no passwords, no accounts.")
                 promise("hand.raised", "SocialTea never follows, unfollows, or blocks anyone. Buttons just open the profile so you can do it yourself in the real app.")
                 promise("square.and.arrow.up", "If you tap Share, you choose where your file goes — that's you saving your own file.")
