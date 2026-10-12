@@ -1,0 +1,2 @@
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift:28:20: error: cannot convert value of type 'Int' to expected argument type 'Tips.Parameter<Int>'
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift:43:20: error: cannot convert value of type 'Bool' to expected argument type 'Tips.Parameter<Bool>'

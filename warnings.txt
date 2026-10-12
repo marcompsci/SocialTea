@@ -1,0 +1,2 @@
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets: warning: Could not get trait set for device iPhone18,2 with version 26.2
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Widget/SocialTeaWidget.swift:148:21: warning: variable 'i' was never mutated; consider changing to 'let' constant
