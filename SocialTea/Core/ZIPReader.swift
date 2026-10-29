@@ -109,7 +109,7 @@ enum ZIPReader {
                 stream.next_in   = UnsafeMutablePointer(mutating: src.bindMemory(to: UInt8.self).baseAddress!)
                 stream.avail_in  = uInt(data.count)
                 stream.next_out  = dst.bindMemory(to: UInt8.self).baseAddress!
-                stream.avail_out = uInt(out.count)
+                stream.avail_out = uInt(dst.count)
                 return inflate(&stream, Z_FINISH)
             }
         }
