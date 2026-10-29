@@ -1,0 +1,5 @@
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets: warning: Could not get trait set for device iPhone18,2 with version 26.2
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Widget/SocialTeaWidget.swift:148:21: warning: variable 'i' was never mutated; consider changing to 'let' constant
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:795:44: warning: main actor-isolated class property 'subscriptionIDs' can not be referenced from a nonisolated autoclosure; this is an error in the Swift 6 language mode
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:796:43: warning: main actor-isolated class property 'allProductIDs' can not be referenced from a nonisolated autoclosure; this is an error in the Swift 6 language mode
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:797:44: warning: main actor-isolated class property 'allProductIDs' can not be referenced from a nonisolated autoclosure; this is an error in the Swift 6 language mode

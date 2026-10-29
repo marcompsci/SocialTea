@@ -1,0 +1,741 @@
+Command line invocation:
+    /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/xcodebuild test -project SocialTea.xcodeproj -scheme SocialTea -destination id=4C675116-265D-488F-BFFA-836A4545674C -resultBundlePath Results.xcresult CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/runner/work/SocialTea/SocialTea/Results.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:4C675116-265D-488F-BFFA-836A4545674C, OS:26.2, name:iPhone 17 Pro Max }
+{ platform:iOS Simulator, arch:x86_64, id:4C675116-265D-488F-BFFA-836A4545674C, OS:26.2, name:iPhone 17 Pro Max }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'SocialTeaUITests' in project 'SocialTea'
+        ➜ Explicit dependency on target 'SocialTea' in project 'SocialTea'
+    Target 'SocialTeaTests' in project 'SocialTea'
+        ➜ Explicit dependency on target 'SocialTea' in project 'SocialTea'
+    Target 'SocialTea' in project 'SocialTea' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 0aa28a08bea12590ff90be82fed44724
+Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/XCBuildData/0aa28a08bea12590ff90be82fed44724.xcbuilddata
+ClangStatCache /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache
+    cd /Users/runner/work/SocialTea/SocialTea/SocialTea.xcodeproj
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products
+    cd /Users/runner/work/SocialTea/SocialTea/SocialTea.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex
+    cd /Users/runner/work/SocialTea/SocialTea/SocialTea.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea-11df4ee4c9ff5ae6a01ba30568be8c20-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/runner/work/SocialTea/SocialTea/SocialTea.xcodeproj
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea-11df4ee4c9ff5ae6a01ba30568be8c20-VFS-iphonesimulator/all-product-headers.yaml
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator
+    cd /Users/runner/work/SocialTea/SocialTea/SocialTea.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+    cd /Users/runner/work/SocialTea/SocialTea/SocialTea.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/empty-SocialTeaUITests.plist (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/empty-SocialTeaUITests.plist
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests.hmap (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests.DependencyStaticMetadataFileList (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests.DependencyMetadataFileList (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-project-headers.hmap (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-own-target-headers.hmap (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-generated-files.hmap (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-all-target-headers.hmap (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-all-non-framework-target-headers.hmap (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/ProductTypeInfoPlistAdditions.plist (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/ProductTypeInfoPlistAdditions.plist
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests_const_extract_protocols.json (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.SwiftFileList (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.SwiftConstValuesFileList (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.LinkFileList (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-OutputFileMap.json (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/empty-SocialTeaTests.plist (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/empty-SocialTeaTests.plist
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests.hmap (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests.DependencyStaticMetadataFileList (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests.DependencyMetadataFileList (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-project-headers.hmap (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-own-target-headers.hmap (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-generated-files.hmap (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-target-headers.hmap (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-non-framework-target-headers.hmap (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests_const_extract_protocols.json (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.SwiftFileList (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.SwiftConstValuesFileList (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.LinkFileList (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-OutputFileMap.json (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea.hmap (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea.DependencyStaticMetadataFileList (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea.DependencyMetadataFileList (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-project-headers.hmap (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-own-target-headers.hmap (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-generated-files.hmap (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-target-headers.hmap (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-non-framework-target-headers.hmap (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-DebugDylibPath-normal-arm64.txt (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-DebugDylibInstallName-normal-arm64.txt (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_const_extract_protocols.json (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftFileList (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftConstValuesFileList (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.LinkFileList (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-OutputFileMap.json (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-OutputFileMap.json
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests-Runner.app/PlugIns/SocialTeaUITests.xctest (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests-Runner.app/PlugIns/SocialTeaUITests.xctest
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/PlugIns/SocialTeaTests.xctest (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/PlugIns/SocialTeaTests.xctest
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/PlugIns (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/PlugIns
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app
+
+Ld /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/__preview.dylib normal (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -install_name @rpath/SocialTea.debug.dylib -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_dependency_info.dat -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/__preview.dylib
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/unthinned (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/unthinned
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned
+
+GenerateAssetSymbols /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/actool /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets --compile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_dependencies --output-partial-info-plist /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 17.0 --platform iphonesimulator --bundle-identifier com.phoronomics.socialtea --generate-swift-asset-symbols /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+CpResource /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/PrivacyInfo.xcprivacy /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/PrivacyInfo.xcprivacy (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/PrivacyInfo.xcprivacy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app
+
+CpResource /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/BaselineSnapshot.json /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/BaselineSnapshot.json (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/BaselineSnapshot.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app
+
+CopyStringsFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/fr.lproj/Localizable.strings /Users/runner/work/SocialTea/SocialTea/SocialTea/fr.lproj/Localizable.strings (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/fr.lproj -- /Users/runner/work/SocialTea/SocialTea/SocialTea/fr.lproj/Localizable.strings
+/Users/runner/work/SocialTea/SocialTea/SocialTea/fr.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'SocialTea' from project 'SocialTea')
+
+CopyStringsFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/es.lproj/Localizable.strings /Users/runner/work/SocialTea/SocialTea/SocialTea/es.lproj/Localizable.strings (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/es.lproj -- /Users/runner/work/SocialTea/SocialTea/SocialTea/es.lproj/Localizable.strings
+/Users/runner/work/SocialTea/SocialTea/SocialTea/es.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'SocialTea' from project 'SocialTea')
+
+CopyStringsFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/en.lproj/Localizable.strings /Users/runner/work/SocialTea/SocialTea/SocialTea/en.lproj/Localizable.strings (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/en.lproj -- /Users/runner/work/SocialTea/SocialTea/SocialTea/en.lproj/Localizable.strings
+/Users/runner/work/SocialTea/SocialTea/SocialTea/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'SocialTea' from project 'SocialTea')
+
+CopyStringsFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/de.lproj/Localizable.strings /Users/runner/work/SocialTea/SocialTea/SocialTea/de.lproj/Localizable.strings (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/de.lproj -- /Users/runner/work/SocialTea/SocialTea/SocialTea/de.lproj/Localizable.strings
+/Users/runner/work/SocialTea/SocialTea/SocialTea/de.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'SocialTea' from project 'SocialTea')
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/libXCTestSwiftSupport.dylib /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/libXCTestBundleInject.dylib /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestBundleInject.dylib (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestBundleInject.dylib /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/XCUnit.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/XCUIAutomation.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/XCTestSupport.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/XCTestCore.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/XCTest.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/XCTAutomationSupport.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks/Testing.framework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Frameworks
+
+CompileAssetCatalogVariant thinned /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/actool /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets --compile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPhone18,2 --filter-for-device-os-version 26.2 --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 17.0 --platform iphonesimulator
+/* com.apple.actool.notices */
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets: warning: Could not get trait set for device iPhone18,2 with version 26.2
+/* com.apple.actool.compilation-results */
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist_thinned
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriver SocialTea normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-SwiftDriver -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTea -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SocialTea (in target 'SocialTea' from project 'SocialTea')
+EmitSwiftModule normal arm64 (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 Compiling\ DeepLink.swift,\ GuideView.swift,\ ZIPReader.swift,\ SettingsView.swift,\ GoalManager.swift,\ WidgetDataCache.swift,\ SocialTeaTips.swift,\ ImportView.swift,\ SocialTeaIntents.swift,\ RelationshipEngine.swift,\ SessionStore.swift,\ ListTools.swift,\ ListsView.swift,\ SocialTeaWidget.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/DeepLink.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Guide/GuideView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/ZIPReader.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Settings/SettingsView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/GoalManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/WidgetDataCache.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Import/ImportView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SocialTeaIntents.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/RelationshipEngine.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SessionStore.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/ListTools.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Lists/ListsView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Widget/SocialTeaWidget.swift (in target 'SocialTea' from project 'SocialTea')
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/DeepLink.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Guide/GuideView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/ZIPReader.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Settings/SettingsView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/GoalManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/WidgetDataCache.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SocialTeaTips.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Import/ImportView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SocialTeaIntents.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/RelationshipEngine.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SessionStore.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/ListTools.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Lists/ListsView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Widget/SocialTeaWidget.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Widget/SocialTeaWidget.swift:148:21: warning: variable 'i' was never mutated; consider changing to 'let' constant
+                var i = OpenPlatformIntent()
+                ~~~ ^
+                let
+
+SwiftCompile normal arm64 Compiling\ LockManager.swift,\ CleanupLiveActivity.swift,\ SyncedPrefs.swift,\ InsightsView.swift,\ LockView.swift,\ BGRefreshManager.swift,\ ThemeSettings.swift,\ CleanupView.swift,\ SnapshotMemory.swift,\ PaywallView.swift,\ SocialTeaFocusFilter.swift,\ PDFReport.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/LockManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/CleanupLiveActivity.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SyncedPrefs.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Insights/InsightsView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Settings/LockView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/BGRefreshManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/ThemeSettings.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Cleanup/CleanupView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SnapshotMemory.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Paywall/PaywallView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SocialTeaFocusFilter.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/PDFReport.swift /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'SocialTea' from project 'SocialTea')
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/LockManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/CleanupLiveActivity.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SyncedPrefs.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Insights/InsightsView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Settings/LockView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/BGRefreshManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/ThemeSettings.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Cleanup/CleanupView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SnapshotMemory.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Paywall/PaywallView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SocialTeaFocusFilter.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/PDFReport.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+LinkAssetCatalog /Users/runner/work/SocialTea/SocialTea/SocialTea/Resources/Assets.xcassets (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-linkAssetCatalog --thinned /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app --plist-output /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/AppIcon76x76@2x~ipad.png (in target 'SocialTea' from project 'SocialTea')
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Assets.car (in target 'SocialTea' from project 'SocialTea')
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/AppIcon60x60@2x.png (in target 'SocialTea' from project 'SocialTea')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SocialTea (in target 'SocialTea' from project 'SocialTea')
+
+SwiftDriver\ Compilation\ Requirements SocialTea normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTea -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Info.plist /Users/runner/work/SocialTea/SocialTea/Config/SocialTea-Info.plist (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-infoPlistUtility /Users/runner/work/SocialTea/SocialTea/Config/SocialTea-Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/assetcatalog_generated_info.plist -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/Info.plist
+
+SwiftMergeGeneratedHeaders /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/SocialTea-Swift.h /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-Swift.h (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-Swift.h -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/SocialTea-Swift.h
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftmodule (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftdoc (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.abi.json (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftsourceinfo (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftCompile normal arm64 Compiling\ OnboardingView.swift,\ ReviewManager.swift,\ ImportParser.swift,\ GlobalSearchView.swift,\ HistoryManager.swift,\ Components.swift,\ SpotlightIndexer.swift,\ AppIconView.swift,\ SubscriptionManager.swift,\ SampleData.swift,\ DashboardView.swift,\ SocialTeaApp.swift,\ Models.swift,\ NotificationManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Onboarding/OnboardingView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/ReviewManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/ImportParser.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Lists/GlobalSearchView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/HistoryManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Components/Components.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SpotlightIndexer.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Settings/AppIconView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SubscriptionManager.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SampleData.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Dashboard/DashboardView.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SocialTeaApp.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/Models.swift /Users/runner/work/SocialTea/SocialTea/SocialTea/App/NotificationManager.swift (in target 'SocialTea' from project 'SocialTea')
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Onboarding/OnboardingView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/ReviewManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/ImportParser.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Lists/GlobalSearchView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/HistoryManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Components/Components.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SpotlightIndexer.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Settings/AppIconView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SubscriptionManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/SampleData.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Views/Dashboard/DashboardView.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/SocialTeaApp.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/Core/Models.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTea/App/NotificationManager.swift (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling OnboardingView.swift, ReviewManager.swift, ImportParser.swift, GlobalSearchView.swift, HistoryManager.swift, Components.swift, SpotlightIndexer.swift, AppIconView.swift, SubscriptionManager.swift, SampleData.swift, DashboardView.swift, SocialTeaApp.swift, Models.swift, NotificationManager.swift (in target 'SocialTea' from project 'SocialTea')
+
+SwiftDriver SocialTeaUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-SwiftDriver -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTeaUITests -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver SocialTeaTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-SwiftDriver -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTeaTests -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SocialTeaUITests (in target 'SocialTeaUITests' from project 'SocialTea')
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTeaUITests/SocialTeaUITests.swift (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SocialTeaTests (in target 'SocialTeaTests' from project 'SocialTea')
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling DeepLink.swift, GuideView.swift, ZIPReader.swift, SettingsView.swift, GoalManager.swift, WidgetDataCache.swift, SocialTeaTips.swift, ImportView.swift, SocialTeaIntents.swift, RelationshipEngine.swift, SessionStore.swift, ListTools.swift, ListsView.swift, SocialTeaWidget.swift (in target 'SocialTea' from project 'SocialTea')
+
+SwiftCompile normal arm64 Compiling\ SocialTeaUITests.swift /Users/runner/work/SocialTea/SocialTea/SocialTeaUITests/SocialTeaUITests.swift (in target 'SocialTeaUITests' from project 'SocialTea')
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTeaUITests/SocialTeaUITests.swift (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling LockManager.swift, CleanupLiveActivity.swift, SyncedPrefs.swift, InsightsView.swift, LockView.swift, BGRefreshManager.swift, ThemeSettings.swift, CleanupView.swift, SnapshotMemory.swift, PaywallView.swift, SocialTeaFocusFilter.swift, PDFReport.swift, GeneratedAssetSymbols.swift (in target 'SocialTea' from project 'SocialTea')
+
+SwiftCompile normal arm64 Compiling\ SocialTeaTests.swift /Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift (in target 'SocialTeaTests' from project 'SocialTea')
+Failed frontend command:
+/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c -primary-file /Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift -emit-dependencies-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.d -emit-const-values-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftconstvalues -emit-reference-dependencies-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftdeps -serialize-diagnostics-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.dia -target arm64-apple-ios17.0-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -no-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/runner/work/SocialTea/SocialTea -resource-dir /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift -enable-anonymous-context-mangled-names -file-compilation-dir /Users/runner/work/SocialTea/SocialTea -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources -Xcc -DDEBUG\=1 -module-name SocialTeaTests -frontend-parseable-output -disable-clang-spi -target-sdk-version 18.5 -target-sdk-name iphonesimulator18.5 -external-plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\#/Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\#/Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -parse-as-library -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.o -index-unit-output-path /SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.o -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -index-system-modules
+
+SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:322:40: error: call to main actor-isolated static method 'make(platforms:)' in a synchronous nonisolated context
+        XCTAssertGreaterThan(PDFReport.make(platforms: sampleStats).count, 1000)
+                                       ^
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/PDFReport.swift:16:17: note: calls to static method 'make(platforms:)' from outside of its actor context are implicitly asynchronous
+    static func make(platforms: [PlatformStats]) -> Data {
+                ^
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:326:30: error: call to main actor-isolated static method 'make(platforms:)' in a synchronous nonisolated context
+        let data = PDFReport.make(platforms: sampleStats)
+                             ^
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/PDFReport.swift:16:17: note: calls to static method 'make(platforms:)' from outside of its actor context are implicitly asynchronous
+    static func make(platforms: [PlatformStats]) -> Data {
+                ^
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:325:10: note: add '@MainActor' to make instance method 'testPDFMagicHeader()' part of global actor 'MainActor'
+    func testPDFMagicHeader() {
+         ^
+    @MainActor 
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:332:30: error: call to main actor-isolated static method 'make(platforms:)' in a synchronous nonisolated context
+        let data = PDFReport.make(platforms: [])
+                             ^
+/Users/runner/work/SocialTea/SocialTea/SocialTea/Core/PDFReport.swift:16:17: note: calls to static method 'make(platforms:)' from outside of its actor context are implicitly asynchronous
+    static func make(platforms: [PlatformStats]) -> Data {
+                ^
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:331:10: note: add '@MainActor' to make instance method 'testEmptyPlatformListStillProducesValidPDF()' part of global actor 'MainActor'
+    func testEmptyPlatformListStillProducesValidPDF() {
+         ^
+    @MainActor 
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:795:44: warning: main actor-isolated class property 'subscriptionIDs' can not be referenced from a nonisolated autoclosure; this is an error in the Swift 6 language mode
+        XCTAssertEqual(SubscriptionManager.subscriptionIDs, ["com.phoronomics.socialtea.pro.monthly", "com.phoronomics.socialtea.pro.yearly"])
+                                           ^
+/Users/runner/work/SocialTea/SocialTea/SocialTea/App/SubscriptionManager.swift:19:16: note: class property declared here
+    static let subscriptionIDs = [monthlyID, yearlyID]
+               ^
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:796:43: warning: main actor-isolated class property 'allProductIDs' can not be referenced from a nonisolated autoclosure; this is an error in the Swift 6 language mode
+        XCTAssertTrue(SubscriptionManager.allProductIDs.contains("com.phoronomics.socialtea.pro.lifetime"))
+                                          ^
+/Users/runner/work/SocialTea/SocialTea/SocialTea/App/SubscriptionManager.swift:20:16: note: class property declared here
+    static let allProductIDs: Set<String> = [monthlyID, yearlyID, lifetimeID]
+               ^
+/Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift:797:44: warning: main actor-isolated class property 'allProductIDs' can not be referenced from a nonisolated autoclosure; this is an error in the Swift 6 language mode
+        XCTAssertEqual(SubscriptionManager.allProductIDs.count, 3)
+                                           ^
+/Users/runner/work/SocialTea/SocialTea/SocialTea/App/SubscriptionManager.swift:20:16: note: class property declared here
+    static let allProductIDs: Set<String> = [monthlyID, yearlyID, lifetimeID]
+               ^
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SocialTeaUITests (in target 'SocialTeaUITests' from project 'SocialTea')
+
+SwiftDriver\ Compilation\ Requirements SocialTeaUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTeaUITests -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/SocialTeaUITests-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SocialTeaTests (in target 'SocialTeaTests' from project 'SocialTea')
+
+SwiftDriver\ Compilation\ Requirements SocialTeaTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTeaTests -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -parse-as-library -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/SocialTeaTests-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources/SocialTeaUITests-Swift.h /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-Swift.h (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests-Swift.h -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/DerivedSources/SocialTeaUITests-Swift.h
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftmodule (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftdoc (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.abi.json (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftsourceinfo (in target 'SocialTeaUITests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaUITests.build/Objects-normal/arm64/SocialTeaUITests.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftMergeGeneratedHeaders /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources/SocialTeaTests-Swift.h /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-Swift.h (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests-Swift.h -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/DerivedSources/SocialTeaTests-Swift.h
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftmodule (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftdoc (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.abi.json (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftsourceinfo (in target 'SocialTeaTests' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTeaTests.build/Objects-normal/arm64/SocialTeaTests.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTeaTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriver\ Compilation SocialTea normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    builtin-Swift-Compilation -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SocialTea -Onone -enforce-exclusivity\=checked @/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Index.noindex/DataStore -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-96ae0914227b19deccb34b33ba7b5dea.sdkstatcache -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/SocialTea-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea-Swift.h -working-directory /Users/runner/work/SocialTea/SocialTea -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/SocialTea.debug.dylib normal (in target 'SocialTea' from project 'SocialTea')
+    cd /Users/runner/work/SocialTea/SocialTea
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -F/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator -filelist /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.LinkFileList -install_name @rpath/SocialTea.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Intermediates.noindex/SocialTea.build/Debug-iphonesimulator/SocialTea.build/Objects-normal/arm64/SocialTea.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -o /Users/runner/Library/Developer/Xcode/DerivedData/SocialTea-hgbilmtkpyfmklczxhycsqzmnhnd/Build/Products/Debug-iphonesimulator/SocialTea.app/SocialTea.debug.dylib
+
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/SocialTea/SocialTea/Results.xcresult
+
+Testing failed:
+	Call to main actor-isolated static method 'make(platforms:)' in a synchronous nonisolated context
+	Call to main actor-isolated static method 'make(platforms:)' in a synchronous nonisolated context
+	Call to main actor-isolated static method 'make(platforms:)' in a synchronous nonisolated context
+	Testing cancelled because the build failed.
+
+** TEST FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 Compiling\ SocialTeaTests.swift /Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift (in target 'SocialTeaTests' from project 'SocialTea')
+	SwiftCompile normal arm64 /Users/runner/work/SocialTea/SocialTea/SocialTeaTests/SocialTeaTests.swift (in target 'SocialTeaTests' from project 'SocialTea')
+	Testing project SocialTea with scheme SocialTea
+(3 failures)
