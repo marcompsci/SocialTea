@@ -121,7 +121,7 @@ struct PaywallView: View {
                 .foregroundStyle(.secondary)
         }
         .padding(14)
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
         .padding(.horizontal, 24)
         .accessibilityIdentifier("paywall.lifetime")
     }
@@ -129,11 +129,10 @@ struct PaywallView: View {
     private var marketing: some View {
         VStack(spacing: 18) {
             Image(systemName: "cup.and.saucer.fill")
-                .font(.system(size: 44))
-                .foregroundStyle(.white)
-                .frame(width: 92, height: 92)
-                .background(Circle().fill(Theme.gradient))
-                .padding(.top, 28)
+                .font(.system(size: 40, weight: .medium))
+                .foregroundStyle(Theme.tea)
+                .padding(.top, 36)
+                .accessibilityHidden(true)
             VStack(spacing: 6) {
                 Text("SocialTea Pro")
                     .font(.largeTitle.weight(.bold))
@@ -213,6 +212,6 @@ struct ProLockedCard: View {
         }
         .padding(18)
         .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: 18).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 }

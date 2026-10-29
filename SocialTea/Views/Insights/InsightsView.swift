@@ -110,8 +110,8 @@ struct InsightsView: View {
                         x: .value("Platform", platform.name),
                         y: .value("Count", count)
                     )
-                    .foregroundStyle(Theme.color(for: platform).gradient)
-                    .cornerRadius(8)
+                    .foregroundStyle(Theme.color(for: platform))
+                    .cornerRadius(Theme.Radius.small)
                     .annotation(position: .top, alignment: .center) {
                         Text(count.formatted())
                             .font(.caption2.weight(.semibold))
@@ -126,7 +126,7 @@ struct InsightsView: View {
                 .joined(separator: ", "))
         }
         .padding(18)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     // MARK: - Growth comparison chart
@@ -152,8 +152,8 @@ struct InsightsView: View {
                         x: .value("Platform", platform.name),
                         y: .value("Change", delta)
                     )
-                    .foregroundStyle(delta >= 0 ? Color.green.gradient : Color.red.gradient)
-                    .cornerRadius(8)
+                    .foregroundStyle(delta >= 0 ? Color.green : Color.red)
+                    .cornerRadius(Theme.Radius.small)
                     .annotation(position: delta >= 0 ? .top : .bottom, alignment: .center) {
                         Text(delta >= 0 ? "+\(delta)" : "\(delta)")
                             .font(.caption2.weight(.semibold))
@@ -180,7 +180,7 @@ struct InsightsView: View {
             }())
         }
         .padding(18)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     // MARK: - Follow-back ratio grid
@@ -208,7 +208,7 @@ struct InsightsView: View {
                 }
             }
             .padding(18)
-            .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
         }
     }
 
@@ -253,7 +253,7 @@ struct InsightsView: View {
                 TipView(trendChartTip, arrowEdge: .none)
             }
             .padding(18)
-            .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
             .onAppear { TrendChartTip.isVisible = true }
         }
     }

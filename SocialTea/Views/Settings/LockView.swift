@@ -11,8 +11,8 @@ struct LockView: View {
         VStack(spacing: 24) {
             Spacer()
             Image(systemName: "lock.fill")
-                .font(.system(size: 44))
-                .foregroundStyle(Theme.gradient)
+                .font(.system(size: 40, weight: .medium))
+                .foregroundStyle(Theme.tea)
             Text("SocialTea is locked").font(.title2.weight(.bold))
 
             if lock.sessionPIN != nil {

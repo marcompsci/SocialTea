@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// "How does this work?" — written so a 10-year-old could follow it.
+/// "How it works" — written so a 10-year-old could follow it.
 struct GuideView: View {
     @State private var platform: Platform = .instagram
 
@@ -29,19 +29,15 @@ struct GuideView: View {
     // MARK: Hero
 
     private var hero: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Image(systemName: "cup.and.saucer.fill")
-                .font(.system(size: 36))
-                .foregroundStyle(.white)
-            Text("How does this work?")
-                .font(.title.weight(.bold))
-                .foregroundStyle(.white)
+        VStack(alignment: .leading, spacing: 8) {
+            Text("How it works")
+                .font(.title2.weight(.bold))
             Text("Instagram, Facebook and TikTok will give you a copy of your own lists. You hand that copy to SocialTea, and it does the math right here on your phone.")
-                .foregroundStyle(.white.opacity(0.9))
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(20)
+        .padding(.horizontal, 4)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 22).fill(Theme.gradient))
     }
 
     private var warning: some View {
@@ -66,7 +62,7 @@ struct GuideView: View {
                 }
             }
             .padding(14)
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
 
             sectionTitle("2. Give it to SocialTea", "doc.badge.plus")
             card("On the Dashboard, tap **Import** on the right platform. Pick your followers file, then your following file. That's it — the numbers appear instantly.\n\nWant to see who left? Do it again in a few weeks and import the new file as the **newer snapshot**.")
@@ -129,7 +125,7 @@ struct GuideView: View {
                 }
             }
             .padding(.horizontal, 14)
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
             card("**Facebook is different:** friends always go both ways, so everyone shows up under Friends and \"Not following back\" is always 0.")
         }
     }
@@ -138,7 +134,7 @@ struct GuideView: View {
         switch view {
         case .notFollowingBack: return "You follow them, but they don't follow you."
         case .fans: return "They follow you, but you don't follow them."
-        case .mutuals: return "You follow each other. Besties!"
+        case .mutuals: return "You follow each other."
         case .unfollowed: return "They followed you in your old file, but not in your new one. Needs two files."
         case .newFollowers: return "They're in your new file but weren't in the old one. Needs two files."
         case .goneQuiet: return "They disappeared from all your lists. Maybe they blocked you, maybe they deleted their account, maybe they took a break — the app can't tell which, so it never says \"blocked\" for sure."
@@ -160,7 +156,7 @@ struct GuideView: View {
                 promise("square.and.arrow.up", "If you tap Share, you choose where your file goes — that's you saving your own file.")
             }
             .padding(14)
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
         }
     }
 
@@ -192,7 +188,7 @@ struct GuideView: View {
             .font(.subheadline)
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     private func promise(_ symbol: String, _ text: String) -> some View {
@@ -211,7 +207,7 @@ struct GuideView: View {
             Text(q).font(.subheadline.weight(.semibold)).foregroundStyle(.primary)
         }
         .padding(14)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 }
 

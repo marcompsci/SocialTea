@@ -7,8 +7,16 @@ enum Theme {
     static let tea = Color(red: 0.07, green: 0.55, blue: 0.52)      // teal
     static let honey = Color(red: 0.96, green: 0.65, blue: 0.20)    // amber
     static let berry = Color(red: 0.89, green: 0.29, blue: 0.42)
+    /// Kept for the alternate app icons only. UI surfaces use flat color.
     static let gradient = LinearGradient(colors: [tea, Color(red: 0.16, green: 0.42, blue: 0.62)],
                                          startPoint: .topLeading, endPoint: .bottomTrailing)
+
+    /// One corner-radius scale for the whole app, so cards stop drifting between 14, 16, 18, 20 and 22.
+    enum Radius {
+        static let card: CGFloat = 16
+        static let control: CGFloat = 10
+        static let small: CGFloat = 6
+    }
 
     static func color(for platform: Platform) -> Color {
         switch platform {
@@ -28,6 +36,35 @@ enum Theme {
         case .goneQuiet: return .gray
         }
     }
+}
+
+// MARK: - Motion
+
+/// Motion tokens. UI motion stays under ~300ms, never eases in, and only bounces when a
+/// gesture carried momentum into it.
+enum Motion {
+    /// Press feedback: fast ease-out.
+    static let press = Animation.easeOut(duration: 0.12)
+    /// Values changing in place (counters, ring, chips).
+    static let change = Animation.spring(duration: 0.3, bounce: 0)
+    /// Something thrown by a gesture settling back.
+    static let settle = Animation.spring(duration: 0.3, bounce: 0.2)
+}
+
+/// Any custom tappable surface: scales to 0.97 the instant a finger lands, springs back on release.
+struct PressableButtonStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.97 : 1)
+            .opacity(configuration.isPressed ? 0.85 : 1)
+            .animation(Motion.press, value: configuration.isPressed)
+    }
+}
+
+extension ButtonStyle where Self == PressableButtonStyle {
+    static var pressable: PressableButtonStyle { PressableButtonStyle() }
 }
 
 // MARK: - Haptics
@@ -66,14 +103,10 @@ struct InitialAvatar: View {
 
     var body: some View {
         Text(person.initial)
-            .font(.system(size: size * 0.42, weight: .bold, design: .rounded))
+            .font(.system(size: size * 0.4, weight: .semibold))
             .foregroundStyle(.white)
             .frame(width: size, height: size)
-            .background(
-                Circle().fill(LinearGradient(colors: [Color(hue: hue, saturation: 0.55, brightness: 0.85),
-                                                      Color(hue: hue, saturation: 0.7, brightness: 0.6)],
-                                             startPoint: .topLeading, endPoint: .bottomTrailing))
-            )
+            .background(Circle().fill(Color(hue: hue, saturation: 0.32, brightness: 0.68)))
             .accessibilityHidden(true)
     }
 }
@@ -160,15 +193,17 @@ struct AnimatedCounter: View {
             .font(font)
             .monospacedDigit()
             .contentTransition(.numericText(value: Double(shown)))
-            .onAppear { animate(to: value) }
+            .onAppear { shown = value }
             .onChange(of: value) { _, new in animate(to: new) }
     }
 
+    // The number is simply there when a screen appears — the Dashboard is seen many times a
+    // day, so counting up from zero every visit would make it feel slow. Only real changes roll.
     private func animate(to target: Int) {
         if reduceMotion {
             shown = target
         } else {
-            withAnimation(.spring(duration: 0.9, bounce: 0.15)) { shown = target }
+            withAnimation(Motion.change) { shown = target }
         }
     }
 }
@@ -180,24 +215,27 @@ struct RatioRing: View {
     var lineWidth: CGFloat = 14
     var tint: Color = Theme.tea
     @State private var progress: Double = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
             Circle().stroke(tint.opacity(0.15), lineWidth: lineWidth)
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(AngularGradient(colors: [tint.opacity(0.6), tint], center: .center),
-                        style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                .stroke(tint, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
             VStack(spacing: 0) {
                 Text("\(Int((ratio * 100).rounded()))%")
                     .font(.system(.title2, design: .rounded).weight(.bold))
+                    .monospacedDigit()
                     .contentTransition(.numericText())
                 Text("follow back").font(.caption2).foregroundStyle(.secondary)
             }
         }
-        .onAppear { withAnimation(.easeOut(duration: 1.1)) { progress = ratio } }
-        .onChange(of: ratio) { _, new in withAnimation(.easeOut(duration: 0.8)) { progress = new } }
+        .onAppear { progress = ratio }
+        .onChange(of: ratio) { _, new in
+            withAnimation(reduceMotion ? nil : Motion.change) { progress = new }
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Follow-back ratio \(Int((ratio * 100).rounded())) percent")
     }
@@ -231,7 +269,7 @@ struct PrivacyPromise: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Theme.tea.opacity(0.08)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Theme.tea.opacity(0.08)))
     }
 }
 
@@ -320,10 +358,11 @@ struct PlatformBadge: View {
     let platform: Platform
     var body: some View {
         Image(systemName: platform.symbol)
-            .font(.title2)
-            .foregroundStyle(.white)
-            .frame(width: 44, height: 44)
-            .background(RoundedRectangle(cornerRadius: 12).fill(Theme.color(for: platform).gradient))
+            .font(.title3)
+            .foregroundStyle(Theme.color(for: platform))
+            .frame(width: 40, height: 40)
+            .background(RoundedRectangle(cornerRadius: Theme.Radius.control)
+                .fill(Theme.color(for: platform).opacity(0.14)))
             .accessibilityHidden(true)
     }
 }
@@ -345,6 +384,6 @@ struct NoticeCard: View {
             Spacer(minLength: 0)
         }
         .padding(14)
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color(.secondarySystemBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemBackground)))
     }
 }

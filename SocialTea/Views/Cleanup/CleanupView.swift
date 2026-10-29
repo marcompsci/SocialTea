@@ -64,7 +64,7 @@ struct CleanupView: View {
                     SwipeDeck(people: Array(deck.prefix(3)), platform: platform) { person, decision in
                         reviewManager.recordAction()
                         Haptics.light()
-                        withAnimation(.snappy) { store.decide(person, decision, platform: platform) }
+                        withAnimation(Motion.change) { store.decide(person, decision, platform: platform) }
                         Task { await KeyboardCleanupTip.cardDecided.donate() }
                     }
                     .padding(.horizontal, 24)
@@ -92,13 +92,13 @@ struct CleanupView: View {
                         Menu {
                             Button {
                                 Haptics.light()
-                                withAnimation(.snappy) { store.decideAll(.keep, platform: platform) }
+                                withAnimation(Motion.change) { store.decideAll(.keep, platform: platform) }
                             } label: {
                                 Label("Keep all remaining", systemImage: "heart")
                             }
                             Button(role: .destructive) {
                                 Haptics.light()
-                                withAnimation(.snappy) { store.decideAll(.unfollow, platform: platform) }
+                                withAnimation(Motion.change) { store.decideAll(.unfollow, platform: platform) }
                             } label: {
                                 Label("Queue all to unfollow", systemImage: "xmark.circle")
                             }
@@ -198,34 +198,35 @@ struct CleanupView: View {
         HStack(spacing: 28) {
             circleButton("xmark", tint: Theme.berry, label: "Add to unfollow queue",
                          hint: "Queues this person as someone to unfollow in \(platform.name)") {
-                if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .unfollow, platform: platform) } }
+                if let top { Haptics.light(); withAnimation(Motion.change) { store.decide(top, .unfollow, platform: platform) } }
             }
             circleButton("arrow.uturn.backward", tint: .secondary, label: "Undo last decision",
                          hint: "Brings the previous card back so you can decide again", small: true) {
                 Haptics.light()
-                withAnimation(.snappy) { _ = store.undo(platform: platform) }
+                withAnimation(Motion.change) { _ = store.undo(platform: platform) }
             }
             .disabled(!canUndo)
             .opacity(canUndo ? 1 : 0.4)
             circleButton("heart.fill", tint: Theme.tea, label: "Keep following",
                          hint: "Marks this person as keep and moves to the next card") {
-                if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .keep, platform: platform) } }
+                if let top { Haptics.light(); withAnimation(Motion.change) { store.decide(top, .keep, platform: platform) } }
             }
         }
     }
 
     private func keyboardDeckShortcuts(platform: Platform, top: Person?, canUndo: Bool) -> some View {
         Group {
+            // Keyboard actions repeat hundreds of times — they apply instantly, no animation.
             Button("Keep") {
-                if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .keep, platform: platform) } }
+                if let top { Haptics.light(); store.decide(top, .keep, platform: platform) }
             }
             .keyboardShortcut(.rightArrow, modifiers: [])
             Button("Queue to unfollow") {
-                if let top { Haptics.light(); withAnimation(.snappy) { store.decide(top, .unfollow, platform: platform) } }
+                if let top { Haptics.light(); store.decide(top, .unfollow, platform: platform) }
             }
             .keyboardShortcut(.leftArrow, modifiers: [])
             Button("Undo") {
-                Haptics.light(); withAnimation(.snappy) { _ = store.undo(platform: platform) }
+                Haptics.light(); _ = store.undo(platform: platform)
             }
             .keyboardShortcut("z", modifiers: .command)
             .disabled(!canUndo)
@@ -246,8 +247,10 @@ struct CleanupView: View {
                 .foregroundStyle(tint)
                 .frame(width: small ? controlSmallSize : controlSize,
                        height: small ? controlSmallSize : controlSize)
-                .background(Circle().fill(Color(.secondarySystemGroupedBackground)).shadow(color: .black.opacity(0.08), radius: 8, y: 3))
+                .background(Circle().fill(Color(.secondarySystemGroupedBackground)))
+                .overlay(Circle().strokeBorder(Color.primary.opacity(0.06)))
         }
+        .buttonStyle(.pressable)
         .accessibilityLabel(label)
         .accessibilityHint(hint)
     }
@@ -326,10 +329,10 @@ private struct SwipeCard: View {
         }
         .padding(28)
         .frame(maxWidth: .infinity, minHeight: cardMinHeight)
-        .background(RoundedRectangle(cornerRadius: 28).fill(Color(.secondarySystemGroupedBackground)))
-        .overlay(alignment: .topLeading) { stamp("KEEP", Theme.tea, visible: offset.width > 30).padding(20) }
-        .overlay(alignment: .topTrailing) { stamp("UNFOLLOW", Theme.berry, visible: offset.width < -30).padding(20) }
-        .shadow(color: .black.opacity(isTop ? 0.12 : 0.05), radius: 14, y: 6)
+        .background(RoundedRectangle(cornerRadius: 24).fill(Color(.secondarySystemGroupedBackground)))
+        .overlay(alignment: .topLeading) { stamp("KEEP", Theme.tea, amount: offset.width).padding(20) }
+        .overlay(alignment: .topTrailing) { stamp("UNFOLLOW", Theme.berry, amount: -offset.width).padding(20) }
+        .shadow(color: .black.opacity(isTop ? 0.08 : 0.03), radius: 10, y: 4)
         .scaleEffect(1 - CGFloat(depth) * 0.05)
         .offset(x: offset.width, y: offset.height * 0.2 + CGFloat(depth) * 14)
         .rotationEffect(.degrees(Double(offset.width / 18)))
@@ -347,40 +350,49 @@ private struct SwipeCard: View {
         DragGesture()
             .onChanged { offset = $0.translation }
             .onEnded { value in
-                let dx = value.translation.width + value.predictedEndTranslation.width * 0.2
-                if dx > threshold {
-                    fling(to: 600, .keep)
-                } else if dx < -threshold {
-                    fling(to: -600, .unfollow)
+                let dx = value.translation.width
+                let vx = value.velocity.width
+                // A quick flick is enough — distance OR speed commits the decision.
+                if dx > threshold || vx > 700 {
+                    fling(.keep, velocity: max(vx, 900))
+                } else if dx < -threshold || vx < -700 {
+                    fling(.unfollow, velocity: min(vx, -900))
                 } else if !reduceMotion {
-                    withAnimation(.spring(duration: 0.35, bounce: 0.3)) { offset = .zero }
+                    withAnimation(Motion.settle) { offset = .zero }
                 } else {
                     offset = .zero
                 }
             }
     }
 
-    private func fling(to x: CGFloat, _ decision: SessionStore.CleanupState.Decision) {
-        if reduceMotion {
+    /// Throws the card off-screen at the finger's own speed, then records the decision.
+    /// The deck stays interactive the whole time — no sleep, no lockout.
+    private func fling(_ decision: SessionStore.CleanupState.Decision, velocity: CGFloat) {
+        guard !reduceMotion else {
             offset = .zero
             onDecide(decision)
-        } else {
-            withAnimation(.easeIn(duration: 0.2)) { offset = CGSize(width: x, height: offset.height) }
-            Task { @MainActor in
-                try? await Task.sleep(for: .milliseconds(200))
-                onDecide(decision)
-            }
+            return
+        }
+        let target = CGSize(width: velocity > 0 ? 700 : -700, height: offset.height)
+        let distance = max(abs(target.width - offset.width), 1)
+        withAnimation(.interpolatingSpring(stiffness: 260, damping: 32,
+                                           initialVelocity: abs(velocity) / distance)) {
+            offset = target
+        } completion: {
+            onDecide(decision)
         }
     }
 
-    private func stamp(_ text: String, _ color: Color, visible: Bool) -> some View {
+    /// Stamps fade in with the drag instead of popping on at a threshold, so the card
+    /// hints at what letting go will do.
+    private func stamp(_ text: String, _ color: Color, amount: CGFloat) -> some View {
         Text(text)
             .font(.headline.weight(.heavy))
             .foregroundStyle(color)
             .padding(.horizontal, 10).padding(.vertical, 4)
-            .overlay(RoundedRectangle(cornerRadius: 8).stroke(color, lineWidth: 3))
-            .rotationEffect(.degrees(text == "KEEP" ? -12 : 12))
-            .opacity(visible ? 1 : 0)
+            .overlay(RoundedRectangle(cornerRadius: Theme.Radius.small).stroke(color, lineWidth: 2.5))
+            .rotationEffect(.degrees(text == "KEEP" ? -10 : 10))
+            .opacity(Double(min(max((amount - 16) / 80, 0), 1)))
     }
 }
 
@@ -403,10 +415,10 @@ private struct CompletionView: View {
             }
             VStack(spacing: 18) {
                 Spacer()
-                Image(systemName: total == 0 ? "checkmark.seal.fill" : "party.popper.fill")
-                    .font(.system(size: 56))
-                    .foregroundStyle(Theme.gradient)
-                Text(total == 0 ? "Everyone follows you back" : "Deck complete!")
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 48))
+                    .foregroundStyle(Theme.tea)
+                Text(total == 0 ? "Everyone follows you back" : "All reviewed")
                     .font(.title2.weight(.bold))
                 if total > 0 {
                     HStack(spacing: 14) {
@@ -440,7 +452,7 @@ private struct CompletionView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 14)
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 }
 
@@ -509,8 +521,8 @@ struct ConfettiView: View {
     @State private var pieces: [Piece] = ConfettiView.makePieces()
 
     private static func makePieces() -> [Piece] {
-        (0..<80).map { i in
-        let colors: [Color] = [Theme.tea, Theme.honey, Theme.berry, .purple, .blue, .yellow]
+        (0..<44).map { i in
+        let colors: [Color] = [Theme.tea, Theme.honey, Theme.berry]
         return Piece(id: i,
                      x: CGFloat.random(in: 0...1),
                      delay: Double.random(in: 0...0.8),

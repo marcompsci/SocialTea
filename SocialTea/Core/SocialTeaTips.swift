@@ -25,7 +25,7 @@ struct BulkDecideTip: Tip {
     @Parameter static var deckSize: Int = 0
 
     var rules: [Rule] {
-        #Rule(Self.deckSize) { $0 > 3 }
+        #Rule(Self.$deckSize) { $0 > 3 }
     }
 
     var options: [TipOption] { [Tips.MaxDisplayCount(1)] }
@@ -40,7 +40,7 @@ struct TrendChartTip: Tip {
     @Parameter static var isVisible: Bool = false
 
     var rules: [Rule] {
-        #Rule(Self.isVisible) { $0 == true }
+        #Rule(Self.$isVisible) { $0 == true }
     }
 
     var options: [TipOption] { [Tips.MaxDisplayCount(1)] }

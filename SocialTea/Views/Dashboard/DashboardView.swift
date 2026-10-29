@@ -7,7 +7,6 @@ struct DashboardView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var importPlatform: Platform?
     @State private var showSettings = false
-    @State private var showThemePicker = false
     @State private var showGoalSheet = false
     @State private var showGlobalSearch = false
 
@@ -52,28 +51,12 @@ struct DashboardView: View {
                     }
                     .accessibilityLabel("Search all platforms")
 
-                    Button {
-                        showThemePicker = true
-                    } label: {
-                        Image(systemName: "paintpalette")
-                    }
-                    .accessibilityLabel("Customize theme")
-
-                    Button {
-                        themeSettings.toggleNightMode()
-                        Haptics.light()
-                    } label: {
-                        Image(systemName: themeSettings.nightMode ? "sun.max.fill" : "moon.fill")
-                    }
-                    .accessibilityLabel(themeSettings.nightMode ? "Night mode on, tap to turn off" : "Night mode off, tap to turn on")
-
                     Button { showSettings = true } label: { Image(systemName: "gearshape") }
                         .accessibilityLabel("Settings")
                 }
             }
             .sheet(item: $importPlatform) { platform in ImportView(platform: platform) }
             .sheet(isPresented: $showSettings) { SettingsView() }
-            .sheet(isPresented: $showThemePicker) { ThemeCustomizerSheet() }
             .sheet(isPresented: $showGlobalSearch) { GlobalSearchView() }
             .sheet(isPresented: $showGoalSheet) {
                 GoalSetSheet(platform: focus, currentFollowers: store.stats(focus).followers)
@@ -116,8 +99,8 @@ struct DashboardView: View {
     private var emptyState: some View {
         VStack(spacing: 12) {
             Image(systemName: "cup.and.saucer.fill")
-                .font(.system(size: 44))
-                .foregroundStyle(Theme.gradient)
+                .font(.largeTitle)
+                .foregroundStyle(Theme.tea)
             Text("Spill the tea on your follows")
                 .font(.title3.weight(.bold))
             Text("Import your official data export, or tap Demo on any platform to look around first.")
@@ -133,7 +116,7 @@ struct DashboardView: View {
         }
         .padding(24)
         .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemGroupedBackground)))
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     private var focus: Platform {
@@ -158,6 +141,7 @@ struct DashboardView: View {
                     }
                 }
             }
+            Button { open(platform) } label: {
             HStack(alignment: .center, spacing: 18) {
                 VStack(alignment: .leading, spacing: 14) {
                     counter(stats.followers, platform.followersNoun, themeSettings.accentColor)
@@ -172,6 +156,10 @@ struct DashboardView: View {
                     .frame(width: 120, height: 120)
                     .id(platform)
             }
+            .contentShape(Rectangle())
+            }
+            .buttonStyle(.pressable)
+            .accessibilityHint("Opens the lists for \(platform.name)")
             if let progress = goalManager.progress(followers: stats.followers, for: platform) {
                 goalProgressRow(platform: platform, followers: stats.followers, progress: progress)
             } else {
@@ -189,8 +177,7 @@ struct DashboardView: View {
                 .foregroundStyle(.secondary)
         }
         .padding(18)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color(.secondarySystemGroupedBackground)))
-        .onTapGesture { open(platform) }
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     private func goalProgressRow(platform: Platform, followers: Int, progress: Double) -> some View {
@@ -280,7 +267,7 @@ private struct GoalSetSheet: View {
 
 // MARK: - Theme customizer sheet
 
-private struct ThemeCustomizerSheet: View {
+struct ThemeCustomizerSheet: View {
     @Environment(ThemeSettings.self) private var theme
     @Environment(\.dismiss) private var dismiss
     @State private var pickedColor: Color = Theme.tea
@@ -355,18 +342,23 @@ private struct PlatformCard: View {
         let loaded = store.platformData(platform).isLoaded
         let stats = store.stats(platform)
         VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 12) {
-                PlatformBadge(platform: platform)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(platform.name).font(.headline)
-                    Text(store.sourceLabel(platform))
-                        .font(.caption).foregroundStyle(.secondary).lineLimit(2)
+            Button(action: onOpen) {
+                HStack(spacing: 12) {
+                    PlatformBadge(platform: platform)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(platform.name).font(.headline).foregroundStyle(.primary)
+                        Text(store.sourceLabel(platform))
+                            .font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                    }
+                    Spacer()
+                    if loaded {
+                        Image(systemName: "chevron.right").foregroundStyle(.tertiary)
+                    }
                 }
-                Spacer()
-                if loaded {
-                    Image(systemName: "chevron.right").foregroundStyle(.tertiary)
-                }
+                .contentShape(Rectangle())
             }
+            .buttonStyle(.pressable)
+            .disabled(!loaded)
             if loaded {
                 HStack {
                     mini(stats.followers, platform.followersNoun)
@@ -386,7 +378,7 @@ private struct PlatformCard: View {
                     Haptics.light()
                     store.loadDemo(platform)
                 } label: {
-                    Label("Demo", systemImage: "sparkles")
+                    Label("Demo", systemImage: "eye")
                 }
                 .buttonStyle(.bordered)
                 Spacer()
@@ -394,10 +386,7 @@ private struct PlatformCard: View {
             .font(.subheadline)
         }
         .padding(16)
-        .background(RoundedRectangle(cornerRadius: 18).fill(Color(.secondarySystemGroupedBackground)))
-        .contentShape(RoundedRectangle(cornerRadius: 18))
-        .onTapGesture { if loaded { onOpen() } }
-        .accessibilityAction(named: "Open lists") { onOpen() }
+        .background(RoundedRectangle(cornerRadius: Theme.Radius.card).fill(Color(.secondarySystemGroupedBackground)))
     }
 
     private func mini(_ value: Int, _ label: String) -> some View {

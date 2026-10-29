@@ -162,7 +162,7 @@ private struct PDFBarChart: View {
                     x: .value("Platform", p.name),
                     y: .value("Followers", p.followers)
                 )
-                .foregroundStyle(platformColor(p.name).gradient)
+                .foregroundStyle(platformColor(p.name))
                 .cornerRadius(7)
                 .annotation(position: .top, alignment: .center) {
                     Text(p.followers.formatted())

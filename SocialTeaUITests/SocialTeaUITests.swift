@@ -112,14 +112,6 @@ final class SocialTeaUITests: XCTestCase {
         snap("11-settings")
         app.buttons["Done"].firstMatch.tap()
 
-        // Theme customizer
-        let theme = app.buttons["Customize theme"].firstMatch
-        if theme.waitForExistence(timeout: 3) {
-            theme.tap()
-            snap("13-theme-customizer")
-            app.buttons["Done"].firstMatch.tap()
-        }
-
         // Import sheet for Instagram
         let importButton = app.buttons["Import / replace"].firstMatch
         if importButton.waitForExistence(timeout: 3) {
@@ -192,7 +184,7 @@ final class SocialTeaUITests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.3)
             taps += 1
         }
-        XCTAssertTrue(element(containing: "Deck complete").waitForExistence(timeout: 5), "Completion screen missing")
+        XCTAssertTrue(element(containing: "All reviewed").waitForExistence(timeout: 5), "Completion screen missing")
         snap("43-cleanup-complete", wait: 0.8)
 
         let openQueue = app.buttons["Open queue"].firstMatch

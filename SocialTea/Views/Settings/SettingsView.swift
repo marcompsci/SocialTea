@@ -8,6 +8,8 @@ struct SettingsView: View {
     @Environment(SubscriptionManager.self) private var subscriptions
     @Environment(ReviewManager.self) private var reviewManager
     @Environment(HistoryManager.self) private var historyManager
+    @Environment(ThemeSettings.self) private var themeSettings
+    @State private var showThemePicker = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var showPaywall = false
@@ -53,6 +55,18 @@ struct SettingsView: View {
                     Text("SocialTea Pro")
                 } footer: {
                     Text("Every name, snapshot comparisons, Cleanup, Insights and export. Choose monthly, yearly, or a one-time Lifetime purchase. Subscriptions are billed through your Apple ID and can be cancelled anytime in Settings.")
+                }
+
+                Section("Appearance") {
+                    Toggle(isOn: Binding(
+                        get: { themeSettings.nightMode },
+                        set: { _ in themeSettings.toggleNightMode() }
+                    )) {
+                        Label("Always dark", systemImage: "moon")
+                    }
+                    Button { showThemePicker = true } label: {
+                        Label("Accent color", systemImage: "paintpalette")
+                    }
                 }
 
                 Section {
@@ -205,6 +219,7 @@ struct SettingsView: View {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
             }
             .sheet(isPresented: $showPINSetup) { PINSetupView() }
+            .sheet(isPresented: $showThemePicker) { ThemeCustomizerSheet() }
             .confirmationDialog("Start over?", isPresented: $confirmStartOver, titleVisibility: .visible) {
                 Button("Start over", role: .destructive) { store.startOver(); Haptics.success() }
             } message: {
